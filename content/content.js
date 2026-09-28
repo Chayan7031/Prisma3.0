@@ -1,4 +1,5 @@
 export const pages = {
+    "cover":"https://res.cloudinary.com/daybrhbsc/image/upload/v1790614624/prisma_magazine_cover_page.jpg",
     "Page1": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0001.jpg",
     "Page2": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0002.jpg",
     "Page3": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0003.jpg",

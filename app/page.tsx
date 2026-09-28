@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-[#0a0510] overflow-x-hidden">
+    <div className="relative w-full min-h-screen bg-[#070d18] overflow-x-hidden">
       {/* HERO SHOWCASE SCREEN (Departmental PRISMA 3.0 & Magazine Preview) */}
       <div className="animate-fade-in-up">
         <Hero
@@ -25,4 +25,4 @@ export default function Home() {
       </div>
     </div>
   );
-}
+}

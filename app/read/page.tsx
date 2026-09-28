@@ -4,15 +4,22 @@ import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+const LoadingScreen = () => (
+  <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#070d18] text-[#00a8ff] select-none">
+    <div className="w-12 h-12 border-2 border-[#00a8ff]/30 border-t-[#00a8ff] rounded-full animate-spin mb-4" />
+    <p className="font-tech text-xl tracking-widest text-white uppercase font-bold">
+      PRISMA <span className="text-[#00a8ff]">3.0</span>
+    </p>
+    <span className="text-xs text-slate-400 tracking-wider mt-1 font-sans">
+      Opening Department Magazine...
+    </span>
+  </div>
+);
+
 // Dynamic import with SSR disabled for browser-only flipbook engine
 const Book = dynamic(() => import('@/components/Book'), {
   ssr: false,
-  loading: () => (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#141210] text-[#c59b6d]">
-      <div className="w-12 h-12 border-3 border-[#c59b6d]/30 border-t-[#c59b6d] rounded-full animate-spin mb-4" />
-      <p className="font-serif text-lg tracking-widest uppercase">Opening PRISMA 3.0...</p>
-    </div>
-  ),
+  loading: () => <LoadingScreen />,
 });
 
 function ReaderContent() {
@@ -35,15 +42,8 @@ function ReaderContent() {
 
 export default function ReadPage() {
   return (
-    <main className="w-full h-screen bg-[#141210] overflow-hidden">
-      <Suspense
-        fallback={
-          <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#141210] text-[#c59b6d]">
-            <div className="w-12 h-12 border-3 border-[#c59b6d]/30 border-t-[#c59b6d] rounded-full animate-spin mb-4" />
-            <p className="font-serif text-lg tracking-widest uppercase">Opening PRISMA 3.0...</p>
-          </div>
-        }
-      >
+    <main className="w-full h-screen bg-[#070d18] overflow-hidden">
+      <Suspense fallback={<LoadingScreen />}>
         <ReaderContent />
       </Suspense>
     </main>
