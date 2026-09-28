@@ -869,10 +869,81 @@ export const Book: React.FC<BookProps> = ({
     >
       <div className="book-reader-glow" />
 
+      {/* Traditional PRISMA 3.0 Gold Filigree & Mandala Architectural Decorations */}
+      <div className="book-decor-layer" aria-hidden="true">
+        {/* Ambient Radial Warmth Glow */}
+        <div className="book-decor-ambient-glow" />
+
+        {/* Central Ambient Halo Mandala behind Book Spread */}
+        <div className="book-decor-mandala-wrap">
+          <img
+            src="/design/main_round_design-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-mandala"
+            draggable={false}
+          />
+        </div>
+
+        {/* Ornate Left Side Border Design ("Round Shape Side" Mandala) */}
+        <div className="book-decor-side-left">
+          <img
+            src="/design/main_round_design-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-side-img"
+            draggable={false}
+          />
+        </div>
+
+        {/* Ornate Right Side Border Design ("Round Shape Side" Mandala) */}
+        <div className="book-decor-side-right">
+          <img
+            src="/design/main_round_design-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-side-img"
+            draggable={false}
+          />
+        </div>
+
+        {/* Four Architectural Corner Filigrees */}
+        <div className="book-decor-corner book-corner-tl">
+          <img
+            src="/design/corner-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-corner-img"
+            draggable={false}
+          />
+        </div>
+        <div className="book-decor-corner book-corner-tr">
+          <img
+            src="/design/corner-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-corner-img"
+            draggable={false}
+          />
+        </div>
+        <div className="book-decor-corner book-corner-bl">
+          <img
+            src="/design/corner-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-corner-img"
+            draggable={false}
+          />
+        </div>
+        <div className="book-decor-corner book-corner-br">
+          <img
+            src="/design/corner-removebg-preview.png"
+            alt=""
+            className="book-decor-img book-decor-corner-img"
+            draggable={false}
+          />
+        </div>
+      </div>
+
       {/* Top Header Bar */}
       <header className="book-top-bar">
         <div className="book-top-info">
           <div className="book-top-title">
+            <span className="book-top-brand-icon">P</span>
             <span>{title}</span>
             <span className="book-top-badge">CSE DEPARTMENT</span>
           </div>
