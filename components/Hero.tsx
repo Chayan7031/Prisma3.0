@@ -2,15 +2,18 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export interface HeroProps {
-  onOpenReader: (page?: number) => void;
+  onOpenReader?: (page?: number) => void;
   pdfUrl?: string;
+  onReplayIntro?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onOpenReader,
   pdfUrl = '/prisma_content.pdf',
+  onReplayIntro,
 }) => {
   return (
     <section className="relative w-full min-h-screen bg-[#0e0c0a] text-[#f6f3eb] flex items-center justify-center px-6 py-12 md:px-12 lg:px-20 overflow-x-hidden font-sans select-none">
@@ -24,17 +27,67 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,8,6,0.6)_100%)]" />
       </div>
 
-      {/* Top Bar with College Branding and Optional Replay */}
+      {/* Top Bar with College Branding, Navigation Menu and Optional Replay */}
       <header className="absolute top-6 left-6 right-6 md:left-12 md:right-12 flex items-center justify-between z-20">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#c59b6d]/15 border border-[#c59b6d]/30 flex items-center justify-center text-[#c59b6d] text-xs font-serif font-bold">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="w-8 h-8 rounded-full bg-[#c59b6d]/15 border border-[#c59b6d]/30 flex items-center justify-center text-[#c59b6d] text-xs font-serif font-bold group-hover:border-[#c59b6d] transition-colors">
             P
           </div>
-          <span className="text-sm tracking-widest uppercase font-serif font-semibold text-[#c5beaf]">
+          <span className="text-sm tracking-widest uppercase font-serif font-semibold text-[#c5beaf] group-hover:text-white transition-colors">
             PRISMA <span className="text-[#c59b6d] font-light">3.0</span>
           </span>
-        </div>
+        </Link>
 
+        {/* Home Navigation Menu */}
+        <nav className="flex items-center gap-2 sm:gap-3" aria-label="Main Navigation">
+          <Link
+            href="/read"
+            onClick={(e) => {
+              if (onOpenReader) {
+                e.preventDefault();
+                onOpenReader(1);
+              }
+            }}
+            className="text-xs uppercase tracking-widest text-[#f6f3eb] hover:text-[#c59b6d] transition-all duration-200 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#c59b6d]/40 hover:border-[#c59b6d] bg-[#1b1713]/80 hover:bg-[#25201b] cursor-pointer font-medium shadow-[0_2px_10px_rgba(0,0,0,0.3)]"
+            title="Read PRISMA 3.0 Magazine in /read"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#c59b6d]">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+            </svg>
+            <span>Read</span>
+          </Link>
+
+          <Link
+            href="/read?page=10"
+            onClick={(e) => {
+              if (onOpenReader) {
+                e.preventDefault();
+                onOpenReader(10);
+              }
+            }}
+            className="text-xs uppercase tracking-widest text-[#a89f91] hover:text-[#c59b6d] transition-colors duration-200 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-[#c59b6d]/40 bg-[#161310]/60 cursor-pointer"
+            title="Read Technical Articles in /read"
+          >
+            <span>Articles</span>
+          </Link>
+
+          {onReplayIntro && (
+            <button
+              type="button"
+              onClick={onReplayIntro}
+              className="text-xs uppercase tracking-widest text-[#a89f91] hover:text-[#c59b6d] transition-colors duration-200 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-[#c59b6d]/40 bg-[#161310]/60 cursor-pointer"
+              title="Replay intro animation"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
+              </svg>
+              <span className="hidden sm:inline">Replay Intro</span>
+              <span className="sm:hidden">Intro</span>
+            </button>
+          )}
+        </nav>
       </header>
 
       {/* Main Showcase Layout: 2 Columns */}
@@ -79,10 +132,15 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Action Buttons Row */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            {/* Primary CTA: Open Interactive Reader */}
-            <button
-              type="button"
-              onClick={() => onOpenReader(1)}
+            {/* Primary CTA: Open Interactive Reader in /read */}
+            <Link
+              href="/read"
+              onClick={(e) => {
+                if (onOpenReader) {
+                  e.preventDefault();
+                  onOpenReader(1);
+                }
+              }}
               className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#c59b6d] via-[#d4a373] to-[#b38555] text-[#141210] font-semibold text-base tracking-wide shadow-[0_4px_25px_rgba(197,155,109,0.35)] hover:shadow-[0_6px_35px_rgba(197,155,109,0.55)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
             >
               <svg
@@ -100,7 +158,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
               </svg>
               <span>Open Interactive Reader</span>
-            </button>
+            </Link>
 
             {/* Secondary CTA: Download PDF */}
             {pdfUrl && (
@@ -164,17 +222,16 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* RIGHT COLUMN: Realistic 3D Magazine Cover Preview */}
         <div className="lg:col-span-5 flex items-center justify-center lg:justify-end animate-fade-in-up">
-          <div
-            className="group relative w-full max-w-[380px] sm:max-w-[420px] aspect-[1/1.414] rounded-2xl cursor-pointer perspective-[1200px]"
-            onClick={() => onOpenReader(1)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+          <Link
+            href="/read"
+            onClick={(e) => {
+              if (onOpenReader) {
+                e.preventDefault();
                 onOpenReader(1);
               }
             }}
-            aria-label="Open Magazine flipbook from Front Cover"
+            className="group relative w-full max-w-[380px] sm:max-w-[420px] aspect-[1/1.414] rounded-2xl cursor-pointer perspective-[1200px] block"
+            aria-label="Open Magazine flipbook in /read"
           >
             {/* Ambient Behind-Book Glow */}
             <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-[#c59b6d]/25 via-amber-500/10 to-transparent blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500" />
@@ -214,7 +271,7 @@ export const Hero: React.FC<HeroProps> = ({
               {/* Subtle hover gloss layer */}
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             </div>
-          </div>
+          </Link>
         </div>
 
       </div>
@@ -223,3 +280,4 @@ export const Hero: React.FC<HeroProps> = ({
 };
 
 export default Hero;
+
