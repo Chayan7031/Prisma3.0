@@ -238,14 +238,14 @@ const getCenteringOffset = (page: number, total: number, pageWidth: number, mobi
   return 0;
 };
 
-const userPageToInternalIndex = (userPage: number, odd: boolean, total: number): number => {
-  if (!odd) return userPage - 1;
+const userPageToInternalIndex = (userPage: number, odd: boolean, total: number, mobile = false): number => {
+  if (mobile || !odd) return userPage - 1;
   if (userPage >= total) return total; // page 21 -> internal index 21
   return userPage - 1; // page 1 -> 0, page 20 -> 19
 };
 
-const internalIndexToUserPage = (index: number, odd: boolean, total: number): number => {
-  if (!odd) return index + 1;
+const internalIndexToUserPage = (index: number, odd: boolean, total: number, mobile = false): number => {
+  if (mobile || !odd) return index + 1;
   if (index >= total) return total; // internal 21 -> page 21
   if (index === total - 1) return total - 1; // internal 20 (inside cover) -> page 20
   return index + 1;
@@ -397,26 +397,26 @@ export const Book: React.FC<BookProps> = ({
   }, [calculateDimensions]);
 
   // Fullscreen Change Listener with staggered bounds update
+  const fullscreenTimersRef = useRef<NodeJS.Timeout[]>([]);
   useEffect(() => {
     const handleFullscreenChange = (): void => {
       setIsFullscreen(!!document.fullscreenElement);
       setIsResizing(true);
       calculateDimensions();
-      const t1 = setTimeout(calculateDimensions, 60);
-      const t2 = setTimeout(calculateDimensions, 160);
-      const t3 = setTimeout(() => {
-        calculateDimensions();
-        setIsResizing(false);
-      }, 320);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-        clearTimeout(t3);
-      };
+      fullscreenTimersRef.current.forEach(clearTimeout);
+      fullscreenTimersRef.current = [
+        setTimeout(calculateDimensions, 60),
+        setTimeout(calculateDimensions, 160),
+        setTimeout(() => {
+          calculateDimensions();
+          setIsResizing(false);
+        }, 320),
+      ];
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
     return () => {
+      fullscreenTimersRef.current.forEach(clearTimeout);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
     };
@@ -446,8 +446,8 @@ export const Book: React.FC<BookProps> = ({
 
     pages.forEach((pageData, index) => {
       // If odd total pages (e.g. 21), insert an inside back cover right before the last page
-      // so StPageFlip creates a separate closing leaf for the back cover
-      if (isOdd && index === pages.length - 1) {
+      // so StPageFlip creates a separate closing leaf for the back cover on desktop spread view
+      if (!isMobile && isOdd && index === pages.length - 1) {
         const insideCoverEl = document.createElement('div');
         insideCoverEl.className = 'book-page book-inside-cover';
         insideCoverEl.setAttribute('data-density', 'soft');
@@ -510,7 +510,7 @@ export const Book: React.FC<BookProps> = ({
     });
 
     const activePage = currentPageRef.current || initialPage;
-    const startInternalIndex = userPageToInternalIndex(activePage, isOdd, pages.length);
+    const startInternalIndex = userPageToInternalIndex(activePage, isOdd, pages.length, isMobile);
 
     try {
       const flipInstance = new PageFlip(hostEl, {
@@ -527,7 +527,7 @@ export const Book: React.FC<BookProps> = ({
         usePortrait: isMobile,
         startPage: startInternalIndex,
         drawShadow: true,
-        flippingTime: prefersReducedMotion ? 1 : 950,
+        flippingTime: prefersReducedMotion ? 1 : (isMobile ? 500 : 950),
         useMouseEvents: true,
         swipeDistance: 25,
         clickEventForward: true,
@@ -538,6 +538,59 @@ export const Book: React.FC<BookProps> = ({
       });
 
       flipInstance.loadFromHTML(hostEl.querySelectorAll('.book-page'));
+
+      // Fix StPageFlip portrait mode flipPrev & corner check bug:
+      // In portrait mode, render.getRect().left is negative (-pageWidth).
+      // The library's flipPrev passes global x: 10, which converts to bookPos.x = 10 - rect.left = pageWidth + 10 (middle of spread),
+      // failing isPointOnCorners and silently dropping the flip when disableFlipByClick is true.
+      // Passing rect.left + 10 places the start point on the left corner of the active page.
+      const flipCtrl = (flipInstance as any).getFlipController?.();
+      const render = (flipInstance as any).getRender?.();
+      if (flipCtrl && render) {
+        const origFlipPrev = flipCtrl.flipPrev.bind(flipCtrl);
+        flipCtrl.flipPrev = (corner: 'top' | 'bottom' = 'top') => {
+          try {
+            const rect = render.getRect();
+            if (render.getOrientation() === 'portrait') {
+              const cornerX = rect.left + 10;
+              const cornerY = corner === 'bottom' ? rect.height - 2 : 1;
+              flipCtrl.flip({ x: cornerX, y: cornerY });
+              return;
+            }
+          } catch (e) {
+            console.warn('flipPrev portrait calculation fallback', e);
+          }
+          origFlipPrev(corner);
+        };
+
+        flipInstance.flipPrev = (corner: 'top' | 'bottom' = 'top') => {
+          flipCtrl.flipPrev(corner);
+        };
+
+        const origIsPointOnCorners = flipCtrl.isPointOnCorners?.bind(flipCtrl);
+        if (origIsPointOnCorners) {
+          flipCtrl.isPointOnCorners = (globalPos: { x: number; y: number }) => {
+            if (render.getOrientation() === 'portrait') {
+              const rect = render.getRect();
+              const bookPos = render.convertToBook(globalPos);
+              const operatingDistance = Math.sqrt(Math.pow(rect.pageWidth, 2) + Math.pow(rect.height, 2)) / 5;
+              const isLeftCorner = (
+                bookPos.x >= rect.pageWidth &&
+                bookPos.x <= rect.pageWidth + operatingDistance &&
+                (bookPos.y < operatingDistance || bookPos.y > rect.height - operatingDistance)
+              );
+              const isRightCorner = (
+                bookPos.x >= rect.width - operatingDistance &&
+                bookPos.x <= rect.width &&
+                (bookPos.y < operatingDistance || bookPos.y > rect.height - operatingDistance)
+              );
+              return isLeftCorner || isRightCorner || origIsPointOnCorners(globalPos);
+            }
+            return origIsPointOnCorners(globalPos);
+          };
+        }
+      }
+
       pageFlipRef.current = flipInstance;
       setTotalPages(pages.length);
       setCurrentPage(activePage);
@@ -548,7 +601,7 @@ export const Book: React.FC<BookProps> = ({
         const pageIdx = typeof e.data?.page === 'number'
           ? e.data.page
           : (typeof e.data === 'number' ? e.data : startInternalIndex);
-        const userPage = internalIndexToUserPage(pageIdx, isOdd, pages.length);
+        const userPage = internalIndexToUserPage(pageIdx, isOdd, pages.length, isMobile);
         setCurrentPage(userPage);
         currentPageRef.current = userPage;
         setCenteringOffset(getCenteringOffset(userPage, pages.length, bookDimensions.width, isMobile));
@@ -559,7 +612,7 @@ export const Book: React.FC<BookProps> = ({
         if (e.data === 'flipping' || e.data === 'user_fold') {
           isFlippingRef.current = true;
           setIsFlipping(true);
-          resetFlippingStateWithTimer(1200);
+          resetFlippingStateWithTimer(isMobile ? 650 : 1200);
         } else if (e.data === 'read') {
           isFlippingRef.current = false;
           setIsFlipping(false);
@@ -571,7 +624,7 @@ export const Book: React.FC<BookProps> = ({
       });
 
       flipInstance.on('flip', (e) => {
-        const userPage = internalIndexToUserPage(e.data, isOdd, pages.length);
+        const userPage = internalIndexToUserPage(e.data, isOdd, pages.length, isMobile);
         setCurrentPage(userPage);
         currentPageRef.current = userPage;
         const targetOffset = getCenteringOffset(userPage, pages.length, bookDimensions.width, isMobile);
@@ -610,15 +663,21 @@ export const Book: React.FC<BookProps> = ({
     if (isFlippingRef.current) return;
     if (currentPage >= totalPages) return;
 
-    const nextPage = currentPage === 1 ? 2 : Math.min(totalPages, currentPage + 2);
+    const nextPage = isMobile
+      ? Math.min(totalPages, currentPage + 1)
+      : (currentPage === 1 ? 2 : Math.min(totalPages, currentPage + 2));
+
     // Slide container concurrently with the flip
     setCenteringOffset(getCenteringOffset(nextPage, totalPages, bookDimensions.width, isMobile));
     isFlippingRef.current = true;
     setIsFlipping(true);
-    resetFlippingStateWithTimer(1200);
+    resetFlippingStateWithTimer(isMobile ? 650 : 1200);
 
     if (pageFlipRef.current) {
       pageFlipRef.current.flipNext('top');
+      if (pageFlipRef.current.getState() === 'read') {
+        pageFlipRef.current.turnToNextPage();
+      }
     }
   }, [currentPage, totalPages, bookDimensions.width, isMobile, resetFlippingStateWithTimer]);
 
@@ -626,17 +685,23 @@ export const Book: React.FC<BookProps> = ({
     if (isFlippingRef.current) return;
     if (currentPage <= 1) return;
 
-    const prevPage = currentPage === totalPages ? Math.max(1, totalPages - 1) : Math.max(1, currentPage - 2);
-    const targetPage = currentPage <= 3 ? 1 : prevPage;
+    const targetPage = isMobile
+      ? Math.max(1, currentPage - 1)
+      : (currentPage === totalPages
+          ? Math.max(1, totalPages - 1)
+          : (currentPage <= 3 ? 1 : Math.max(1, currentPage - 2)));
 
     // Slide container concurrently with the flip
     setCenteringOffset(getCenteringOffset(targetPage, totalPages, bookDimensions.width, isMobile));
     isFlippingRef.current = true;
     setIsFlipping(true);
-    resetFlippingStateWithTimer(1200);
+    resetFlippingStateWithTimer(isMobile ? 650 : 1200);
 
     if (pageFlipRef.current) {
       pageFlipRef.current.flipPrev('top');
+      if (pageFlipRef.current.getState() === 'read') {
+        pageFlipRef.current.turnToPrevPage();
+      }
     }
   }, [currentPage, totalPages, bookDimensions.width, isMobile, resetFlippingStateWithTimer]);
 
@@ -650,14 +715,29 @@ export const Book: React.FC<BookProps> = ({
       setCenteringOffset(targetOffset);
       isFlippingRef.current = true;
       setIsFlipping(true);
-      resetFlippingStateWithTimer(1200);
+      resetFlippingStateWithTimer(isMobile ? 650 : 1200);
 
       if (pageFlipRef.current) {
-        const targetInternal = userPageToInternalIndex(target, isOdd, totalPages);
-        if (Math.abs(target - currentPage) <= 2) {
-          pageFlipRef.current.flip(targetInternal, 'top');
+        const targetInternal = userPageToInternalIndex(target, isOdd, totalPages, isMobile);
+        if (isMobile) {
+          if (Math.abs(target - currentPage) === 1) {
+            if (target > currentPage) {
+              pageFlipRef.current.flipNext('top');
+            } else {
+              pageFlipRef.current.flipPrev('top');
+            }
+            if (pageFlipRef.current.getState() === 'read') {
+              pageFlipRef.current.turnToPage(targetInternal);
+            }
+          } else {
+            pageFlipRef.current.turnToPage(targetInternal);
+          }
         } else {
-          pageFlipRef.current.turnToPage(targetInternal);
+          if (Math.abs(target - currentPage) <= 2) {
+            pageFlipRef.current.flip(targetInternal, 'top');
+          } else {
+            pageFlipRef.current.turnToPage(targetInternal);
+          }
         }
       }
     },

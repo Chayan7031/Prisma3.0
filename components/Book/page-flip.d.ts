@@ -35,9 +35,14 @@ declare module 'page-flip' {
     destroy(): void;
     getPageCount(): number;
     getCurrentPageIndex(): number;
+    getState(): string;
+    getFlipController(): any;
+    getRender(): any;
     flipNext(corner?: string): void;
     flipPrev(corner?: string): void;
     turnToPage(page: number): void;
+    turnToPrevPage(): void;
+    turnToNextPage(): void;
     flip(page: number, corner?: string): void;
     on(event: string, callback: (e: FlipEvent) => void): void;
     off(event: string, callback?: (...args: any[]) => void): void;
