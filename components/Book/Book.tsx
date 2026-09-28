@@ -275,6 +275,7 @@ export const Book: React.FC<BookProps> = ({
   const pageFlipRef = useRef<PageFlip | null>(null);
   const isOdd = pages.length % 2 === 1;
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
+  const currentPageRef = useRef<number>(initialPage);
   const [totalPages, setTotalPages] = useState<number>(pages.length);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -287,11 +288,18 @@ export const Book: React.FC<BookProps> = ({
   const [isReady, setIsReady] = useState<boolean>(false);
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
   const isFlippingRef = useRef<boolean>(false);
+  const [isResizing, setIsResizing] = useState<boolean>(false);
+  const resizeDebounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean>(false);
   const [centeringOffset, setCenteringOffset] = useState<number>(() =>
     getCenteringOffset(initialPage, pages.length, 420, false)
   );
   const flippingTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Keep currentPageRef in sync with currentPage
+  useEffect(() => {
+    currentPageRef.current = currentPage;
+  }, [currentPage]);
 
   // Sound disabled per user request
   const triggerFlipAudio = useCallback((): void => {}, []);
@@ -360,28 +368,59 @@ export const Book: React.FC<BookProps> = ({
     const finalHeight = Math.max(340, Math.round(calculatedHeight));
 
     setBookDimensions({ width: finalWidth, height: finalHeight });
-    setCenteringOffset(getCenteringOffset(currentPage, pages.length, finalWidth, mobileMode));
+    const activePage = currentPageRef.current || 1;
+    setCenteringOffset(getCenteringOffset(activePage, pages.length, finalWidth, mobileMode));
     return { width: finalWidth, height: finalHeight, isMobile: mobileMode };
-  }, [aspectRatio, currentPage, pages.length]);
+  }, [aspectRatio, pages.length]);
 
-  // Window Resize Listener
+  // Window Resize Listener with debounce
   useEffect(() => {
     calculateDimensions();
     const handleResize = (): void => {
+      setIsResizing(true);
       calculateDimensions();
+      if (resizeDebounceTimerRef.current) {
+        clearTimeout(resizeDebounceTimerRef.current);
+      }
+      resizeDebounceTimerRef.current = setTimeout(() => {
+        setIsResizing(false);
+        calculateDimensions();
+      }, 200);
     };
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (resizeDebounceTimerRef.current) {
+        clearTimeout(resizeDebounceTimerRef.current);
+      }
+    };
   }, [calculateDimensions]);
 
-  // Fullscreen Change Listener
+  // Fullscreen Change Listener with staggered bounds update
   useEffect(() => {
     const handleFullscreenChange = (): void => {
       setIsFullscreen(!!document.fullscreenElement);
+      setIsResizing(true);
+      calculateDimensions();
+      const t1 = setTimeout(calculateDimensions, 60);
+      const t2 = setTimeout(calculateDimensions, 160);
+      const t3 = setTimeout(() => {
+        calculateDimensions();
+        setIsResizing(false);
+      }, 320);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+        clearTimeout(t3);
+      };
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
-  }, []);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, [calculateDimensions]);
 
   // Initialize and mount PageFlip
   useEffect(() => {
@@ -470,7 +509,8 @@ export const Book: React.FC<BookProps> = ({
       hostEl.appendChild(pageEl);
     });
 
-    const startInternalIndex = userPageToInternalIndex(initialPage, isOdd, pages.length);
+    const activePage = currentPageRef.current || initialPage;
+    const startInternalIndex = userPageToInternalIndex(activePage, isOdd, pages.length);
 
     try {
       const flipInstance = new PageFlip(hostEl, {
@@ -500,6 +540,19 @@ export const Book: React.FC<BookProps> = ({
       flipInstance.loadFromHTML(hostEl.querySelectorAll('.book-page'));
       pageFlipRef.current = flipInstance;
       setTotalPages(pages.length);
+      setCurrentPage(activePage);
+      setCenteringOffset(getCenteringOffset(activePage, pages.length, bookDimensions.width, isMobile));
+
+      // Sync on PageFlip initial mount
+      flipInstance.on('init', (e) => {
+        const pageIdx = typeof e.data?.page === 'number'
+          ? e.data.page
+          : (typeof e.data === 'number' ? e.data : startInternalIndex);
+        const userPage = internalIndexToUserPage(pageIdx, isOdd, pages.length);
+        setCurrentPage(userPage);
+        currentPageRef.current = userPage;
+        setCenteringOffset(getCenteringOffset(userPage, pages.length, bookDimensions.width, isMobile));
+      });
 
       // Listen for animation start and completion to lock inputs and manage state
       flipInstance.on('changeState', (e) => {
@@ -520,6 +573,7 @@ export const Book: React.FC<BookProps> = ({
       flipInstance.on('flip', (e) => {
         const userPage = internalIndexToUserPage(e.data, isOdd, pages.length);
         setCurrentPage(userPage);
+        currentPageRef.current = userPage;
         const targetOffset = getCenteringOffset(userPage, pages.length, bookDimensions.width, isMobile);
         setCenteringOffset(targetOffset);
         triggerFlipAudio();
@@ -796,7 +850,7 @@ export const Book: React.FC<BookProps> = ({
           }}
         >
           <div
-            className={`flipbook-centering-wrapper is-${bookState} ${isFlipping ? 'is-flipping' : ''}`}
+            className={`flipbook-centering-wrapper is-${bookState} ${isFlipping ? 'is-flipping' : ''} ${isResizing ? 'is-resizing' : ''}`}
             style={{
               transform: `translateX(${centeringOffset}px)`,
             }}

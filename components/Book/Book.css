@@ -353,6 +353,11 @@
   -webkit-transform-style: preserve-3d;
 }
 
+/* Instant repositioning during viewport resizing and fullscreen toggling */
+.flipbook-centering-wrapper.is-resizing {
+  transition: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .flipbook-centering-wrapper {
     transition: none !important;
