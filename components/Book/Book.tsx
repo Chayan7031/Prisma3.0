@@ -151,6 +151,8 @@ export interface BookProps {
   initialTheme?: 'charcoal' | 'parchment';
   /** Additional wrapper class name */
   className?: string;
+  /** Whether to show the Table of Contents option in toolbar (default: false) */
+  showTOC?: boolean;
 }
 
 // ============================================================================
@@ -231,6 +233,7 @@ export const Book: React.FC<BookProps> = ({
   title = 'PRISMA 3.0',
   subtitle = 'Department of Computer Science and Engineering • KGEC',
   toc = DEFAULT_TOC,
+  showTOC = false,
   onPageChange,
   onClose,
   soundEnabled: initialSoundEnabled = true,
@@ -697,20 +700,24 @@ export const Book: React.FC<BookProps> = ({
 
           <div className="book-toolbar-divider" />
 
-          {/* Contents, Zoom & Theme Group */}
+          {/* Contents (Optional), Zoom & Theme Group */}
           <div className="book-toolbar-group">
-            <button
-              type="button"
-              className="book-btn"
-              onClick={() => setIsTOCSidebarOpen(true)}
-              title="Table of Contents"
-              aria-label="Open Table of Contents"
-            >
-              <ContentsIcon />
-              <span className="book-btn-label">Contents</span>
-            </button>
+            {showTOC && (
+              <>
+                <button
+                  type="button"
+                  className="book-btn"
+                  onClick={() => setIsTOCSidebarOpen(true)}
+                  title="Table of Contents"
+                  aria-label="Open Table of Contents"
+                >
+                  <ContentsIcon />
+                  <span className="book-btn-label">Contents</span>
+                </button>
 
-            <div className="book-toolbar-divider" />
+                <div className="book-toolbar-divider" />
+              </>
+            )}
 
             <button
               type="button"
@@ -776,7 +783,7 @@ export const Book: React.FC<BookProps> = ({
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                className="book-btn"
+                className="book-btn book-btn-download"
                 title="Download Magazine PDF"
                 aria-label="Download Magazine PDF"
               >
@@ -802,7 +809,7 @@ export const Book: React.FC<BookProps> = ({
       </footer>
 
       {/* Table of Contents Drawer Modal */}
-      {isTOCSidebarOpen && (
+      {showTOC && isTOCSidebarOpen && (
         <div className="book-toc-overlay" onClick={() => setIsTOCSidebarOpen(false)}>
           <aside
             className="book-toc-drawer"

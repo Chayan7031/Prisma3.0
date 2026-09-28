@@ -58,16 +58,53 @@
 .book-reader-container.theme-parchment .book-toolbar {
   background: rgba(247, 244, 237, 0.94);
   border: 1px solid rgba(60, 52, 42, 0.16);
-  box-shadow: 0 15px 40px rgba(60, 50, 40, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.6);
+  border-radius: 9999px !important;
+  box-shadow: 0 15px 40px rgba(60, 50, 40, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .book-reader-container.theme-parchment .book-toolbar-group {
-  background: rgba(60, 52, 42, 0.06);
+  background: transparent;
+}
+
+.book-reader-container.theme-parchment .book-toolbar-divider {
+  background: rgba(60, 52, 42, 0.16);
+}
+
+.book-reader-container.theme-parchment .book-page-jump-form {
+  background: rgba(60, 52, 42, 0.05);
+  border-color: rgba(60, 52, 42, 0.12);
 }
 
 .book-reader-container.theme-parchment .book-page-input {
   color: var(--book-text-primary);
-  border-bottom-color: rgba(60, 52, 42, 0.35);
+}
+
+.book-reader-container.theme-parchment .book-page-total {
+  color: var(--book-text-muted);
+}
+
+.book-reader-container.theme-parchment .book-zoom-indicator {
+  background: rgba(60, 52, 42, 0.05);
+  border-color: rgba(60, 52, 42, 0.12);
+  color: var(--book-text-primary);
+}
+
+.book-reader-container.theme-parchment .book-btn-download {
+  background: rgba(60, 52, 42, 0.06);
+  border-color: rgba(60, 52, 42, 0.14);
+  color: var(--book-text-primary);
+}
+
+.book-reader-container.theme-parchment .book-btn-close:not(.book-btn-icon-only) {
+  background: rgba(196, 93, 67, 0.1) !important;
+  color: #b84c31 !important;
+  border-color: rgba(196, 93, 67, 0.28) !important;
+}
+
+.book-reader-container.theme-parchment .book-btn-close:not(.book-btn-icon-only):hover:not(:disabled) {
+  background: rgba(196, 93, 67, 0.2) !important;
+  color: #9c3b22 !important;
+  border-color: rgba(196, 93, 67, 0.5) !important;
 }
 
 .book-reader-container.theme-parchment .book-btn:hover:not(:disabled) {
@@ -454,11 +491,11 @@
 }
 
 /* ==========================================================================
-   Bottom Floating Toolbar (Prisma 3.0 Refined Style)
+   Bottom Floating Toolbar (Prisma 3.0 Round Capsule / Pill Design)
    ========================================================================== */
 .book-toolbar-container {
   position: fixed;
-  bottom: 16px;
+  bottom: 20px;
   left: 0;
   right: 0;
   display: flex;
@@ -470,17 +507,17 @@
 }
 
 .book-toolbar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-wrap: nowrap;
   gap: 6px;
-  background: var(--book-surface);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid var(--book-border);
-  border-radius: var(--book-radius-lg);
-  padding: 6px 10px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), 0 0 0 1px var(--book-border-subtle);
+  background: rgba(18, 15, 23, 0.85);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px !important;
+  padding: 6px 12px;
+  box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.45);
   pointer-events: auto;
   max-width: 96vw;
   overflow-x: auto;
@@ -492,22 +529,22 @@
   display: none;
 }
 
-/* Toolbar Segment Groups */
+/* Toolbar Segment Groups (Seamless transparent flow) */
 .book-toolbar-group {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 3px;
-  background: rgba(0, 0, 0, 0.22);
-  border-radius: var(--book-radius-md);
-  padding: 3px 5px;
+  gap: 4px;
+  background: transparent;
+  border-radius: 9999px;
+  padding: 0 2px;
 }
 
 /* Divider Line */
 .book-toolbar-divider {
   width: 1px;
-  height: 20px;
-  background: var(--book-border);
-  margin: 0 2px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 0 4px;
   flex-shrink: 0;
 }
 
@@ -517,17 +554,17 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 32px;
-  padding: 0 10px;
+  height: 34px;
+  padding: 0 12px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--book-radius-sm);
-  color: var(--book-text-secondary);
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.75);
   font-family: var(--book-font);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   user-select: none;
   text-decoration: none;
@@ -535,19 +572,21 @@
 }
 
 .book-btn-icon-only {
-  width: 32px;
+  width: 34px;
+  height: 34px;
   padding: 0;
+  border-radius: 9999px;
 }
 
 .book-btn:hover:not(:disabled) {
-  background: rgba(220, 210, 195, 0.08);
-  color: var(--book-text-primary);
-  border-color: rgba(220, 210, 195, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .book-btn:active:not(:disabled) {
   transform: scale(0.96);
-  background: rgba(220, 210, 195, 0.12);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .book-btn:disabled {
@@ -561,61 +600,109 @@
   border-color: rgba(197, 155, 109, 0.45);
 }
 
-/* Close Reader Button */
-.book-btn-close {
-  color: var(--book-danger);
+/* Download Button Pill */
+.book-btn-download {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f6f3eb;
+  border-radius: 9999px;
+  padding: 0 14px;
 }
 
-.book-btn-close:hover:not(:disabled) {
+.book-btn-download:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Close Reader Button (Harmonized with PRISMA theme - Warm Terracotta / Coral pill) */
+.book-btn-close:not(.book-btn-icon-only) {
+  background: rgba(224, 122, 95, 0.12) !important;
+  color: #e07a5f !important;
+  border: 1px solid rgba(224, 122, 95, 0.3) !important;
+  border-radius: 9999px !important;
+  padding: 0 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.book-btn-close:not(.book-btn-icon-only):hover:not(:disabled) {
+  background: rgba(224, 122, 95, 0.24) !important;
+  color: #ffb4a2 !important;
+  border-color: rgba(224, 122, 95, 0.55) !important;
+  box-shadow: 0 2px 14px rgba(224, 122, 95, 0.25) !important;
+  transform: scale(1.02);
+}
+
+.book-btn-close:not(.book-btn-icon-only):active:not(:disabled) {
+  transform: scale(0.97);
+  background: rgba(224, 122, 95, 0.3) !important;
+}
+
+.book-btn-close.book-btn-icon-only {
+  color: var(--book-danger);
+  border-radius: 9999px;
+}
+
+.book-btn-close.book-btn-icon-only:hover:not(:disabled) {
   background: var(--book-danger-bg) !important;
   color: #ff9b82 !important;
   border-color: rgba(224, 122, 95, 0.4) !important;
 }
 
-/* Page Jump Form & Input */
+
+/* Page Jump Form & Input (Pill Badge) */
 .book-page-jump-form {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 0 4px;
+  padding: 3px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
 }
 
 .book-page-input {
-  width: 38px;
-  height: 24px;
+  width: 26px;
+  height: 22px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(220, 210, 195, 0.35);
-  color: var(--book-text-primary);
+  color: #ffffff;
   font-family: var(--book-font-mono);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
-  padding: 0 2px;
+  padding: 0;
   outline: none;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .book-page-input:focus {
-  border-bottom-color: var(--book-accent);
-  background: rgba(197, 155, 109, 0.12);
-  border-radius: 2px 2px 0 0;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
 }
 
 .book-page-total {
   font-family: var(--book-font-mono);
   font-size: 12px;
-  color: var(--book-text-muted);
+  color: rgba(255, 255, 255, 0.5);
   user-select: none;
+  font-weight: 500;
 }
 
 /* Zoom Indicator Button */
 .book-zoom-indicator {
   font-family: var(--book-font-mono);
   font-size: 11px;
-  min-width: 44px;
+  min-width: 48px;
   text-align: center;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.85);
 }
+
 
 /* Sound Wave Animation */
 .book-sound-waves {
@@ -825,15 +912,15 @@
   }
 
   .book-toolbar {
-    padding: 4px 6px;
+    padding: 4px 10px;
     gap: 4px;
-    border-radius: var(--book-radius-md);
+    border-radius: 9999px !important;
     max-width: 100%;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .book-toolbar-group {
-    padding: 2px 4px;
+    padding: 0;
     gap: 2px;
   }
 
@@ -841,6 +928,7 @@
     height: 30px;
     padding: 0 6px;
     font-size: 11px;
+    border-radius: 9999px;
   }
 
   .book-btn-icon-only {
@@ -854,12 +942,12 @@
 
   .book-toolbar-divider {
     height: 16px;
-    margin: 0 1px;
+    margin: 0 2px;
   }
 
   .book-page-input {
-    width: 32px;
-    height: 22px;
+    width: 24px;
+    height: 20px;
     font-size: 12px;
   }
 
@@ -885,16 +973,18 @@
 @media (max-width: 400px) {
   .book-toolbar {
     gap: 2px;
-    padding: 3px 4px;
+    padding: 3px 6px;
+    border-radius: 9999px !important;
   }
 
   .book-toolbar-group {
-    padding: 1px 2px;
+    padding: 0;
   }
 
   .book-btn {
     height: 28px;
     padding: 0 4px;
+    border-radius: 9999px;
   }
 
   .book-btn-icon-only {
@@ -902,6 +992,7 @@
   }
 
   .book-page-input {
-    width: 28px;
+    width: 22px;
   }
 }
+
