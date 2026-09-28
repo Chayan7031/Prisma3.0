@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCloudinaryPageUrl } from '@/lib/cloudinary';
 
 export interface HeroProps {
   onOpenReader?: (page?: number) => void;
@@ -241,7 +242,7 @@ export const Hero: React.FC<HeroProps> = ({
               
               {/* Front Page Magazine Cover (Page 0001) */}
               <Image
-                src="/prisma_content_page-0001.jpg"
+                src={getCloudinaryPageUrl(1)}
                 alt="PRISMA 3.0 Magazine Front Cover Preview"
                 fill
                 priority

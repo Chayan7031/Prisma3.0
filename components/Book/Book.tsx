@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { PageFlip } from 'page-flip';
+import { getMagazinePageUrls } from '@/lib/cloudinary';
 import './Book.css';
 
 // ============================================================================
@@ -156,12 +157,9 @@ export interface BookProps {
 }
 
 // ============================================================================
-// Default Pages and Table of Contents (21 Pages from public/)
+// Default Pages and Table of Contents (21 Pages via Cloudinary with local fallback)
 // ============================================================================
-export const DEFAULT_PAGES: string[] = Array.from({ length: 21 }, (_, index) => {
-  const num = String(index + 1).padStart(4, '0');
-  return `/prisma_content_page-${num}.jpg`;
-});
+export const DEFAULT_PAGES: string[] = getMagazinePageUrls(21);
 
 export const DEFAULT_TOC: TOCItem[] = [
   { title: 'Front Cover', page: 1 },
