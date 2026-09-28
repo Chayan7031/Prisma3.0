@@ -254,21 +254,8 @@ export const Book: React.FC<BookProps> = ({
   const [bookDimensions, setBookDimensions] = useState<BookDimensions>({ width: 420, height: 594 });
   const [isReady, setIsReady] = useState<boolean>(false);
 
-  // Play page flip sound helper
-  const triggerFlipAudio = useCallback((): void => {
-    if (!isSoundActive) return;
-    if (soundUrl) {
-      try {
-        const audio = new Audio(soundUrl);
-        audio.currentTime = 0;
-        audio.play().catch(() => playSynthesizedFlipSound());
-      } catch (err) {
-        playSynthesizedFlipSound();
-      }
-    } else {
-      playSynthesizedFlipSound();
-    }
-  }, [isSoundActive, soundUrl]);
+  // Sound disabled per user request
+  const triggerFlipAudio = useCallback((): void => {}, []);
 
   // Screen size & dimension calculation
   const calculateDimensions = useCallback((): { width: number; height: number; isMobile: boolean } => {
@@ -408,7 +395,7 @@ export const Book: React.FC<BookProps> = ({
         startZIndex: 10,
         autoSize: true,
         showPageCorners: true,
-        disableFlipByClick: false,
+        disableFlipByClick: true,
       });
 
       flipInstance.loadFromHTML(hostEl.querySelectorAll('.book-page'));
@@ -550,22 +537,22 @@ export const Book: React.FC<BookProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNextPage, handlePrevPage, handleGoToPage, totalPages, isTOCSidebarOpen, onClose]);
 
-  const touchStartXRef = useRef<number | null>(null);
-  const touchStartYRef = useRef<number | null>(null);
+  const pointerStartXRef = useRef<number | null>(null);
+  const pointerStartYRef = useRef<number | null>(null);
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>): void => {
-    if (e.touches && e.touches.length === 1) {
-      touchStartXRef.current = e.touches[0].clientX;
-      touchStartYRef.current = e.touches[0].clientY;
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>): void => {
+    if (e.isPrimary) {
+      pointerStartXRef.current = e.clientX;
+      pointerStartYRef.current = e.clientY;
     }
   };
 
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>): void => {
-    if (touchStartXRef.current === null || touchStartYRef.current === null) return;
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-    const diffX = endX - touchStartXRef.current;
-    const diffY = endY - touchStartYRef.current;
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>): void => {
+    if (!e.isPrimary || pointerStartXRef.current === null || pointerStartYRef.current === null) return;
+    const endX = e.clientX;
+    const endY = e.clientY;
+    const diffX = endX - pointerStartXRef.current;
+    const diffY = endY - pointerStartYRef.current;
 
     if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
       if (diffX < 0) {
@@ -573,16 +560,25 @@ export const Book: React.FC<BookProps> = ({
       } else {
         handlePrevPage();
       }
+    } else if (Math.abs(diffX) < 20 && Math.abs(diffY) < 20) {
+      const target = e.target as HTMLElement;
+      if (!target.closest('.book-btn') && !target.closest('.book-toolbar-container') && !target.closest('.book-hotspot')) {
+        if (endX > window.innerWidth / 2) {
+          handleNextPage();
+        } else {
+          handlePrevPage();
+        }
+      }
     }
-    touchStartXRef.current = null;
-    touchStartYRef.current = null;
+    pointerStartXRef.current = null;
+    pointerStartYRef.current = null;
   };
 
   return (
     <div
       className={`book-reader-container theme-${currentTheme} ${isEmbedded ? 'is-embedded' : ''} ${className}`}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      onPointerDownCapture={handlePointerDown}
+      onPointerUpCapture={handlePointerUp}
     >
       <div className="book-reader-glow" />
 
@@ -773,23 +769,6 @@ export const Book: React.FC<BookProps> = ({
 
           {/* Audio, Download & Close Group */}
           <div className="book-toolbar-group">
-            <button
-              type="button"
-              className={`book-btn book-btn-icon-only ${isSoundActive ? 'is-active' : ''}`}
-              onClick={() => setIsSoundActive(!isSoundActive)}
-              title={isSoundActive ? 'Mute Page Flip Sound' : 'Enable Page Flip Sound'}
-              aria-label="Toggle Flip Sound"
-            >
-              {isSoundActive ? (
-                <span className="book-sound-waves">
-                  <span className="book-sound-bar" />
-                  <span className="book-sound-bar" />
-                  <span className="book-sound-bar" />
-                </span>
-              ) : (
-                <SoundOffIcon />
-              )}
-            </button>
 
             {pdfUrl && (
               <a

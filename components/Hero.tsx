@@ -6,16 +6,14 @@ import Image from 'next/image';
 export interface HeroProps {
   onOpenReader: (page?: number) => void;
   pdfUrl?: string;
-  onReplayIntro?: () => void;
 }
 
 export const Hero: React.FC<HeroProps> = ({
   onOpenReader,
   pdfUrl = '/prisma_content.pdf',
-  onReplayIntro,
 }) => {
   return (
-    <section className="relative w-full min-h-screen bg-[#0e0c0a] text-[#f6f3eb] flex items-center justify-center px-6 py-12 md:px-12 lg:px-20 overflow-hidden font-sans select-none">
+    <section className="relative w-full min-h-screen bg-[#0e0c0a] text-[#f6f3eb] flex items-center justify-center px-6 py-12 md:px-12 lg:px-20 overflow-x-hidden font-sans select-none">
       {/* Background Ambient Glows */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Warm amber radial glow focused behind the book on the right */}
@@ -37,20 +35,6 @@ export const Hero: React.FC<HeroProps> = ({
           </span>
         </div>
 
-        {onReplayIntro && (
-          <button
-            type="button"
-            onClick={onReplayIntro}
-            className="text-xs uppercase tracking-widest text-[#a89f91] hover:text-[#c59b6d] transition-colors duration-200 flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 hover:border-[#c59b6d]/40 bg-[#161310]/60 cursor-pointer"
-            title="Replay intro animation"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-              <path d="M3 3v5h5" />
-            </svg>
-            <span>Replay Intro</span>
-          </button>
-        )}
       </header>
 
       {/* Main Showcase Layout: 2 Columns */}

@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PRISMA 3.0 📖
 
-## Getting Started
+> **The Annual Departmental Magazine for Computer Science & Engineering**
+> 
+> *Kalyani Government Engineering College (KGEC)*
 
-First, run the development server:
+PRISMA 3.0 is a next-generation web experience designed to showcase the creative expressions, faculty insights, technical horizons, and departmental achievements of the CSE department. Rather than a standard static PDF viewer, this project implements a highly interactive, 3D physics-based digital flipbook that brings the physical reading experience to the web.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Key Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Interactive 3D Flipbook**: Realistic page-turning physics utilizing `page-flip` and HTML5 canvas.
+- **Cross-Platform Responsive**: Seamlessly adapts from a dual-page spread on desktop to a single-page portrait view on mobile.
+- **Unified Navigation**: Navigate the magazine via intuitive edge-tapping, swipe gestures, mouse-dragging, keyboard arrows, or the dedicated toolbar.
+- **Immersive Aesthetic**: Designed with an ambient, premium UI featuring custom floating animations, dynamic background glows, and toggleable Charcoal/Parchment themes.
+- **Performant**: Built on Next.js 15 (App Router) and React, optimizing heavy assets and canvas elements for smooth interactions.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js](https://nextjs.org/) (React)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Language**: TypeScript
+- **Interactive Engine**: [page-flip](https://nodlik.github.io/StPageFlip/)
 
-## Learn More
+## 🚀 Quick Start (Local Development)
 
-To learn more about Next.js, take a look at the following resources:
+To run this project locally, ensure you have Node.js installed, then follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone <your-repo-url>
+   cd prisma3.0
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **View the application**:
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+- `/app` - Next.js App Router configuration and main pages (`page.tsx`).
+- `/components` - Reusable UI components (Hero Section, 3D Book logic).
+- `/public` - Static assets, including the high-resolution magazine pages and downloadable PDF.
+
+---
+*Built with ❤️ by the CSE Students' Magazine Committee.*
