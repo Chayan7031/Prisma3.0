@@ -314,6 +314,8 @@
   z-index: 5;
   padding: 40px 16px 80px 16px;
   box-sizing: border-box;
+  perspective: 2000px;
+  -webkit-perspective: 2000px;
 }
 
 /* When zoomed in, enable panning / smooth scrolling */
@@ -339,6 +341,24 @@
   transform-origin: center center;
 }
 
+/* Centering and 3D Perspective Wrapper */
+.flipbook-centering-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 950ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  will-change: transform;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flipbook-centering-wrapper {
+    transition: none !important;
+  }
+}
+
 /* Host Container where PageFlip mounts */
 .flipbook-mount-wrapper {
   position: relative;
@@ -349,9 +369,88 @@
 }
 
 .flipbook-host {
-  box-shadow: var(--book-shadow-xl);
   border-radius: 4px;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  background: transparent !important;
 }
+
+/* Spread state: Full 2-page shadow */
+.flipbook-centering-wrapper.is-spread:not(.is-flipping) .flipbook-host {
+  box-shadow: 0 25px 65px -15px rgba(0, 0, 0, 0.85), 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* Front Cover state: Hide shadow from empty left half, apply shadow ONLY to front cover */
+.flipbook-centering-wrapper.is-cover-front .flipbook-host {
+  box-shadow: none !important;
+}
+
+.flipbook-centering-wrapper.is-cover-front:not(.is-flipping) .stf__item.--right,
+.flipbook-centering-wrapper.is-cover-front:not(.is-flipping) .book-page:first-child {
+  box-shadow: 0 25px 65px -15px rgba(0, 0, 0, 0.85), 0 10px 30px rgba(0, 0, 0, 0.55) !important;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Back Cover state: Hide shadow from empty right half, apply shadow ONLY to back cover */
+.flipbook-centering-wrapper.is-cover-back .flipbook-host {
+  box-shadow: none !important;
+}
+
+.flipbook-centering-wrapper.is-cover-back:not(.is-flipping) .stf__item.--left,
+.flipbook-centering-wrapper.is-cover-back:not(.is-flipping) .book-page:last-child {
+  box-shadow: 0 25px 65px -15px rgba(0, 0, 0, 0.85), 0 10px 30px rgba(0, 0, 0, 0.55) !important;
+  border-radius: 4px 0 0 4px;
+}
+
+/* During 3D flipping: suppress static box shadows so dynamic 3D page shadows take over cleanly */
+.flipbook-centering-wrapper.is-flipping .flipbook-host,
+.flipbook-centering-wrapper.is-flipping .stf__item,
+.flipbook-centering-wrapper.is-flipping .book-page {
+  box-shadow: none !important;
+}
+
+/* Stack of Page Edges (shown on closed front and back covers) */
+.book-edge-stack {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  width: 4px;
+  z-index: 25;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.book-edge-stack-right {
+  right: -4px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #f7f4ee 0px,
+    #f7f4ee 2px,
+    #d8d3c7 2px,
+    #d8d3c7 3px
+  );
+  border-radius: 0 3px 3px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4), 6px 0 16px rgba(0, 0, 0, 0.5);
+}
+
+.book-edge-stack-left {
+  left: -4px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #f7f4ee 0px,
+    #f7f4ee 2px,
+    #d8d3c7 2px,
+    #d8d3c7 3px
+  );
+  border-radius: 3px 0 0 3px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.4), -6px 0 16px rgba(0, 0, 0, 0.5);
+}
+
+.book-edge-stack.is-visible {
+  opacity: 1;
+}
+
 
 /* Individual Page Styling with Warm Linen/Parchment Underlay */
 .book-page {
@@ -437,6 +536,61 @@
   border: 1px solid rgba(60, 50, 40, 0.2);
 }
 
+/* Inside cover page styling (shown on Spread 10 right page when odd page count) */
+.book-inside-cover {
+  background-color: var(--book-page-bg);
+}
+
+.book-inside-cover-content {
+  background: radial-gradient(circle at 50% 50%, #faf7f0 0%, #ede6d8 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.book-endpaper-design {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 20px;
+  border: 1px double rgba(197, 155, 109, 0.4);
+  margin: 24px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 30px rgba(197, 155, 109, 0.08);
+}
+
+.book-endpaper-crest {
+  font-family: var(--book-font);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--book-accent);
+  margin-bottom: 8px;
+}
+
+.book-endpaper-sub {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #554e44;
+  margin-bottom: 4px;
+}
+
+.book-endpaper-detail {
+  font-size: 10px;
+  color: #8c8275;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 /* Side Page Turn Click Hotspots (Arrows appearing on hover) */
 .book-hotspot {
   position: absolute;
@@ -451,6 +605,11 @@
   opacity: 0;
   transition: opacity 0.25s ease, transform 0.25s ease;
   pointer-events: auto;
+}
+
+.book-hotspot.is-disabled {
+  pointer-events: none !important;
+  opacity: 0 !important;
 }
 
 .book-hotspot:hover {

@@ -25,7 +25,7 @@ declare module 'page-flip' {
   }
 
   export interface FlipEvent {
-    data: number;
+    data: any;
     object?: any;
   }
 
