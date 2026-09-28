@@ -533,13 +533,13 @@ export const Book: React.FC<BookProps> = ({
         clickEventForward: true,
         startZIndex: 10,
         autoSize: true,
-        showPageCorners: true,
+        showPageCorners: !isMobile,
         disableFlipByClick: true,
       });
 
       flipInstance.loadFromHTML(hostEl.querySelectorAll('.book-page'));
 
-      // Fix StPageFlip portrait mode flipPrev & corner check bug:
+      // Fix StPageFlip portrait mode flipPrev coordinate bug:
       // In portrait mode, render.getRect().left is negative (-pageWidth).
       // The library's flipPrev passes global x: 10, which converts to bookPos.x = 10 - rect.left = pageWidth + 10 (middle of spread),
       // failing isPointOnCorners and silently dropping the flip when disableFlipByClick is true.
@@ -566,29 +566,6 @@ export const Book: React.FC<BookProps> = ({
         flipInstance.flipPrev = (corner: 'top' | 'bottom' = 'top') => {
           flipCtrl.flipPrev(corner);
         };
-
-        const origIsPointOnCorners = flipCtrl.isPointOnCorners?.bind(flipCtrl);
-        if (origIsPointOnCorners) {
-          flipCtrl.isPointOnCorners = (globalPos: { x: number; y: number }) => {
-            if (render.getOrientation() === 'portrait') {
-              const rect = render.getRect();
-              const bookPos = render.convertToBook(globalPos);
-              const operatingDistance = Math.sqrt(Math.pow(rect.pageWidth, 2) + Math.pow(rect.height, 2)) / 5;
-              const isLeftCorner = (
-                bookPos.x >= rect.pageWidth &&
-                bookPos.x <= rect.pageWidth + operatingDistance &&
-                (bookPos.y < operatingDistance || bookPos.y > rect.height - operatingDistance)
-              );
-              const isRightCorner = (
-                bookPos.x >= rect.width - operatingDistance &&
-                bookPos.x <= rect.width &&
-                (bookPos.y < operatingDistance || bookPos.y > rect.height - operatingDistance)
-              );
-              return isLeftCorner || isRightCorner || origIsPointOnCorners(globalPos);
-            }
-            return origIsPointOnCorners(globalPos);
-          };
-        }
       }
 
       pageFlipRef.current = flipInstance;
