@@ -7,32 +7,32 @@
 
 /* Design Tokens & Theme Variables */
 :root {
-  /* Default: Dark Antique Charcoal & Warm Amber Glow (Complements cream pages) */
-  --book-bg: #141210;
-  --book-bg-gradient: radial-gradient(circle at 50% 45%, #221e1a 0%, #110f0e 85%);
-  --book-surface: rgba(28, 25, 22, 0.92);
-  --book-surface-hover: rgba(42, 38, 33, 0.96);
-  --book-surface-active: rgba(58, 52, 45, 0.98);
-  --book-border: rgba(220, 210, 195, 0.14);
-  --book-border-subtle: rgba(220, 210, 195, 0.07);
-  --book-border-glow: rgba(197, 155, 109, 0.45);
-  --book-accent: #c59b6d; /* Warm antique gold / bronze */
-  --book-accent-rgb: 197, 155, 109;
-  --book-accent-gradient: linear-gradient(135deg, #d4a373 0%, #c59b6d 50%, #9e774d 100%);
-  --book-text-primary: #f6f3eb; /* Parchment cream */
-  --book-text-secondary: #c5beaf; /* Muted sand */
-  --book-text-muted: #8c857b; /* Warm taupe */
+  /* Default: Deep Navy & Electric Cyber Cyan (Matches Home Screen Theme) */
+  --book-bg: #070d18;
+  --book-bg-gradient: radial-gradient(circle at 50% 45%, #0c182c 0%, #050a12 85%);
+  --book-surface: rgba(11, 22, 38, 0.92);
+  --book-surface-hover: rgba(16, 32, 56, 0.96);
+  --book-surface-active: rgba(22, 44, 76, 0.98);
+  --book-border: rgba(0, 168, 255, 0.2);
+  --book-border-subtle: rgba(255, 255, 255, 0.08);
+  --book-border-glow: rgba(0, 168, 255, 0.4);
+  --book-accent: #00a8ff; /* Electric Cyber Cyan */
+  --book-accent-rgb: 0, 168, 255;
+  --book-accent-gradient: linear-gradient(135deg, #00d2ff 0%, #00a8ff 50%, #0284c7 100%);
+  --book-text-primary: #f8fafc;
+  --book-text-secondary: #94a3b8;
+  --book-text-muted: #64748b;
   --book-page-bg: #f7f4ee;
-  --book-danger: #e07a5f;
-  --book-danger-bg: rgba(224, 122, 95, 0.16);
-  --book-danger-hover: rgba(224, 122, 95, 0.28);
-  --book-shadow-xl: 0 25px 65px -15px rgba(0, 0, 0, 0.85);
-  --book-shadow-book: 0 16px 45px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --book-danger: #f43f5e;
+  --book-danger-bg: rgba(244, 63, 94, 0.16);
+  --book-danger-hover: rgba(244, 63, 94, 0.28);
+  --book-shadow-xl: 0 25px 65px -15px rgba(0, 0, 0, 0.9);
+  --book-shadow-book: 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 35px rgba(0, 168, 255, 0.12);
   --book-radius-lg: 16px;
   --book-radius-md: 10px;
   --book-radius-sm: 6px;
-  --book-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --book-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --book-font: var(--font-space), system-ui, -apple-system, sans-serif;
+  --book-font-mono: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 /* Light Parchment Theme (Exact match with user's PRISMA 3.0 page) */
@@ -229,18 +229,203 @@
   box-shadow: var(--book-shadow-xl);
 }
 
-/* Ambient Radial Glow Effect with Warm Bronze/Parchment Undertones */
+/* Ambient Radial Glow Effect with Deep Blue / Electric Cyan Undertones */
 .book-reader-glow {
   position: absolute;
   inset: 0;
   background: radial-gradient(
     circle at center,
-    rgba(197, 155, 109, 0.09) 0%,
-    rgba(212, 163, 115, 0.04) 45%,
+    rgba(0, 168, 255, 0.09) 0%,
+    rgba(0, 210, 255, 0.03) 45%,
     transparent 72%
   );
   pointer-events: none;
   z-index: 1;
+}
+
+/* ==========================================================================
+   Traditional PRISMA 3.0 Filigree & Mandala Architectural Decorations
+   Assets: public/design/ (main_round_design, left_side, right_side, corner)
+   ========================================================================== */
+.book-decor-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.book-decor-ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(0, 168, 255, 0.12) 0%,
+    rgba(0, 210, 255, 0.04) 45%,
+    transparent 75%
+  );
+  pointer-events: none;
+}
+
+.book-decor-img {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: hue-rotate(155deg) saturate(1.8) brightness(1.2) drop-shadow(0 0 16px rgba(0, 168, 255, 0.35));
+}
+
+/* Central Watermark Mandala behind the Book Spread */
+.book-decor-mandala-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 580px;
+  height: 580px;
+  max-width: 85vw;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.14;
+  filter: drop-shadow(0 0 35px rgba(0, 168, 255, 0.35));
+  animation: bookMandalaAmbientFloat 25s ease-in-out infinite alternate;
+}
+
+@keyframes bookMandalaAmbientFloat {
+  0% {
+    transform: translate(-50%, -50%) scale(0.97) rotate(0deg);
+    opacity: 0.11;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.03) rotate(3deg);
+    opacity: 0.16;
+  }
+}
+
+.book-decor-mandala {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Ornate Left Side Border Design ("Round Shape Side" Mandala Arc) */
+.book-decor-side-left {
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240px;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: none;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 20px rgba(0, 168, 255, 0.35));
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+}
+
+.book-decor-side-left .book-decor-side-img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Ornate Right Side Border Design ("Round Shape Side" Mandala Arc) */
+.book-decor-side-right {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 240px;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 20px rgba(0, 168, 255, 0.35));
+  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+}
+
+.book-decor-side-right .book-decor-side-img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  object-position: right center;
+  transform: scaleX(-1);
+}
+
+/* Interactive Illumination on Mouse Presence */
+.book-reader-container:hover .book-decor-side-left,
+.book-reader-container:hover .book-decor-side-right {
+  opacity: 0.55;
+  filter: drop-shadow(0 0 25px rgba(0, 168, 255, 0.5));
+}
+
+/* Four Architectural Corner Filigrees */
+.book-decor-corner {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  pointer-events: none;
+  opacity: 0.35;
+  filter: drop-shadow(0 0 12px rgba(0, 168, 255, 0.3));
+  transition: opacity 0.3s ease;
+}
+
+.book-decor-corner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.book-corner-tl {
+  top: 0;
+  left: 0;
+}
+
+.book-corner-tr {
+  top: 0;
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.book-corner-bl {
+  bottom: 0;
+  left: 0;
+  transform: scaleY(-1);
+}
+
+.book-corner-br {
+  bottom: 0;
+  right: 0;
+  transform: scale(-1, -1);
+}
+
+/* Parchment Theme Adaptations */
+.book-reader-container.theme-parchment .book-decor-mandala-wrap {
+  opacity: 0.16;
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.62) contrast(1.25) drop-shadow(0 0 25px rgba(184, 134, 78, 0.25));
+}
+
+.book-reader-container.theme-parchment .book-decor-side-left,
+.book-reader-container.theme-parchment .book-decor-side-right {
+  opacity: 0.5;
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.58) contrast(1.3) drop-shadow(0 0 16px rgba(184, 134, 78, 0.3));
+}
+
+.book-reader-container.theme-parchment .book-decor-corner {
+  opacity: 0.42;
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.58) contrast(1.3);
 }
 
 /* Top Subtle Header Bar */
@@ -253,12 +438,30 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 24px;
   z-index: 20;
-  background: linear-gradient(to bottom, rgba(20, 18, 16, 0.88) 0%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(7, 13, 24, 0.95) 0%, rgba(7, 13, 24, 0.65) 75%, transparent 100%);
+  border-bottom: 1px solid rgba(0, 168, 255, 0.15);
   pointer-events: none;
   transition: background 0.3s ease;
 }
+
+.book-top-brand-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: rgba(0, 168, 255, 0.12);
+  border: 1px solid rgba(0, 168, 255, 0.35);
+  color: #00a8ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-tech), sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 4px;
+}
+
 
 .book-top-info {
   display: flex;
@@ -274,17 +477,19 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-tech), sans-serif;
 }
 
 .book-top-badge {
   font-size: 10px;
   font-weight: 700;
   padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(197, 155, 109, 0.2);
-  color: var(--book-accent);
-  border: 1px solid rgba(197, 155, 109, 0.35);
-  letter-spacing: 0.06em;
+  border-radius: 4px;
+  background: rgba(0, 168, 255, 0.12);
+  color: #00a8ff;
+  border: 1px solid rgba(0, 168, 255, 0.3);
+  letter-spacing: 0.08em;
+  font-family: var(--font-tech), sans-serif;
 }
 
 .book-top-subtitle {
@@ -565,11 +770,11 @@
   justify-content: center;
   text-align: center;
   padding: 32px 20px;
-  border: 1px double rgba(197, 155, 109, 0.4);
+  border: 1px double rgba(0, 168, 255, 0.4);
   margin: 24px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.5);
-  box-shadow: inset 0 0 30px rgba(197, 155, 109, 0.08);
+  box-shadow: inset 0 0 30px rgba(0, 168, 255, 0.08);
 }
 
 .book-endpaper-crest {
@@ -675,13 +880,13 @@
   align-items: center;
   flex-wrap: nowrap;
   gap: 6px;
-  background: rgba(18, 15, 23, 0.85);
+  background: rgba(7, 13, 24, 0.88);
   backdrop-filter: blur(28px) saturate(190%);
   -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(0, 168, 255, 0.22);
   border-radius: 9999px !important;
   padding: 6px 12px;
-  box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 25px rgba(0, 168, 255, 0.12);
   pointer-events: auto;
   max-width: 96vw;
   overflow-x: auto;
@@ -759,16 +964,16 @@
 }
 
 .book-btn.is-active {
-  background: rgba(197, 155, 109, 0.22);
+  background: rgba(0, 168, 255, 0.2);
   color: var(--book-accent);
-  border-color: rgba(197, 155, 109, 0.45);
+  border-color: rgba(0, 168, 255, 0.45);
 }
 
 /* Download Button Pill */
 .book-btn-download {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f6f3eb;
+  color: #f8fafc;
   border-radius: 9999px;
   padding: 0 14px;
 }
@@ -776,14 +981,14 @@
 .book-btn-download:hover:not(:disabled) {
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.24);
+  border-color: rgba(0, 168, 255, 0.35);
 }
 
-/* Close Reader Button (Harmonized with PRISMA theme - Warm Terracotta / Coral pill) */
+/* Close Reader Button */
 .book-btn-close:not(.book-btn-icon-only) {
-  background: rgba(224, 122, 95, 0.12) !important;
-  color: #e07a5f !important;
-  border: 1px solid rgba(224, 122, 95, 0.3) !important;
+  background: rgba(244, 63, 94, 0.12) !important;
+  color: #fb7185 !important;
+  border: 1px solid rgba(244, 63, 94, 0.3) !important;
   border-radius: 9999px !important;
   padding: 0 14px !important;
   font-weight: 500 !important;
@@ -792,16 +997,16 @@
 }
 
 .book-btn-close:not(.book-btn-icon-only):hover:not(:disabled) {
-  background: rgba(224, 122, 95, 0.24) !important;
-  color: #ffb4a2 !important;
-  border-color: rgba(224, 122, 95, 0.55) !important;
-  box-shadow: 0 2px 14px rgba(224, 122, 95, 0.25) !important;
+  background: rgba(244, 63, 94, 0.22) !important;
+  color: #fda4af !important;
+  border-color: rgba(244, 63, 94, 0.5) !important;
+  box-shadow: 0 2px 14px rgba(244, 63, 94, 0.25) !important;
   transform: scale(1.02);
 }
 
 .book-btn-close:not(.book-btn-icon-only):active:not(:disabled) {
   transform: scale(0.97);
-  background: rgba(224, 122, 95, 0.3) !important;
+  background: rgba(244, 63, 94, 0.3) !important;
 }
 
 .book-btn-close.book-btn-icon-only {
@@ -811,8 +1016,8 @@
 
 .book-btn-close.book-btn-icon-only:hover:not(:disabled) {
   background: var(--book-danger-bg) !important;
-  color: #ff9b82 !important;
-  border-color: rgba(224, 122, 95, 0.4) !important;
+  color: #fda4af !important;
+  border-color: rgba(244, 63, 94, 0.4) !important;
 }
 
 
@@ -822,9 +1027,15 @@
   align-items: center;
   gap: 4px;
   padding: 3px 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 168, 255, 0.06);
+  border: 1px solid rgba(0, 168, 255, 0.2);
   border-radius: 9999px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-page-jump-form:focus-within {
+  border-color: rgba(0, 168, 255, 0.5);
+  box-shadow: 0 0 12px rgba(0, 168, 255, 0.2);
 }
 
 .book-page-input {
@@ -843,7 +1054,7 @@
 }
 
 .book-page-input:focus {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 168, 255, 0.15);
   border-radius: 4px;
 }
 
@@ -862,9 +1073,14 @@
   min-width: 48px;
   text-align: center;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 168, 255, 0.06);
+  border: 1px solid rgba(0, 168, 255, 0.2);
   color: rgba(255, 255, 255, 0.85);
+  transition: border-color 0.2s ease;
+}
+
+.book-zoom-indicator:hover {
+  border-color: rgba(0, 168, 255, 0.45);
 }
 
 
@@ -983,9 +1199,9 @@
 }
 
 .book-toc-item.is-current {
-  background: rgba(197, 155, 109, 0.16);
+  background: rgba(0, 168, 255, 0.16);
   color: var(--book-accent);
-  border-color: rgba(197, 155, 109, 0.38);
+  border-color: rgba(0, 168, 255, 0.38);
   font-weight: 600;
 }
 
@@ -1006,7 +1222,7 @@
 
 .book-toc-item.is-current .book-toc-item-page {
   color: var(--book-accent);
-  background: rgba(197, 155, 109, 0.25);
+  background: rgba(0, 168, 255, 0.25);
 }
 
 /* ==========================================================================
@@ -1159,4 +1375,73 @@
     width: 22px;
   }
 }
+
+/* Responsive scaling and graceful adaptation for PRISMA ornamental decor */
+@media (max-width: 1200px) {
+  .book-decor-side-left {
+    width: 180px;
+    opacity: 0.32;
+  }
+  .book-decor-side-right {
+    width: 180px;
+    opacity: 0.35;
+  }
+  .book-decor-corner {
+    width: 95px;
+    height: 95px;
+    opacity: 0.28;
+  }
+  .book-decor-mandala-wrap {
+    width: 480px;
+    height: 480px;
+    opacity: 0.12;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-decor-side-left {
+    width: 110px;
+    left: -20px;
+    opacity: 0.22;
+  }
+  .book-decor-side-right {
+    width: 110px;
+    right: -20px;
+    opacity: 0.22;
+  }
+  .book-decor-corner {
+    width: 65px;
+    height: 65px;
+    opacity: 0.22;
+  }
+  .book-decor-mandala-wrap {
+    width: 340px;
+    height: 340px;
+    opacity: 0.1;
+  }
+}
+
+@media (max-width: 480px) {
+  .book-decor-side-left {
+    width: 75px;
+    left: -25px;
+    opacity: 0.16;
+  }
+  .book-decor-side-right {
+    width: 75px;
+    right: -25px;
+    opacity: 0.16;
+  }
+  .book-decor-corner {
+    width: 48px;
+    height: 48px;
+    opacity: 0.18;
+  }
+  .book-decor-mandala-wrap {
+    width: 260px;
+    height: 260px;
+    opacity: 0.08;
+  }
+}
+
 
