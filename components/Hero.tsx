@@ -216,7 +216,7 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="relative w-full h-full rounded-lg overflow-hidden bg-[#0c1626] border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.8),_0_0_30px_rgba(0,168,255,0.12)] transform transition-transform duration-500 group-hover:scale-[1.02] group-hover:-translate-y-1">
               {/* Front Page Magazine Cover (Page 0001) */}
               <Image
-                src={getCloudinaryPageUrl(1)}
+                src="https://res.cloudinary.com/daybrhbsc/image/upload/v1790614624/prisma_magazine_cover_page.jpg"
                 alt="PRISMA 3.0 Magazine Front Cover Preview"
                 fill
                 priority
