@@ -9,7 +9,7 @@ export const pages = {
     "Page7": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0007.jpg",
     "Page8": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0008.jpg",
     "Page9": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0009.jpg",
-    "Page10": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0010.jpg",
+    "Page10": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0011.jpg",
     "Page11": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0011.jpg",
     "Page12": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0012.jpg",
     "Page13": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0013.jpg",
@@ -21,6 +21,7 @@ export const pages = {
     "Page19": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0019.jpg",
     "Page20": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0020.jpg",
     "Page21": "https://res.cloudinary.com/daybrhbsc/image/upload/v1790604411/prisma_content_page-0021.jpg",
+    "backCover": "/prisma_backcover.png",
 };
 
 export const pageList = Object.values(pages);
