@@ -245,7 +245,7 @@
 
 /* ==========================================================================
    Traditional PRISMA 3.0 Filigree & Mandala Architectural Decorations
-   Assets: public/design/ (main_round_design, left_side, right_side, corner)
+   Assets: public/design/ (full_round_design, left_side, right_side, corner)
    ========================================================================== */
 .book-decor-layer {
   position: absolute;
@@ -371,6 +371,141 @@
   filter: drop-shadow(0 0 25px rgba(0, 168, 255, 0.5));
 }
 
+/* ==========================================================================
+   PRISMA 3.0 Vector Path & Dynamic Moving Round Designs
+   ========================================================================== */
+.book-vector-decor-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0.42;
+  transition: opacity 0.4s ease;
+}
+
+.book-reader-container:hover .book-vector-decor-container {
+  opacity: 0.55;
+}
+
+.book-reader-container.theme-parchment .book-vector-decor-container {
+  opacity: 0.45;
+}
+
+.book-vector-decor-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.book-decor-moving-img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: hue-rotate(155deg) saturate(1.8) brightness(1.2) drop-shadow(0 0 16px rgba(0, 168, 255, 0.35));
+  transition: filter 0.4s ease;
+}
+
+.theme-parchment .book-decor-moving-img {
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.58) contrast(1.3) drop-shadow(0 0 16px rgba(184, 134, 78, 0.3));
+}
+
+/* 360-Degree Hypnotic Celestial Rotation */
+.decor-rotator {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorClockwise 32s linear infinite;
+  will-change: transform;
+}
+
+.decor-rotator-reverse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorCounterClockwise 32s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spinDecorClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinDecorCounterClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Subtle Reticle HUD Pulse & Spin */
+.vector-orbit-reticle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorCounterClockwise 45s linear infinite;
+}
+
+.vector-orbit-reticle-reverse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorClockwise 45s linear infinite;
+}
+
+/* High-Speed Traveling Energy Pulses along Vector Tracks */
+.vector-dash-pulse {
+  animation: vectorDashPulseAnim 7s linear infinite;
+}
+
+.vector-dash-pulse-delayed {
+  animation: vectorDashPulseAnim 7s linear infinite;
+  animation-delay: -3.5s;
+}
+
+.vector-dash-pulse-fast {
+  animation: vectorDashPulseAnim 5s linear infinite;
+}
+
+.vector-dash-pulse-reverse {
+  animation: vectorDashPulseReverseAnim 5s linear infinite;
+}
+
+@keyframes vectorDashPulseAnim {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -1300;
+  }
+}
+
+@keyframes vectorDashPulseReverseAnim {
+  0% {
+    stroke-dashoffset: -1300;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Hover illumination on desktop presence */
+.book-reader-container:hover .book-vector-tracks-group {
+  filter: drop-shadow(0 0 10px rgba(0, 168, 255, 0.35));
+  transition: filter 0.5s ease;
+}
+
+.book-reader-container.theme-parchment:hover .book-vector-tracks-group {
+  filter: drop-shadow(0 0 10px rgba(184, 134, 78, 0.35));
+}
+
 /* Four Architectural Corner Filigrees */
 .book-decor-corner {
   position: absolute;
@@ -389,24 +524,24 @@
 }
 
 .book-corner-tl {
-  top: 0;
+  bottom: 0;
   left: 0;
 }
 
 .book-corner-tr {
-  top: 0;
+  bottom: 0;
   right: 0;
   transform: scaleX(-1);
 }
 
 .book-corner-bl {
-  bottom: 0;
+  top: 7%;
   left: 0;
   transform: scaleY(-1);
 }
 
 .book-corner-br {
-  bottom: 0;
+  top: 7%;
   right: 0;
   transform: scale(-1, -1);
 }
