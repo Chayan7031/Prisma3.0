@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { PageFlip } from 'page-flip';
 import { getMagazinePageUrls } from '@/lib/cloudinary';
+import VectorPathDecor from './VectorPathDecor';
 import './Book.css';
 
 // ============================================================================
@@ -877,14 +878,14 @@ export const Book: React.FC<BookProps> = ({
         {/* Central Ambient Halo Mandala behind Book Spread */}
         <div className="book-decor-mandala-wrap">
           <img
-            src="/design/main_round_design-removebg-preview.png"
+            src="/design/full_round_design.png"
             alt=""
             className="book-decor-img book-decor-mandala"
             draggable={false}
           />
         </div>
 
-        {/* Ornate Left Side Border Design ("Round Shape Side" Mandala) */}
+        {/* Ornate Left Side Border Design as previous */}
         <div className="book-decor-side-left">
           <img
             src="/design/main_round_design-removebg-preview.png"
@@ -894,7 +895,7 @@ export const Book: React.FC<BookProps> = ({
           />
         </div>
 
-        {/* Ornate Right Side Border Design ("Round Shape Side" Mandala) */}
+        {/* Ornate Right Side Border Design as previous */}
         <div className="book-decor-side-right">
           <img
             src="/design/main_round_design-removebg-preview.png"
@@ -903,6 +904,9 @@ export const Book: React.FC<BookProps> = ({
             draggable={false}
           />
         </div>
+
+        {/* Dynamic Vector Path & Moving Round Designs (Invisible Paths, Varied Sized Mandalas) */}
+        <VectorPathDecor currentTheme={currentTheme} />
 
         {/* Four Architectural Corner Filigrees */}
         <div className="book-decor-corner book-corner-tl">

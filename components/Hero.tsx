@@ -3,7 +3,20 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { getCloudinaryPageUrl } from '@/lib/cloudinary';
+
+const MagazineShowcase = dynamic(() => import('@/components/MagazineShowcase'), {
+  ssr: false,
+  loading: () => (
+    <div className="relative w-full max-w-[360px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[580px] xl:max-w-[650px] 2xl:max-w-[720px] h-[350px] sm:h-[400px] md:h-[460px] lg:h-[520px] xl:h-[580px] 2xl:h-[640px] flex flex-col items-center justify-center">
+      <div className="w-9 h-9 border-2 border-[#00a8ff]/30 border-t-[#00a8ff] rounded-full animate-spin mb-3" />
+      <span className="text-[11px] uppercase tracking-widest text-[#00a8ff] font-tech font-semibold">
+        Loading 3D Magazine...
+      </span>
+    </div>
+  ),
+});
 
 export interface HeroProps {
   onOpenReader?: (page?: number) => void;
@@ -88,10 +101,10 @@ export const Hero: React.FC<HeroProps> = ({
       </header>
 
       {/* Main Showcase Layout: 2 Columns */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center py-10 lg:py-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center py-8 lg:py-12">
         
         {/* LEFT COLUMN: Classic Editorial Headline, Copy & CTAs */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6 animate-fade-in-up">
+        <div className="lg:col-span-6 xl:col-span-6 flex flex-col items-start text-left space-y-6 animate-fade-in-up">
           
           {/* Clean Editorial Kicker */}
           <div className="text-xs font-semibold tracking-[0.2em] text-[#00a8ff] uppercase">
@@ -196,48 +209,9 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Realistic 3D Magazine Cover Preview */}
-        <div className="lg:col-span-5 flex items-center justify-center lg:justify-end animate-fade-in-up">
-          <Link
-            href="/read"
-            onClick={(e) => {
-              if (onOpenReader) {
-                e.preventDefault();
-                onOpenReader(1);
-              }
-            }}
-            className="group relative w-full max-w-[360px] sm:max-w-[400px] aspect-[1/1.414] rounded-lg cursor-pointer perspective-[1200px] block"
-            aria-label="Open Magazine flipbook in /read"
-          >
-            {/* Soft Ambient Behind-Book Glow */}
-            <div className="absolute -inset-4 rounded-xl bg-[radial-gradient(circle,rgba(0,168,255,0.18)_0%,transparent_70%)] blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-
-            {/* 3D Realistic Book Card */}
-            <div className="relative w-full h-full rounded-lg overflow-hidden bg-[#0c1626] border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.8),_0_0_30px_rgba(0,168,255,0.12)] transform transition-transform duration-500 group-hover:scale-[1.02] group-hover:-translate-y-1">
-              {/* Front Page Magazine Cover (Page 0001) */}
-              <Image
-                src="https://res.cloudinary.com/daybrhbsc/image/upload/v1790614624/prisma_magazine_cover_page.jpg"
-                alt="PRISMA 3.0 Magazine Front Cover Preview"
-                fill
-                priority
-                className="object-cover object-top select-none pointer-events-none"
-              />
-
-              {/* Realistic subtle book spine shadow crease on left */}
-              <div className="absolute top-0 bottom-0 left-0 w-8 pointer-events-none bg-gradient-to-r from-black/40 via-black/15 to-transparent z-10" />
-
-              {/* Clean Floating CTA: 'Read Magazine' */}
-              <div className="absolute bottom-5 right-5 z-20">
-                <div className="flex items-center gap-2 px-4 py-2 rounded bg-black/85 backdrop-blur-md text-white text-xs font-semibold tracking-wider uppercase border border-white/20 shadow-lg group-hover:border-[#00a8ff] transition-all duration-300">
-                  <span className="text-[#00a8ff]">▶</span>
-                  <span>Read Magazine</span>
-                </div>
-              </div>
-
-              {/* Subtle hover gloss layer */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
-            </div>
-          </Link>
+        {/* RIGHT COLUMN: Realistic 3D Magazine Showcase (Continuous Rotating, Page Flip & Back Cover) */}
+        <div className="lg:col-span-6 xl:col-span-6 flex items-center justify-center lg:justify-end animate-fade-in-up w-full">
+          <MagazineShowcase onOpenReader={onOpenReader} />
         </div>
 
       </div>
