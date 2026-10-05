@@ -113,10 +113,10 @@ export const Hero: React.FC<HeroProps> = ({
         
         {/* Left: prisma 3.0 Logo in authentic Samarkan glyphs & Gold accent */}
         <Link href="/" className="cursor-pointer group flex items-baseline gap-2 sm:gap-2.5 z-10">
-          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#161121] lowercase tracking-wide transition-opacity group-hover:opacity-85">
-            prisma
+          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#161121] tracking-wide transition-opacity group-hover:opacity-85">
+            PRISMA
           </span>
-          <span className="font-space font-black text-2xl sm:text-3xl lg:text-[32px] text-[#BE953E] tracking-tight">
+          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#BE953E] tracking-tight">
             3.0
           </span>
         </Link>
@@ -162,46 +162,46 @@ export const Hero: React.FC<HeroProps> = ({
       {/* ========================================================================= */}
       {/* MAIN HERO SHOWCASE (Left Text + Right Grounded Artwork)                   */}
       {/* ========================================================================= */}
-      <div className="relative z-20 w-full max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 flex-1 flex flex-col justify-center">
+      <div className="relative z-20 w-full max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 flex-1 flex flex-col justify-start lg:justify-center pt-8 lg:pt-0 pb-12 lg:pb-0">
         
         {/* ===================================================================== */}
         {/* LEFT COLUMN: Typography, Masthead & Action Buttons                    */}
         {/* ===================================================================== */}
-        <div className="w-full lg:max-w-[480px] xl:max-w-[530px] flex flex-col items-start text-left z-20 py-6 sm:py-10">
+        <div className="w-full lg:max-w-[480px] xl:max-w-[530px] flex flex-col items-start text-left z-20 py-2 sm:py-10 flex-none relative pointer-events-auto">
           
           {/* 1. Code Line with Orange Vertical Bar */}
-          <div className="flex items-center gap-2 mb-3 sm:mb-4 select-none">
+          <div className="flex items-center gap-2 mb-3 sm:mb-4 select-none animate-fade-in-up" style={{ animationDelay: '200ms', opacity: 0, animationFillMode: 'forwards' }}>
             <span className="w-[3px] h-[18px] bg-[#FF4D00] rounded-sm inline-block mr-0.5" />
-            <span className="font-mono text-xs sm:text-[14px] text-[#444444] font-medium tracking-wide">
+            <span className="font-mono text-[10px] sm:text-[14px] text-[#444444] font-medium tracking-wide">
               &gt; def create Impact():{' '}
               <span className="inline-block w-2.5 h-[2px] bg-[#FF4D00] animate-pulse align-middle ml-0.5" />
             </span>
           </div>
 
-          {/* 2. Monumental Headline: prisma 3.0 in Signature Design */}
-          <div className="flex items-baseline gap-3 sm:gap-4 leading-none select-none">
-            <h1 className="font-samarkan text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-wide text-[#161121] lowercase">
-              prisma
+          {/* 2. Monumental Headline: PRISMA 3.0 */}
+          <div className="flex items-baseline gap-2 sm:gap-4 leading-none select-none mb-2 sm:mb-4 animate-fade-in-up" style={{ animationDelay: '400ms', opacity: 0, animationFillMode: 'forwards' }}>
+            <h1 className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-wide text-[#161121]">
+              PRISMA
             </h1>
-            <span className="font-space font-black text-5xl sm:text-6xl md:text-7xl lg:text-[72px] xl:text-[82px] tracking-tight text-[#BE953E]">
+            <span className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-tight text-[#BE953E]">
               3.0
             </span>
           </div>
 
           {/* 3. Department Subtitle */}
-          <div className="mt-3 sm:mt-4 text-[11px] sm:text-xs font-mono tracking-[0.24em] text-[#555555] uppercase leading-relaxed font-semibold select-none">
+          <div className="mt-2 sm:mt-4 text-[9px] sm:text-xs font-mono tracking-[0.15em] sm:tracking-[0.24em] text-[#555555] uppercase leading-relaxed font-semibold select-none animate-fade-in-up" style={{ animationDelay: '500ms', opacity: 0, animationFillMode: 'forwards' }}>
             <p>KGEC CSE DEPARTMENT / ANNUAL</p>
             <p>MAGAZINE</p>
           </div>
 
           {/* 4. Tagline: SAME DREAMS. MORE ALGORITHMS. */}
-          <div className="mt-6 sm:mt-8 mb-6 sm:mb-8 text-xs sm:text-sm font-space font-black tracking-[0.22em] text-[#3A3A3A] uppercase space-y-1 select-none">
+          <div className="mt-5 sm:mt-8 mb-5 sm:mb-8 text-[10px] sm:text-sm font-space font-black tracking-[0.18em] sm:tracking-[0.22em] text-[#3A3A3A] uppercase space-y-1 select-none animate-fade-in-up" style={{ animationDelay: '650ms', opacity: 0, animationFillMode: 'forwards' }}>
             <div>SAME DREAMS.</div>
             <div>MORE ALGORITHMS.</div>
           </div>
 
           {/* 6. Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full animate-fade-in-up" style={{ animationDelay: '800ms', opacity: 0, animationFillMode: 'forwards' }}>
             {/* Primary Button: Read Magazine */}
             <Link
               href="/read"
@@ -233,19 +233,19 @@ export const Hero: React.FC<HeroProps> = ({
         {/* ===================================================================== */}
         {/* RIGHT ARTWORK: Sized Proximity Matching Reference Image              */}
         {/* ===================================================================== */}
-        <div className="relative lg:absolute lg:right-0 lg:bottom-0 lg:top-0 w-full lg:w-[60%] xl:w-[62%] flex items-end justify-center pointer-events-none z-10 overflow-hidden sm:overflow-visible">
+        <div className="absolute inset-0 lg:left-auto lg:right-0 lg:bottom-0 lg:top-0 w-full h-full lg:w-[60%] xl:w-[62%] flex items-end justify-center pointer-events-none z-0 lg:z-10 overflow-hidden sm:overflow-visible">
           
           {/* ------------------------------------------------------------------- */}
           {/* TOP RIGHT: Pillar Typography (Shifted Slightly Left)                */}
           {/* ------------------------------------------------------------------- */}
-          <div className="absolute top-1 sm:top-2 lg:top-3 right-6 sm:right-10 lg:right-14 xl:right-16 z-20 text-right select-none pointer-events-auto">
-            <div className="text-[9px] sm:text-[11px] lg:text-[12px] font-space font-bold tracking-[0.24em] sm:tracking-[0.28em] text-[#333333] uppercase space-y-0.5 sm:space-y-1">
+          <div className="absolute top-20 sm:top-2 lg:top-3 right-4 sm:right-10 lg:right-14 xl:right-16 z-20 text-right select-none pointer-events-auto animate-fade-in-up" style={{ animationDelay: '1000ms', opacity: 0, animationFillMode: 'forwards' }}>
+            <div className="text-[7px] sm:text-[11px] lg:text-[12px] font-space font-bold tracking-[0.2em] sm:tracking-[0.28em] text-[#333333] uppercase space-y-0.5 sm:space-y-1">
               <div>INNOVATION</div>
               <div>LEADERSHIP</div>
               <div>INCLUSION</div>
               <div>IMPACT</div>
             </div>
-            <div className="w-8 sm:w-12 h-[2px] bg-[#FF4D00] ml-auto mt-1.5 sm:mt-2 rounded-full" />
+            <div className="w-6 sm:w-12 h-[1.5px] sm:h-[2px] bg-[#FF4D00] ml-auto mt-1 sm:mt-2 rounded-full animate-slide-in-right" style={{ animationDelay: '1200ms', opacity: 0, animationFillMode: 'forwards' }} />
           </div>
 
           {/* ------------------------------------------------------------------- */}
@@ -551,28 +551,14 @@ export const Hero: React.FC<HeroProps> = ({
           </svg>
 
           {/* ------------------------------------------------------------------- */}
-          {/* LEFT DESIGN (Botanical Sketch near Tech Box)                        */}
           {/* ------------------------------------------------------------------- */}
-          <div className="hidden sm:block absolute left-[3%] lg:left-[5%] bottom-[18%] lg:bottom-[22%] z-10 w-[120px] sm:w-[150px] aspect-[275/291] opacity-80 pointer-events-none">
-            <Image
-              src="/left_design_tight.png"
-              alt="Left Botanical Sketch"
-              fill
-              className="object-contain"
-            />
-          </div>
-
-
+          {/* CENTERPIECE: Woman Image (Enlarged Heroic Presence, Grounded, Static) */}
           {/* ------------------------------------------------------------------- */}
-          {/* CENTERPIECE: Woman Image (Enlarged Heroic Presence, Grounded)       */}
-          {/* ------------------------------------------------------------------- */}
-          <div className="relative z-10 w-full max-w-[400px] sm:max-w-[490px] md:max-w-[560px] lg:max-w-[620px] xl:max-w-[680px] 2xl:max-w-[730px] aspect-[577/433] mx-auto flex items-end justify-center pointer-events-auto">
-            <Image
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-full max-w-[400px] xs:max-w-[480px] sm:max-w-[580px] md:max-w-[680px] lg:max-w-[780px] xl:max-w-[850px] 2xl:max-w-[920px] flex items-end justify-center pointer-events-auto overflow-hidden">
+            <img
               src="/Face_woman_prisma-removebg-preview.png"
               alt="PRISMA 3.0 Renaissance Cyborg Woman"
-              fill
-              priority
-              className="object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.14)]"
+              className="w-full h-auto object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.14)]"
             />
           </div>
 
@@ -581,7 +567,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* ------------------------------------------------------------------- */}
           
           {/* 1. Wireframe Head & Foliage Drawing (Shifted Slightly Down) */}
-          <div className="absolute right-0 sm:right-2 lg:right-4 top-[15%] sm:top-[16%] lg:top-[18%] z-15 w-[130px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto">
+          <div className="absolute right-0 sm:right-2 lg:right-4 top-[20%] sm:top-[16%] lg:top-[18%] z-15 w-[85px] xs:w-[100px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto animate-floating">
             <Image
               src="/br_design_tight.png"
               alt="Wireframe Head and Circuit Graphics"
@@ -591,8 +577,8 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* 2. Downside Editorial Quote at the Bottom Space */}
-          <div className="absolute right-2 sm:right-5 lg:right-7 bottom-4 sm:bottom-6 lg:bottom-8 z-30 max-w-[105px] sm:max-w-[125px] lg:max-w-[140px] text-right pointer-events-auto select-none">
-            <p className="font-serif-italic text-[11px] sm:text-[12.5px] lg:text-[13.5px] text-[#1F1F1F] italic leading-[1.24] tracking-tight font-medium">
+          <div className="absolute right-0 sm:right-5 lg:right-7 bottom-2 sm:bottom-6 lg:bottom-8 z-30 max-w-[85px] xs:max-w-[105px] sm:max-w-[125px] lg:max-w-[140px] text-right pointer-events-auto select-none animate-fade-in-up" style={{ animationDelay: '1400ms', opacity: 0, animationFillMode: 'forwards' }}>
+            <p className="font-serif-italic text-[8.5px] xs:text-[10px] sm:text-[12.5px] lg:text-[13.5px] text-[#1F1F1F] italic leading-[1.24] tracking-tight font-medium">
               Not just<br />
               users of<br />
               technology,<br />
@@ -600,7 +586,7 @@ export const Hero: React.FC<HeroProps> = ({
               creators of<br />
               change.
             </p>
-            <div className="w-8 sm:w-11 h-[2.5px] bg-[#FF4D00] ml-auto mt-2 rounded-full" />
+            <div className="w-5 sm:w-11 h-[1.5px] sm:h-[2.5px] bg-[#FF4D00] ml-auto mt-1 sm:mt-2 rounded-full animate-slide-in-right" style={{ animationDelay: '1600ms', opacity: 0, animationFillMode: 'forwards' }} />
           </div>
 
         </div>

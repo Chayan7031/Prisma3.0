@@ -125,3 +125,64 @@ body {
 .animate-floating {
   animation: float 3s ease-in-out infinite;
 }
+
+@keyframes flowCurrent {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes sparkFlash {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+@keyframes slowContractA {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.97); }
+}
+
+@keyframes slowContractB {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(0.95) rotate(2deg); }
+}
+
+.animate-current-branch-1 {
+  stroke-dasharray: 20 80;
+  animation: flowCurrent 4s linear infinite;
+}
+.animate-current-branch-2 {
+  stroke-dasharray: 25 75;
+  animation: flowCurrent 5s linear infinite;
+}
+.animate-current-branch-3 {
+  stroke-dasharray: 30 70;
+  animation: flowCurrent 4.5s linear infinite reverse;
+}
+.animate-current-branch-4 {
+  stroke-dasharray: 15 85;
+  animation: flowCurrent 6s linear infinite;
+}
+.animate-spark-1 {
+  transform-origin: center;
+  animation: sparkFlash 2s ease-in-out infinite;
+}
+.animate-spark-2 {
+  transform-origin: center;
+  animation: sparkFlash 2.5s ease-in-out infinite 1s;
+}
+.animate-ring-current-fast {
+  stroke-dasharray: 30 70;
+  animation: flowCurrent 3s linear infinite;
+}
+.animate-ring-current-slow {
+  stroke-dasharray: 40 160;
+  animation: flowCurrent 8s linear infinite reverse;
+}
+.animate-slow-contract-a {
+  transform-origin: center;
+  animation: slowContractA 10s ease-in-out infinite;
+}
+.animate-slow-contract-b {
+  transform-origin: center;
+  animation: slowContractB 12s ease-in-out infinite;
+}

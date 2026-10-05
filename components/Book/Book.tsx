@@ -875,86 +875,181 @@ export const Book: React.FC<BookProps> = ({
         {/* Ambient Radial Warmth Glow */}
         <div className="book-decor-ambient-glow" />
 
-        {/* Central Ambient Halo Mandala behind Book Spread */}
-        <div className="book-decor-mandala-wrap">
-          <img
-            src="/design/full_round_design.png"
-            alt=""
-            className="book-decor-img book-decor-mandala"
-            draggable={false}
-          />
-        </div>
 
-        {/* Ornate Left Side Border Design as previous */}
+
+        {/* Ornate Left Side Border Design */}
         <div className="book-decor-side-left">
           <img
-            src="/design/main_round_design-removebg-preview.png"
+            src="/book-bg-border.png"
             alt=""
             className="book-decor-img book-decor-side-img"
             draggable={false}
           />
         </div>
 
-        {/* Ornate Right Side Border Design as previous */}
+        {/* Ornate Right Side Border Design */}
         <div className="book-decor-side-right">
           <img
-            src="/design/main_round_design-removebg-preview.png"
+            src="/book-bg-border-right.png"
             alt=""
             className="book-decor-img book-decor-side-img"
             draggable={false}
           />
         </div>
 
-        {/* Dynamic Vector Path & Moving Round Designs (Invisible Paths, Varied Sized Mandalas) */}
-        <VectorPathDecor currentTheme={currentTheme} />
+        {/* Animated Spreading Circuit Lines - V2 */}
+        <svg
+          viewBox="0 0 1000 800"
+          className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible opacity-90"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <filter id="neonOrangeGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur1" />
+              <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
+              <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur3" />
+              <feMerge>
+                <feMergeNode in="blur3" />
+                <feMergeNode in="blur2" />
+                <feMergeNode in="blur1" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
 
-        {/* Four Architectural Corner Filigrees */}
-        <div className="book-decor-corner book-corner-tl">
+          {/* Group: Top Left Branch */}
+          <g>
+            {/* Base Wire */}
+            <path d="M 380 250 L 250 250 L 250 100 L 50 100" stroke="#f97316" strokeWidth="1.5" opacity="0.3" />
+            {/* Nodes */}
+            <circle cx="380" cy="250" r="5" fill="#fceac5" stroke="#ea580c" strokeWidth="2" />
+            <circle cx="250" cy="250" r="2.5" fill="#ea580c" />
+            <rect x="247" y="97" width="6" height="6" fill="#fceac5" stroke="#ea580c" strokeWidth="1.5" />
+            {/* Cross Details */}
+            <path d="M 120 70 L 120 80 M 115 75 L 125 75" stroke="#ea580c" strokeWidth="1.5" />
+            {/* Animated Energy Pulse */}
+            <path
+              d="M 380 250 L 250 250 L 250 100 L 50 100"
+              stroke="#ff8a3d"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              filter="url(#neonOrangeGlow)"
+              style={{ strokeDasharray: '40 200', animation: 'book-circuit-flow 4s linear infinite reverse' }}
+            />
+          </g>
+
+          {/* Group: Bottom Left Branch */}
+          <g>
+            <path d="M 360 550 L 220 550 L 150 700 L -20 700" stroke="#f97316" strokeWidth="1.5" opacity="0.3" />
+            <circle cx="360" cy="550" r="5" fill="#fceac5" stroke="#ea580c" strokeWidth="2" />
+            <circle cx="220" cy="550" r="2.5" fill="#ea580c" />
+            <circle cx="150" cy="700" r="3" fill="#ea580c" />
+            <path d="M 180 620 L 180 630 M 175 625 L 185 625" stroke="#ea580c" strokeWidth="1.5" />
+            <path
+              d="M 360 550 L 220 550 L 150 700 L -20 700"
+              stroke="#ff8a3d"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              filter="url(#neonOrangeGlow)"
+              style={{ strokeDasharray: '50 250', animation: 'book-circuit-flow 5s linear infinite reverse' }}
+            />
+          </g>
+
+          {/* Group: Top Right Branch */}
+          <g>
+            <path d="M 620 200 L 750 200 L 800 50 L 1020 50" stroke="#f97316" strokeWidth="1.5" opacity="0.3" />
+            <circle cx="620" cy="200" r="5" fill="#fceac5" stroke="#ea580c" strokeWidth="2" />
+            <circle cx="750" cy="200" r="2.5" fill="#ea580c" />
+            <rect x="797" y="47" width="6" height="6" fill="#fceac5" stroke="#ea580c" strokeWidth="1.5" />
+            <path d="M 850 90 L 850 100 M 845 95 L 855 95" stroke="#ea580c" strokeWidth="1.5" />
+            <path
+              d="M 620 200 L 750 200 L 800 50 L 1020 50"
+              stroke="#ff8a3d"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              filter="url(#neonOrangeGlow)"
+              style={{ strokeDasharray: '40 220', animation: 'book-circuit-flow 4.5s linear infinite reverse' }}
+            />
+          </g>
+
+          {/* Group: Bottom Right Branch */}
+          <g>
+            <path d="M 640 620 L 780 620 L 850 760 L 1020 760" stroke="#f97316" strokeWidth="1.5" opacity="0.3" />
+            <circle cx="640" cy="620" r="5" fill="#fceac5" stroke="#ea580c" strokeWidth="2" />
+            <circle cx="780" cy="620" r="2.5" fill="#ea580c" />
+            <circle cx="850" cy="760" r="3" fill="#ea580c" />
+            <path d="M 760 700 L 760 710 M 755 705 L 765 705" stroke="#ea580c" strokeWidth="1.5" />
+            <path
+              d="M 640 620 L 780 620 L 850 760 L 1020 760"
+              stroke="#ff8a3d"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              filter="url(#neonOrangeGlow)"
+              style={{ strokeDasharray: '60 300', animation: 'book-circuit-flow 5.5s linear infinite reverse' }}
+            />
+          </g>
+        </svg>
+
+        {/* Futuristic Robotic Hand Pointing at Book */}
+        <div className="absolute top-[50%] -translate-y-1/2 -left-[12%] sm:-left-[5%] md:left-[0%] lg:left-[4%] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700">
           <img
-            src="/design/corner-removebg-preview.png"
-            alt=""
-            className="book-decor-img book-decor-corner-img"
+            src="/Futuristic-Robotic-Hand-Schematic.png"
+            alt="Robotic Hand Schematic"
+            className="w-full h-auto object-contain"
             draggable={false}
           />
         </div>
-        <div className="book-decor-corner book-corner-tr">
+
+        {/* Futuristic Robotic Hand Pointing at Book (Right Side) */}
+        <div className="absolute top-[50%] -translate-y-1/2 -right-[12%] sm:-right-[5%] md:right-[0%] lg:right-[4%] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700">
           <img
-            src="/design/corner-removebg-preview.png"
-            alt=""
-            className="book-decor-img book-decor-corner-img"
+            src="/Futuristic-Robotic-Hand-Schematic-revert.png"
+            alt="Robotic Hand Schematic Reversed"
+            className="w-full h-auto object-contain"
             draggable={false}
           />
         </div>
-        <div className="book-decor-corner book-corner-bl">
+
+        {/* Butterfly Above Right Hand */}
+        <div className="absolute top-[15%] sm:top-[18%] md:top-[5%] right-[5%] sm:right-[10%] md:right-[15%] lg:right-[8%] w-[150px] sm:w-[180px] md:w-[220px] lg:w-[250px] opacity-75 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 -rotate-12">
           <img
-            src="/design/corner-removebg-preview.png"
-            alt=""
-            className="book-decor-img book-decor-corner-img"
+            src="/page-bg-butterfly.png"
+            alt="Butterfly Decor"
+            className="w-full h-auto object-contain"
             draggable={false}
           />
         </div>
-        <div className="book-decor-corner book-corner-br">
+
+        {/* Bottom Left Decor (Right beside the left border) */}
+        <div className="absolute bottom-0 left-[10%] sm:left-[12%] md:left-[14%] lg:left-[4%] w-[250px] sm:w-[300px] md:w-[400px] lg:w-[500px] opacity-100 pointer-events-none z-10 transition-all duration-700">
           <img
-            src="/design/corner-removebg-preview.png"
-            alt=""
-            className="book-decor-img book-decor-corner-img"
+            src="/design/left_side-removebg-preview.png"
+            alt="Bottom Left Decor"
+            className="w-full h-auto object-contain object-bottom"
+            style={{ filter: 'drop-shadow(0px 0px 10px rgba(0,0,0,0.3))' }}
             draggable={false}
           />
         </div>
+
+        {/* Bottom Right Decor (Left beside the right border) */}
+        <div className="absolute bottom-0 right-[10%] sm:right-[12%] md:right-[14%] lg:right-[4%] w-[250px] sm:w-[300px] md:w-[400px] lg:w-[500px] opacity-100 pointer-events-none z-10 transition-all duration-700">
+          <img
+            src="/left_side-removebg-preview-right.png"
+            alt="Bottom Right Decor"
+            className="w-full h-auto object-contain object-bottom"
+            style={{ filter: 'drop-shadow(0px 0px 10px rgba(0,0,0,0.3))' }}
+            draggable={false}
+          />
+        </div>
+
+
       </div>
 
-      {/* Top Header Bar */}
-      <header className="book-top-bar">
-        <div className="book-top-info">
-          <div className="book-top-title">
-            <span className="book-top-brand-icon">P</span>
-            <span>{title}</span>
-            <span className="book-top-badge">CSE DEPARTMENT</span>
-          </div>
-          {subtitle && <div className="book-top-subtitle">{subtitle}</div>}
-        </div>
+      {/* Top Header Bar (Only Close Button remains) */}
+      <header className="book-top-bar" style={{ background: 'transparent', borderBottom: 'none', position: 'absolute', zIndex: 50 }}>
 
-        <div className="book-top-actions">
+        <div className="book-top-actions" style={{ marginRight: '130px' }}>
           {onClose && (
             <button
               type="button"
@@ -1034,7 +1129,7 @@ export const Book: React.FC<BookProps> = ({
         )}
       </main>
 
-      {/* Floating Bottom Toolbar */}
+      {/* Floating Bottom Toolbar (Restored and Theme-Matched) */}
       <footer className="book-toolbar-container">
         <nav className="book-toolbar" aria-label="Book Navigation Controls">
           {/* Page Turn & Input Group */}

@@ -17,7 +17,6 @@ import WhiteShowcase from './WhiteShowcase';
 import MandalaFlourish from './MandalaFlourish';
 import ThemeStoryCard from './ThemeStoryCard';
 import CuratedThemesSection from './CuratedThemesSection';
-import OptikkaHero from '@/components/OptikkaHero';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -162,15 +161,6 @@ export default function WhiteThemePage() {
       {/* ========================================================================= */}
       {/* SECTION 1 (OFF-WHITE IN BLACK BEZEL): ARCHITECTURAL SAMARKAN HERO          */}
       {/* ========================================================================= */}
-      <div id="overview" className="w-full pt-2">
-        <OptikkaHero
-          initialBrand="prisma"
-          initialFont="samarkan"
-          scrollTargetId="preview"
-          onOpenReader={handleOpenReader}
-          pdfUrl="/prisma_content.pdf"
-        />
-      </div>
 
       {/* ========================================================================= */}
       {/* SECTION 2 (BLACK): PINNED GSAP 3D MAGAZINE & THEME STORY SHOWCASE          */}
