@@ -641,11 +641,13 @@ const BookShowcase: React.FC<BookShowcaseProps> = ({
 export interface MagazineShowcaseProps {
   onOpenReader?: (page?: number) => void;
   className?: string;
+  hideCta?: boolean;
 }
 
 export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
   onOpenReader,
   className = '',
+  hideCta = false,
 }) => {
   const router = useRouter();
   const pages = useMemo(() => buildMagazineShowcasePages(), []);
@@ -703,7 +705,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
       title="Click to Read PRISMA 3.0 Magazine"
     >
       {/* Soft Ambient Behind-Book Glow pool floating naturally on the dark background */}
-      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(0,168,255,0.14)_0%,rgba(0,210,255,0.03)_50%,transparent_70%)] blur-3xl pointer-events-none group-hover:opacity-100 transition-opacity duration-700 opacity-60" />
+      <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(255,87,34,0.14)_0%,rgba(255,122,80,0.03)_50%,transparent_70%)] blur-3xl pointer-events-none group-hover:opacity-100 transition-opacity duration-700 opacity-60" />
 
       {/* 3D WebGL Canvas Viewport - completely transparent & floating seamlessly on the hero */}
       <div className="relative w-full h-full">
@@ -767,14 +769,16 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
         </Canvas>
 
         {/* Floating Read Magazine CTA Badge */}
-        <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-6 z-20 pointer-events-none">
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] font-semibold tracking-wider uppercase border border-white/15 shadow-xl group-hover:border-[#00a8ff] group-hover:bg-[#00a8ff] group-hover:text-black transition-all duration-300 pointer-events-auto">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3" />
-            </svg>
-            <span>Read Magazine</span>
+        {!hideCta && (
+          <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-6 z-20 pointer-events-none">
+            <div className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] font-semibold tracking-wider uppercase border border-white/15 shadow-xl group-hover:border-[#FF5722] group-hover:bg-[#FF5722] group-hover:text-white transition-all duration-300 pointer-events-auto">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              <span>Read Magazine</span>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
