@@ -87,6 +87,15 @@ export const Hero: React.FC<HeroProps> = ({
             Articles
           </Link>
 
+          <Link
+            href="/v2"
+            className="inline-flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase text-slate-200 hover:text-white px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer"
+            title="Experience the White Themed Version"
+          >
+            <span className="w-2 h-2 rounded-full bg-white" />
+            <span>White Edition (V2)</span>
+          </Link>
+
           {onReplayIntro && (
             <button
               type="button"
