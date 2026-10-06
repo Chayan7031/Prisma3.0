@@ -11,8 +11,8 @@ import {
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
-    if ((window as any).__lenis) {
-      (window as any).__lenis.scrollTo(0, { duration: 1.2 });
+    if (typeof window !== 'undefined' && window.__lenis) {
+      window.__lenis.scrollTo(0, { duration: 1.2 });
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }

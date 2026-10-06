@@ -49,6 +49,8 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           
           setTimeout(() => {
             setIsHidden(true);
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
             if (typeof window !== 'undefined') {
               window.dispatchEvent(new CustomEvent('prisma-preloader-complete'));
             }
