@@ -116,7 +116,7 @@ export const Hero: React.FC<HeroProps> = ({
 
       window.scrollTo(0, 0);
 
-      const animDuration = 2400; // 2.4s for a majestic, cinematic reveal
+      const animDuration = 1600; // Snappy 1.6s reveal for cinematic color bloom
       let startTime: number | null = null;
 
       const step = (timestamp: number) => {
@@ -145,25 +145,24 @@ export const Hero: React.FC<HeroProps> = ({
 
     // Triggered right when the preloader finishes loading and begins revealing the page
     const handlePreloaderOpen = () => {
-      // 200ms delay while the preloader box stretches out to uncover the hero
       animTimeoutId = setTimeout(() => {
         startRevealAnimation();
-      }, 200);
+      }, 100);
     };
 
     window.addEventListener('prisma-preloader-open', handlePreloaderOpen);
 
-    // Fallback: if event doesn't fire within 3100ms, start automatically
+    // Fallback: if event doesn't fire within 2400ms, start automatically
     const fallbackTimeout = setTimeout(() => {
       if (!hasStarted) {
         startRevealAnimation();
       }
-    }, 3100);
+    }, 2400);
 
-    // Hard safety guarantee: unconditionally unlock after 4.5s
+    // Hard safety guarantee: unconditionally unlock after 2800ms so mobile scrolling is never stuck
     const safetyUnlockTimeout = setTimeout(() => {
       unlockScroll();
-    }, 4500);
+    }, 2800);
 
     return () => {
       window.removeEventListener('prisma-preloader-open', handlePreloaderOpen);

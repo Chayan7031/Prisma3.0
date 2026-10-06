@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import Lenis from 'lenis';
 
 declare global {
@@ -15,15 +15,7 @@ export interface MagneticScrollProps {
   duration?: number;
   threshold?: number;
   cooldown?: number;
-  showIndicators?: boolean;
 }
-
-const SECTION_LABELS: Record<string, string> = {
-  'hero-section': '01 // HERO',
-  'magazine-showcase-section': '02 // 3D SHOWCASE',
-  'previous-magazines': '03 // ARCHIVE',
-  'site-footer': '04 // FOOTER',
-};
 
 export const MagneticScroll: React.FC<MagneticScrollProps> = ({
   sectionIds = [
@@ -32,23 +24,22 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     'previous-magazines',
     'site-footer',
   ],
-  duration = 1.1,
+  duration = 0.9,
   threshold = 18,
-  cooldown = 350,
-  showIndicators = true,
+  cooldown = 320,
 }) => {
   const lenisRef = useRef<Lenis | null>(null);
   const isTransitioningRef = useRef(false);
-  const activeIndexRef = useRef(0);
-  const [activeSectionIndex, setActiveSectionIndex] = useState(0);
-  const [isUnlocked, setIsUnlocked] = useState(false);
   const accumulatedDeltaRef = useRef(0);
   const accumulatedTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastTransitionEndTimeRef = useRef(0);
   const safetyTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const touchStartRef = useRef<{ y: number; time: number } | null>(null);
 
-  // Measure document offset tops for each registered section with robust fallbacks
+  // Touch tracking for mobile swipe navigation
+  const touchStartPosRef = useRef<{ x: number; y: number } | null>(null);
+  const touchTriggeredRef = useRef(false);
+
+  // Measure document offset tops for each section with fallbacks
   const getSectionOffsets = useCallback(() => {
     if (typeof window === 'undefined') return [0];
 
@@ -65,10 +56,28 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
         const top = Math.round(rect.top + window.scrollY);
         return Math.min(Math.max(0, top), maxScroll);
       }
-      // Reliable fallback based on index if element is briefly not found
       return Math.min(Math.round(window.innerHeight * index), maxScroll);
     });
   }, [sectionIds]);
+
+  // Find closest section based on current scroll position
+  const getClosestSectionIndex = useCallback(() => {
+    const offsets = getSectionOffsets();
+    const currentScroll = typeof window !== 'undefined'
+      ? (window.scrollY || lenisRef.current?.scroll || 0)
+      : 0;
+
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    for (let i = 0; i < offsets.length; i++) {
+      const diff = Math.abs(currentScroll - offsets[i]);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = i;
+      }
+    }
+    return closestIndex;
+  }, [getSectionOffsets]);
 
   // Magnetic scroll smoothly to target section
   const scrollToSection = useCallback(
@@ -84,28 +93,25 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
 
       const currentScroll = window.scrollY || lenis.scroll || 0;
       if (Math.abs(currentScroll - targetOffset) < 10) {
-        activeIndexRef.current = clampedIndex;
-        setActiveSectionIndex(clampedIndex);
         return;
       }
 
       isTransitioningRef.current = true;
-      activeIndexRef.current = clampedIndex;
-      setActiveSectionIndex(clampedIndex);
 
-      // Safety timeout: guarantee isTransitioning resets even in case of interruptions
+      // Fail-safe timeout: guarantee isTransitioning resets
       if (safetyTimerRef.current) {
         clearTimeout(safetyTimerRef.current);
       }
       safetyTimerRef.current = setTimeout(() => {
         isTransitioningRef.current = false;
         accumulatedDeltaRef.current = 0;
-      }, duration * 1000 + 350);
+      }, duration * 1000 + 200);
 
       lenis.scrollTo(targetOffset, {
         duration,
         lock: true,
-        force: true, // Guarantees execution even if stopped
+        force: true,
+        // Silky smooth exponential easeOut
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         onComplete: () => {
           lastTransitionEndTimeRef.current = Date.now();
@@ -120,12 +126,11 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
   );
 
   useEffect(() => {
-    // Prevent browser native scroll position restoration on reload
     if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
-    // 1. Initialize Lenis Smooth Scroll engine with autoRaf
+    // 1. Initialize Lenis Smooth Scroll engine with syncTouch enabled
     const lenis = new Lenis({
       autoRaf: true,
       duration,
@@ -133,43 +138,23 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
+      syncTouch: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.2,
       infinite: false,
     });
 
     lenisRef.current = lenis;
     window.__lenis = lenis;
 
-    // Sync active index when scroll position changes
-    lenis.on('scroll', (e: { scroll: number }) => {
-      if (!isTransitioningRef.current) {
-        const offsets = getSectionOffsets();
-        let closest = 0;
-        let minDiff = Infinity;
-        for (let i = 0; i < offsets.length; i++) {
-          const diff = Math.abs(e.scroll - offsets[i]);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closest = i;
-          }
-        }
-        if (closest !== activeIndexRef.current) {
-          activeIndexRef.current = closest;
-          setActiveSectionIndex(closest);
-        }
-      }
-    });
-
-    // 2. Wheel & Trackpad Gesture Handler
+    // 2. Desktop Wheel & Trackpad gesture handler
     const handleWheel = (e: WheelEvent) => {
-      // If hero reveal / preloader is active:
       if (typeof window !== 'undefined' && window.__prismaScrollLocked) {
         e.preventDefault();
         return;
       }
 
-      // Prevent native scroll to stop intermediate section pauses
+      // Intercept wheel to prevent stopping at intermediate positions
       e.preventDefault();
 
       if (isTransitioningRef.current) {
@@ -193,95 +178,61 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       if (Math.abs(accumulatedDeltaRef.current) >= threshold) {
         const direction = accumulatedDeltaRef.current > 0 ? 1 : -1;
         accumulatedDeltaRef.current = 0;
-
-        // Compute current section from actual scroll position
-        const offsets = getSectionOffsets();
-        const currentScroll = window.scrollY || lenisRef.current?.scroll || 0;
-        let closestIndex = 0;
-        let minDiff = Infinity;
-        for (let i = 0; i < offsets.length; i++) {
-          const diff = Math.abs(currentScroll - offsets[i]);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closestIndex = i;
-          }
-        }
-
-        const nextIndex = closestIndex + direction;
-        scrollToSection(nextIndex);
-      }
-    };
-
-    // 3. Touch swipe gesture handling (Mobile / Tablet)
-    const handleTouchStart = (e: TouchEvent) => {
-      if (typeof window !== 'undefined' && window.__prismaScrollLocked) return;
-      if (e.touches.length > 0) {
-        touchStartRef.current = {
-          y: e.touches[0].clientY,
-          time: Date.now(),
-        };
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if ((typeof window !== 'undefined' && window.__prismaScrollLocked) || isTransitioningRef.current) {
-        if (e.cancelable) e.preventDefault();
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if ((typeof window !== 'undefined' && window.__prismaScrollLocked) || isTransitioningRef.current) return;
-      if (!touchStartRef.current || e.changedTouches.length === 0) return;
-
-      const deltaY = touchStartRef.current.y - e.changedTouches[0].clientY;
-      const deltaTime = Date.now() - touchStartRef.current.time;
-      touchStartRef.current = null;
-
-      if (Math.abs(deltaY) > 35 && deltaTime < 800) {
-        const direction = deltaY > 0 ? 1 : -1;
-        const offsets = getSectionOffsets();
-        const currentScroll = window.scrollY || lenisRef.current?.scroll || 0;
-        let closestIndex = 0;
-        let minDiff = Infinity;
-        for (let i = 0; i < offsets.length; i++) {
-          const diff = Math.abs(currentScroll - offsets[i]);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closestIndex = i;
-          }
-        }
+        const closestIndex = getClosestSectionIndex();
         scrollToSection(closestIndex + direction);
       }
     };
 
-    // 4. Keyboard Navigation
+    // 3. Mobile Touch swipe gesture handling (Direct & Responsive)
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        touchStartPosRef.current = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
+        touchTriggeredRef.current = false;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (touchTriggeredRef.current || isTransitioningRef.current) return;
+      if (typeof window !== 'undefined' && window.__prismaScrollLocked) return;
+      if (!touchStartPosRef.current || e.touches.length === 0) return;
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffY = touchStartPosRef.current.y - currentY;
+      const diffX = touchStartPosRef.current.x - currentX;
+
+      // Vertical swipe intent detected (diffY > 28px and primarily vertical)
+      if (Math.abs(diffY) > 28 && Math.abs(diffY) > Math.abs(diffX) * 1.2) {
+        touchTriggeredRef.current = true;
+        const direction = diffY > 0 ? 1 : -1; // diffY > 0 means swipe UP -> scroll DOWN
+        const closestIndex = getClosestSectionIndex();
+        scrollToSection(closestIndex + direction);
+      }
+    };
+
+    const handleTouchEnd = () => {
+      touchStartPosRef.current = null;
+      touchTriggeredRef.current = false;
+    };
+
+    // 4. Keyboard Navigation (Arrow Keys, PageUp/Down, Space, Home, End)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (typeof window !== 'undefined' && window.__prismaScrollLocked) return;
 
       const downKeys = ['ArrowDown', 'PageDown', ' '];
       const upKeys = ['ArrowUp', 'PageUp'];
 
-      const getClosest = () => {
-        const offsets = getSectionOffsets();
-        const currentScroll = window.scrollY || 0;
-        let closest = 0;
-        let minDiff = Infinity;
-        for (let i = 0; i < offsets.length; i++) {
-          const diff = Math.abs(currentScroll - offsets[i]);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closest = i;
-          }
-        }
-        return closest;
-      };
-
       if (downKeys.includes(e.key) && !e.shiftKey) {
         e.preventDefault();
-        scrollToSection(getClosest() + 1);
+        const closestIndex = getClosestSectionIndex();
+        scrollToSection(closestIndex + 1);
       } else if (upKeys.includes(e.key) || (e.key === ' ' && e.shiftKey)) {
         e.preventDefault();
-        scrollToSection(getClosest() - 1);
+        const closestIndex = getClosestSectionIndex();
+        scrollToSection(closestIndex - 1);
       } else if (e.key === 'Home') {
         e.preventDefault();
         scrollToSection(0);
@@ -293,31 +244,23 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
 
     // 5. Preloader / Hero scroll unlock listener
     const handleScrollUnlocked = () => {
-      setIsUnlocked(true);
       if (typeof window !== 'undefined') {
         window.__prismaScrollLocked = false;
       }
     };
 
-    if (typeof window !== 'undefined' && !window.__prismaScrollLocked) {
-      setTimeout(() => {
-        setIsUnlocked(true);
-      }, 0);
-    }
-
-    // Safety fallback: unlock after 4.5 seconds no matter what
+    // Safety fallback: ensure scroll is unlocked after 3.2 seconds
     const safetyUnlockTimeout = setTimeout(() => {
       handleScrollUnlocked();
-    }, 4500);
+    }, 3200);
 
-    // 6. Window resize handler
     const handleResize = () => {
       lenis.resize();
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd, { passive: true });
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('resize', handleResize);
@@ -337,56 +280,17 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       lenis.destroy();
       window.__lenis = null;
     };
-  }, [duration, threshold, cooldown, sectionIds, scrollToSection, getSectionOffsets]);
+  }, [
+    duration,
+    threshold,
+    cooldown,
+    sectionIds,
+    scrollToSection,
+    getClosestSectionIndex,
+  ]);
 
-  if (!showIndicators) return null;
-
-  return (
-    <nav
-      aria-label="Section Navigation"
-      className={`fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col items-end gap-3.5 pointer-events-none select-none transition-all duration-700 ${
-        isUnlocked ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
-      }`}
-    >
-      {sectionIds.map((id, index) => {
-        const isActive = activeSectionIndex === index;
-        const label = SECTION_LABELS[id] || `0${index + 1}`;
-
-        return (
-          <button
-            key={id}
-            onClick={() => scrollToSection(index)}
-            aria-label={`Scroll to ${label}`}
-            className="group relative flex items-center justify-end pointer-events-auto p-1.5 focus:outline-none cursor-pointer"
-          >
-            {/* Tooltip on hover */}
-            <span
-              className={`absolute right-7 px-2.5 py-1 rounded bg-[#161121]/90 backdrop-blur-md text-[9px] font-mono tracking-[0.18em] text-[#F1EDE2] uppercase border border-[#FF4D00]/20 whitespace-nowrap pointer-events-none transition-all duration-300 transform ${
-                isActive
-                  ? 'opacity-80 translate-x-0'
-                  : 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0'
-              }`}
-            >
-              {label}
-            </span>
-
-            {/* Indicator Dot / Pill */}
-            <div
-              className={`relative transition-all duration-400 rounded-full ${
-                isActive
-                  ? 'w-2.5 h-7 bg-[#FF4D00] shadow-[0_0_12px_rgba(255,77,0,0.6)]'
-                  : 'w-2 h-2 bg-[#161121]/25 hover:bg-[#FF4D00]/60 hover:scale-125'
-              }`}
-            >
-              {isActive && (
-                <div className="absolute inset-0 rounded-full animate-ping bg-[#FF4D00]/40" />
-              )}
-            </div>
-          </button>
-        );
-      })}
-    </nav>
-  );
+  // Return null: dots UI is completely removed per user request
+  return null;
 };
 
 export default MagneticScroll;
