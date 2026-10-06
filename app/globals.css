@@ -7,6 +7,18 @@
   --cyber-blue: #00d2ff;
 }
 
+@font-face {
+  font-family: 'Samarkan';
+  src: url('/fonts/samarkan/samarkan.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-samarkan {
+  font-family: 'Samarkan', system-ui, sans-serif;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -26,6 +38,14 @@ body {
 
 .font-mono-tech {
   font-family: var(--font-mono), monospace;
+}
+
+.font-script {
+  font-family: var(--font-script), 'Caveat', cursive;
+}
+
+.font-serif-italic {
+  font-family: var(--font-serif-italic), 'Playfair Display', Georgia, serif;
 }
 
 .glow-cyan-text {
@@ -113,3 +133,274 @@ body {
 .animate-floating {
   animation: float 3s ease-in-out infinite;
 }
+
+/* ========================================================================= */
+/* SVG CIRCUIT & RING ELECTRIC CURRENT FLOW & CONTRACTION ANIMATIONS        */
+/* ========================================================================= */
+
+/* 1. Slow Organic Contraction & Expansion of Technical Rings */
+@keyframes slowContractA {
+  0%, 100% {
+    transform: scale(1);
+  }
+  38% {
+    transform: scale(0.965);
+  }
+  52% {
+    transform: scale(0.96);
+  }
+  70% {
+    transform: scale(1.018);
+  }
+  85% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slowContractB {
+  0%, 100% {
+    transform: scale(1);
+  }
+  34% {
+    transform: scale(0.972);
+  }
+  48% {
+    transform: scale(0.968);
+  }
+  68% {
+    transform: scale(1.012);
+  }
+  82% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slowContractC {
+  0%, 100% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(0.978);
+  }
+  56% {
+    transform: scale(0.97);
+  }
+  74% {
+    transform: scale(1.015);
+  }
+  88% {
+    transform: scale(1);
+  }
+}
+
+/* 2. Electric Current Pulse Flowing along Circuit Traces */
+@keyframes currentPulseBranch1 {
+  0%, 35% {
+    stroke-dashoffset: 120;
+    opacity: 0;
+  }
+  38% {
+    opacity: 1;
+  }
+  62% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  68% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+}
+
+@keyframes currentPulseBranch2 {
+  0%, 40% {
+    stroke-dashoffset: 120;
+    opacity: 0;
+  }
+  43% {
+    opacity: 1;
+  }
+  66% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  72% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+}
+
+@keyframes currentPulseBranch3 {
+  0%, 38% {
+    stroke-dashoffset: 120;
+    opacity: 0;
+  }
+  42% {
+    opacity: 1;
+  }
+  65% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  70% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+}
+
+@keyframes currentPulseBranch4 {
+  0%, 44% {
+    stroke-dashoffset: 120;
+    opacity: 0;
+  }
+  48% {
+    opacity: 1;
+  }
+  70% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  76% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: -20;
+    opacity: 0;
+  }
+}
+
+/* 3. Electric Current Orbiting around Blueprint Rings */
+@keyframes ringOrbitCurrentCW {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ringOrbitCurrentCCW {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 100;
+  }
+}
+
+/* 4. Terminal Spark / Capacitor Flash on arrival of current */
+@keyframes sparkNodeFlash1 {
+  0%, 58%, 76%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  63% {
+    transform: scale(2.2);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px #ff7722) drop-shadow(0 0 14px #ff5900);
+  }
+  67% {
+    transform: scale(1.4);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 4px #ff5900);
+  }
+}
+
+@keyframes sparkNodeFlash2 {
+  0%, 62%, 80%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  67% {
+    transform: scale(2.2);
+    opacity: 1;
+    filter: drop-shadow(0 0 8px #ff7722) drop-shadow(0 0 14px #ff5900);
+  }
+  71% {
+    transform: scale(1.4);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 4px #ff5900);
+  }
+}
+
+/* Animation utility classes */
+.animate-slow-contract-a {
+  animation: slowContractA 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.animate-slow-contract-b {
+  animation: slowContractB 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.animate-slow-contract-c {
+  animation: slowContractC 7s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.animate-current-branch-1 {
+  stroke-dasharray: 24 76;
+  animation: currentPulseBranch1 7s ease-in-out infinite;
+}
+
+.animate-current-branch-2 {
+  stroke-dasharray: 22 78;
+  animation: currentPulseBranch2 7s ease-in-out infinite;
+}
+
+.animate-current-branch-3 {
+  stroke-dasharray: 24 76;
+  animation: currentPulseBranch3 7s ease-in-out infinite;
+}
+
+.animate-current-branch-4 {
+  stroke-dasharray: 22 78;
+  animation: currentPulseBranch4 7s ease-in-out infinite;
+}
+
+.animate-ring-current-fast {
+  stroke-dasharray: 18 82;
+  animation: ringOrbitCurrentCW 4s linear infinite;
+}
+
+.animate-ring-current-med {
+  stroke-dasharray: 25 75;
+  animation: ringOrbitCurrentCCW 6s linear infinite;
+}
+
+.animate-ring-current-slow {
+  stroke-dasharray: 15 85;
+  animation: ringOrbitCurrentCW 8s linear infinite;
+}
+
+.animate-spark-1 {
+  animation: sparkNodeFlash1 7s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.animate-spark-2 {
+  animation: sparkNodeFlash2 7s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
