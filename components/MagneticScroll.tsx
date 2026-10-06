@@ -249,10 +249,10 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       }
     };
 
-    // Safety fallback: ensure scroll is unlocked after 3.2 seconds
+    // Safety fallback: ensure scroll is unlocked after 14 seconds (never prematurely during preloader or slow hero reveal)
     const safetyUnlockTimeout = setTimeout(() => {
       handleScrollUnlocked();
-    }, 3200);
+    }, 14000);
 
     const handleResize = () => {
       lenis.resize();

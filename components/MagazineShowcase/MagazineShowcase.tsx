@@ -14,7 +14,6 @@ export function buildMagazineShowcasePages(): PageData[] {
     'https://res.cloudinary.com/daybrhbsc/image/upload/f_auto,q_auto,w_1000/v1790614624/prisma_magazine_cover_page.jpg';
 
   const backCover = contentPages.backCover || '/prisma_backcover.png';
-
   // Inside content pages from Cloudinary
   const contentList: string[] = [];
   for (let i = 1; i <= 16; i++) {
@@ -121,7 +120,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
 
   return (
     <section
-      className={`relative w-full text-[#161121] overflow-hidden select-none font-space h-[100dvh] lg:h-auto lg:min-h-[100dvh] flex items-center justify-center ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
+      className={`relative w-full text-[#161121] overflow-hidden select-none font-space min-h-[100dvh] lg:h-auto lg:min-h-[100dvh] flex items-center justify-center ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
         } ${className}`}
       id="magazine-showcase-inner"
     >
@@ -191,7 +190,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           </div>
 
           {/* 3. Anatomical Cybernetic Profile Blueprint (page-bg-face) - Right Flank Editorial Backdrop (Shifted down) */}
-          <div className="absolute top-[18%] sm:top-[16%] lg:top-[18%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
+          <div className="absolute hidden md:block top-[18%] sm:top-[16%] lg:top-[18%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
             <Image
               src="/page-bg-face.png"
               alt="Cybernetic Anatomical Face Blueprint"
@@ -204,13 +203,13 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
       )}
 
       {/* Main Container */}
-      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-20 lg:py-28 h-full flex flex-col justify-center">
+      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 pt-4 sm:pt-20 lg:pt-28 pb-32 sm:pb-36 lg:pb-28 h-full flex flex-col justify-center">
 
         {/* Two-Column Grid: 3D Magazine Showcase (Left) + Editorial Text (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-14 xl:gap-20 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-14 xl:gap-20 items-center w-full">
 
           {/* LEFT COLUMN: 3D Animated Magazine Viewer with Hero Section Woman Background Element */}
-          <div className="lg:col-span-6 relative flex items-center justify-center min-h-[50vh] sm:min-h-[540px] lg:min-h-[620px] overflow-visible">
+          <div className="lg:col-span-6 relative flex items-center justify-center min-h-[38vh] sm:min-h-[540px] lg:min-h-[620px] overflow-visible">
 
             {/* 1. Hero Section Solar Halo, Blueprint Rings & Circuit Vectors (Enlarged Monumental Presence) */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-visible">
@@ -420,7 +419,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             </div>
 
             {/* 3D WebGL Book Viewport (Static Showcase Pose) */}
-            <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[50vh] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
+            <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[38vh] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
               <Book3DViewer
                 pages={pages}
                 onNavigateToRead={() => handleNavigateToRead(1)}
@@ -443,37 +442,37 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           >
             {/* Kicker: THE MAGAZINE with Hero Orange Bar */}
             <div
-              className={`flex items-center gap-2 mb-3.5 select-none transition-all duration-700 ease-out transform ${
+              className={`flex items-center gap-2 mb-2 sm:mb-3.5 select-none transition-all duration-700 ease-out transform ${
                 isBlockInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
               }`}
             >
               <span className="w-3.5 h-[2.5px] bg-[#FF4D00] inline-block rounded-xs animate-pulse" />
-              <span className="text-xs sm:text-sm font-space font-extrabold tracking-[0.28em] uppercase text-[#555555]">
+              <span className="text-[11px] sm:text-sm font-space font-extrabold tracking-[0.28em] uppercase text-[#555555]">
                 THE MAGAZINE
               </span>
             </div>
 
             {/* Monumental Headline: prisma 3.0 in Samarkan Font matching Hero Section */}
             <div
-              className={`flex items-baseline gap-2.5 sm:gap-4 leading-none select-none mb-4 sm:mb-6 transition-all duration-800 delay-150 ease-out transform ${
+              className={`flex items-baseline gap-2 sm:gap-4 leading-none select-none mb-2.5 sm:mb-6 transition-all duration-800 delay-150 ease-out transform ${
                 isBlockInView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
               }`}
             >
-              <h2 className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-wide text-[#161121] lowercase transition-all duration-500 hover:tracking-wider cursor-default">
+              <h2 className="font-samarkan text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-wide text-[#161121] lowercase transition-all duration-500 hover:tracking-wider cursor-default">
                 prisma
               </h2>
-              <span className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-tight text-[#BE953E] transition-all duration-500 hover:scale-105 drop-shadow-[0_2px_16px_rgba(190,149,62,0.25)] cursor-default">
+              <span className="font-samarkan text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-tight text-[#FF4D00] transition-all duration-500 hover:scale-105 cursor-default">
                 3.0
               </span>
             </div>
 
             {/* Editorial Description Copy */}
             <div
-              className={`relative mb-8 sm:mb-10 max-w-2xl transition-all duration-800 delay-300 ease-out transform ${
+              className={`relative mb-4 sm:mb-10 max-w-2xl transition-all duration-800 delay-300 ease-out transform ${
                 isBlockInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <p className="relative z-10 text-base sm:text-lg lg:text-[19px] xl:text-xl text-[#3A3A3A] leading-relaxed font-space font-normal">
+              <p className="relative z-10 text-[13px] xs:text-sm sm:text-lg lg:text-[19px] xl:text-xl text-[#3A3A3A] leading-relaxed font-space font-normal">
                 A celebration of ideas, innovation and the incredible women shaping the future of technology.
                 This edition explores how research, intelligence and empathy come together to build a more inclusive
                 and innovative tomorrow.
@@ -483,14 +482,14 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             {/* Action Buttons with Micro-Animations */}
             {!hideCta && (
               <div
-                className={`flex flex-wrap items-center gap-4 sm:gap-5 transition-all duration-800 delay-450 ease-out transform ${
+                className={`flex flex-wrap items-center gap-2.5 sm:gap-5 transition-all duration-800 delay-450 ease-out transform ${
                   isBlockInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
                 {/* Primary CTA: Explore the Sections > */}
                 <button
                   onClick={handleExploreSections}
-                  className="group inline-flex items-center justify-center gap-3 px-8 py-3.5 sm:px-9 sm:py-4 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E64500] hover:from-[#FF5D1A] hover:to-[#FF4D00] text-white text-sm sm:text-base font-space font-bold tracking-wide shadow-[0_4px_16px_rgba(255,77,0,0.28)] hover:shadow-[0_8px_26px_rgba(255,77,0,0.45)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 sm:gap-3 px-6 py-3 sm:px-9 sm:py-4 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E64500] hover:from-[#FF5D1A] hover:to-[#FF4D00] text-white text-xs sm:text-base font-space font-bold tracking-wide shadow-[0_4px_16px_rgba(255,77,0,0.28)] hover:shadow-[0_8px_26px_rgba(255,77,0,0.45)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
                 >
                   <span>Explore the Sections</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1.5 font-bold">
@@ -503,9 +502,9 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                   <a
                     href={pdfUrl}
                     download="PRISMA_3.0_Magazine.pdf"
-                    className="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl bg-[#FAF6EE] hover:bg-white text-[#161121] border border-[#C8BCAB] hover:border-[#FF4D00] text-sm sm:text-base font-space font-semibold tracking-wide shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
+                    className="group inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 py-3 sm:px-8 sm:py-4 rounded-xl bg-[#FAF6EE] hover:bg-white text-[#161121] border border-[#C8BCAB] hover:border-[#FF4D00] text-xs sm:text-base font-space font-semibold tracking-wide shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
                   >
-                    <Download className="w-4 h-4 text-[#FF4D00] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" />
+                    <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FF4D00] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" />
                     <span>Download PDF</span>
                   </a>
                 )}

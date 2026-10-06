@@ -1,12 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
   Play,
   Download,
 } from 'lucide-react';
+
+declare global {
+  interface Window {
+    __prismaPreloaderComplete?: boolean;
+    __prismaScrollLocked?: boolean;
+  }
+}
 
 // Linear RGB interpolation helper for smooth color transitions
 function interpolateRgb(
@@ -25,13 +32,11 @@ function interpolateRgb(
 const DRAFT_GRAY: [number, number, number] = [148, 140, 128];
 const DRAFT_TEXT: [number, number, number] = [138, 131, 120];
 const DRAFT_TITLE: [number, number, number] = [96, 89, 78];
-const DRAFT_GOLD: [number, number, number] = [142, 130, 110];
 
 // Fully revealed vibrant palette (active brand tones at scroll = 1)
 const BRAND_ORANGE: [number, number, number] = [255, 77, 0];
 const ELECTRIC_ORANGE: [number, number, number] = [255, 89, 0];
 const RICH_OBSIDIAN: [number, number, number] = [22, 17, 33];
-const RICH_GOLD: [number, number, number] = [190, 149, 62];
 const DARK_TEXT: [number, number, number] = [31, 31, 31];
 
 // Generate SVG mask path for clean displaced reveal (no black line)
@@ -116,7 +121,7 @@ export const Hero: React.FC<HeroProps> = ({
 
       window.scrollTo(0, 0);
 
-      const animDuration = 1600; // Snappy 1.6s reveal for cinematic color bloom
+      const animDuration = 3800; // Slower, luxurious 3.8s reveal for cinematic organic bloom
       let startTime: number | null = null;
 
       const step = (timestamp: number) => {
@@ -143,29 +148,35 @@ export const Hero: React.FC<HeroProps> = ({
       animFrameId = requestAnimationFrame(step);
     };
 
-    // Triggered right when the preloader finishes loading and begins revealing the page
-    const handlePreloaderOpen = () => {
+    // Triggered right when the preloader has fully finished loading and is completely hidden
+    const handlePreloaderComplete = () => {
       animTimeoutId = setTimeout(() => {
         startRevealAnimation();
-      }, 100);
+      }, 250);
     };
 
-    window.addEventListener('prisma-preloader-open', handlePreloaderOpen);
+    if (typeof window !== 'undefined' && window.__prismaPreloaderComplete) {
+      animTimeoutId = setTimeout(() => {
+        startRevealAnimation();
+      }, 250);
+    } else {
+      window.addEventListener('prisma-preloader-complete', handlePreloaderComplete);
+    }
 
-    // Fallback: if event doesn't fire within 2400ms, start automatically
+    // Fallback: only if preloader event doesn't fire within 9000ms, start automatically
     const fallbackTimeout = setTimeout(() => {
       if (!hasStarted) {
         startRevealAnimation();
       }
-    }, 2400);
+    }, 9000);
 
-    // Hard safety guarantee: unconditionally unlock after 2800ms so mobile scrolling is never stuck
+    // Hard safety guarantee: unconditionally unlock after 14000ms
     const safetyUnlockTimeout = setTimeout(() => {
       unlockScroll();
-    }, 2800);
+    }, 14000);
 
     return () => {
-      window.removeEventListener('prisma-preloader-open', handlePreloaderOpen);
+      window.removeEventListener('prisma-preloader-complete', handlePreloaderComplete);
       clearTimeout(animTimeoutId);
       clearTimeout(fallbackTimeout);
       clearTimeout(safetyUnlockTimeout);
@@ -180,7 +191,6 @@ export const Hero: React.FC<HeroProps> = ({
   const sunStrokeColor = useMemo(() => interpolateRgb(DRAFT_GRAY, BRAND_ORANGE, revealProgress), [revealProgress]);
   const circuitTraceColor = useMemo(() => interpolateRgb(DRAFT_GRAY, ELECTRIC_ORANGE, revealProgress), [revealProgress]);
   const titlePrismaColor = useMemo(() => interpolateRgb(DRAFT_TITLE, RICH_OBSIDIAN, revealProgress), [revealProgress]);
-  const title30Color = useMemo(() => interpolateRgb(DRAFT_GOLD, RICH_GOLD, revealProgress), [revealProgress]);
   const codeBarColor = useMemo(() => interpolateRgb(DRAFT_GRAY, BRAND_ORANGE, revealProgress), [revealProgress]);
   const codeTextColor = useMemo(() => interpolateRgb(DRAFT_TEXT, [68, 68, 68], revealProgress), [revealProgress]);
   const subtitleColor = useMemo(() => interpolateRgb(DRAFT_TEXT, [85, 85, 85], revealProgress), [revealProgress]);
