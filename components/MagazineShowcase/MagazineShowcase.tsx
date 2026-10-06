@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Download } from 'lucide-react';
 import { pages as contentPages } from '@/content/content';
 import Book3DViewer, { PageData } from './Book3DViewer';
-import RibbonTorus from '../RibbonTorus';
 
 // Generate magazine sheets from pages with back cover
 export function buildMagazineShowcasePages(): PageData[] {
@@ -184,11 +183,6 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
               sizes="(max-width: 768px) 280px, 390px"
               className="object-contain object-top"
             />
-          </div>
-
-          {/* Wireframe Torus Peeking at the Bottom-Right Corner (from reference image) */}
-          <div className="absolute -bottom-28 -right-16 sm:-bottom-24 sm:-right-8 w-[280px] sm:w-[360px] lg:w-[420px] h-[280px] sm:h-[360px] lg:h-[420px] opacity-45 pointer-events-none select-none z-0">
-            <RibbonTorus speed={0.4} interactive={false} />
           </div>
         </>
       )}
@@ -427,7 +421,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
               </svg>
             </div>
 
-            {/* 3D WebGL Book Viewport with Showcase Animation */}
+            {/* 3D WebGL Book Viewport (Static Showcase Pose) */}
             <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[400px] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
               <Book3DViewer
                 pages={pages}
@@ -439,7 +433,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                 cameraDistance={4.4}
                 tiltX={-0.18}
                 tiltZ={-0.10}
-                spinSpeed={0.75}
+                autoAnimate={false}
               />
             </div>
           </div>

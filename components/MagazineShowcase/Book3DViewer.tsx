@@ -345,10 +345,12 @@ interface BookShowcasePhysicsProps {
   lastInteractionRef: React.MutableRefObject<number>;
   tiltX?: number;
   tiltZ?: number;
+  yawY?: number;
   spinSpeed?: number;
   screenWidth?: number;
   scale?: number;
   onNavigateToRead?: () => void;
+  autoAnimate?: boolean;
 }
 
 const BookShowcasePhysics: React.FC<BookShowcasePhysicsProps> = ({
@@ -358,10 +360,12 @@ const BookShowcasePhysics: React.FC<BookShowcasePhysicsProps> = ({
   lastInteractionRef,
   tiltX = -0.24,
   tiltZ = -0.14,
+  yawY = degToRad(-18),
   spinSpeed = 0.85,
   screenWidth = 1200,
   scale = 1.0,
   onNavigateToRead,
+  autoAnimate = false,
 }) => {
 
   const [delayedPage, setDelayedPage] = useState(0);
@@ -423,6 +427,17 @@ const BookShowcasePhysics: React.FC<BookShowcasePhysicsProps> = ({
     );
 
     if (tiltGroupRef.current && axisGroupRef.current) {
+      if (!autoAnimate) {
+        if (delayedPage !== 0) {
+          setDelayedPage(0);
+        }
+        easing.dampAngle(tiltGroupRef.current.rotation, 'x', tiltX, 0.35, delta);
+        easing.dampAngle(tiltGroupRef.current.rotation, 'z', tiltZ, 0.35, delta);
+        easing.damp(tiltGroupRef.current.position, 'y', 0, 0.35, delta);
+        easing.dampAngle(axisGroupRef.current.rotation, 'y', yawY, 0.35, delta);
+        return;
+      }
+
       const now = performance.now();
       if (isInteractingRef?.current && lastInteractionRef.current > 0 && now - lastInteractionRef.current > 2500) {
         isInteractingRef.current = false;
@@ -585,12 +600,14 @@ export interface Book3DViewerProps {
   spinSpeed?: number;
   tiltX?: number;
   tiltZ?: number;
+  yawY?: number;
   title?: string;
   badgeText?: string;
   showBadge?: boolean;
   glowColor?: string;
   cameraDistance?: number;
   scale?: number;
+  autoAnimate?: boolean;
 }
 
 export const Book3DViewer: React.FC<Book3DViewerProps> = ({
@@ -601,12 +618,14 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
   spinSpeed = 0.85,
   tiltX = -0.24,
   tiltZ = -0.14,
+  yawY = degToRad(-18),
   title = 'Click to Read Magazine',
   badgeText = 'Read Magazine',
   showBadge = false,
   glowColor = 'rgba(255, 77, 0, 0.10)',
   cameraDistance = 4.3,
   scale = 1.0,
+  autoAnimate = false,
 }) => {
 
   const controlsRef = useRef<any>(null);
@@ -681,10 +700,12 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
               lastInteractionRef={lastInteractionRef}
               tiltX={tiltX}
               tiltZ={tiltZ}
+              yawY={yawY}
               spinSpeed={spinSpeed}
               screenWidth={screenWidth}
               scale={scale}
               onNavigateToRead={onNavigateToRead}
+              autoAnimate={autoAnimate}
             />
 
 
