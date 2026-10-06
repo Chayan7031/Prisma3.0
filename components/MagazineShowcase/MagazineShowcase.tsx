@@ -117,7 +117,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
 
   return (
     <section
-      className={`relative w-full text-[#161121] overflow-hidden select-none font-space ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
+      className={`relative w-full text-[#161121] overflow-hidden select-none font-space h-[100dvh] lg:h-auto lg:min-h-[100dvh] flex items-center justify-center ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
         } ${className}`}
       id="magazine-showcase-section"
     >
@@ -188,13 +188,13 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
       )}
 
       {/* Main Container */}
-      <div className="relative z-10 max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 py-16 sm:py-20 lg:py-28">
+      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-20 lg:py-28 h-full flex flex-col justify-center">
 
         {/* Two-Column Grid: 3D Magazine Showcase (Left) + Editorial Text (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-14 xl:gap-20 items-center w-full">
 
           {/* LEFT COLUMN: 3D Animated Magazine Viewer with Hero Section Woman Background Element */}
-          <div className="lg:col-span-6 relative flex items-center justify-center min-h-[460px] sm:min-h-[540px] lg:min-h-[620px] overflow-visible">
+          <div className="lg:col-span-6 relative flex items-center justify-center min-h-[50vh] sm:min-h-[540px] lg:min-h-[620px] overflow-visible">
 
             {/* 1. Hero Section Solar Halo, Blueprint Rings & Circuit Vectors (Enlarged Monumental Presence) */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-visible">
@@ -422,7 +422,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             </div>
 
             {/* 3D WebGL Book Viewport (Static Showcase Pose) */}
-            <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[400px] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
+            <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[50vh] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
               <Book3DViewer
                 pages={pages}
                 onNavigateToRead={() => handleNavigateToRead(1)}
