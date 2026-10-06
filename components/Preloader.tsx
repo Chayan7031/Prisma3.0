@@ -30,7 +30,6 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       const easeOut = 1 - Math.pow(1 - progressRatio, 3);
       const currentProgress = easeOut * 100;
 
-      // Direct DOM mutation completely bypasses React re-renders (ZERO lag)
       if (progressBarRef.current) {
         progressBarRef.current.style.width = `${currentProgress}%`;
       }
@@ -170,7 +169,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
         {/* Progress Number - Ultra optimized without React state bindings */}
         <div 
-          className={`absolute -bottom-16 sm:-bottom-20 text-white text-5xl sm:text-7xl font-space font-light tracking-[0.1em] transition-opacity duration-300 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
+          className={`absolute -bottom-16 sm:-bottom-20 text-white text-5xl sm:text-7xl font-samarkan tracking-wider transition-opacity duration-300 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
         >
           <span ref={progressTextRef}>0</span><span className="text-2xl sm:text-4xl text-white/40 ml-1">%</span>
         </div>
