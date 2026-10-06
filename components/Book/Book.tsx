@@ -301,7 +301,7 @@ export const Book: React.FC<BookProps> = ({
   }, [currentPage]);
 
   // Sound disabled per user request
-  const triggerFlipAudio = useCallback((): void => {}, []);
+  const triggerFlipAudio = useCallback((): void => { }, []);
 
   // Preload page images to prevent flicker during 3D page turns
   useEffect(() => {
@@ -664,8 +664,8 @@ export const Book: React.FC<BookProps> = ({
     const targetPage = isMobile
       ? Math.max(1, currentPage - 1)
       : (currentPage === totalPages
-          ? Math.max(1, totalPages - 1)
-          : (currentPage <= 3 ? 1 : Math.max(1, currentPage - 2)));
+        ? Math.max(1, totalPages - 1)
+        : (currentPage <= 3 ? 1 : Math.max(1, currentPage - 2)));
 
     // Slide container concurrently with the flip
     setCenteringOffset(getCenteringOffset(targetPage, totalPages, bookDimensions.width, isMobile));
@@ -878,24 +878,10 @@ export const Book: React.FC<BookProps> = ({
 
 
         {/* Ornate Left Side Border Design */}
-        <div className="book-decor-side-left">
-          <img
-            src="/book-bg-border.png"
-            alt=""
-            className="book-decor-img book-decor-side-img"
-            draggable={false}
-          />
-        </div>
+        <div className="book-decor-side-left border-scroll-anim"></div>
 
         {/* Ornate Right Side Border Design */}
-        <div className="book-decor-side-right">
-          <img
-            src="/book-bg-border-right.png"
-            alt=""
-            className="book-decor-img book-decor-side-img"
-            draggable={false}
-          />
-        </div>
+        <div className="book-decor-side-right border-scroll-anim"></div>
 
         {/* Animated Spreading Circuit Lines - V2 */}
         <svg
@@ -991,8 +977,8 @@ export const Book: React.FC<BookProps> = ({
           </g>
         </svg>
 
-        {/* Futuristic Robotic Hand Pointing at Book */}
-        <div className="absolute top-[50%] -translate-y-1/2 -left-[12%] sm:-left-[5%] md:left-[0%] lg:left-[4%] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700">
+        {/* Futuristic Robotic Hand Pointing at Book (Top on Mobile, Left on Desktop) */}
+        <div className="absolute top-[-4%] sm:top-[12%] md:top-[50%] left-1/2 md:left-[0%] lg:left-[4%] -translate-x-1/2 md:translate-x-0 translate-y-0 md:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 md:rotate-0">
           <img
             src="/Futuristic-Robotic-Hand-Schematic.png"
             alt="Robotic Hand Schematic"
@@ -1001,8 +987,8 @@ export const Book: React.FC<BookProps> = ({
           />
         </div>
 
-        {/* Futuristic Robotic Hand Pointing at Book (Right Side) */}
-        <div className="absolute top-[50%] -translate-y-1/2 -right-[12%] sm:-right-[5%] md:right-[0%] lg:right-[4%] w-[300px] sm:w-[350px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700">
+        {/* Futuristic Robotic Hand Pointing at Book (Bottom on Mobile, Right on Desktop) */}
+        <div className="absolute bottom-[0%] sm:bottom-[12%] md:bottom-auto md:top-[50%] left-1/2 md:left-auto md:right-[0%] lg:right-[4%] -translate-x-1/2 md:translate-x-0 translate-y-0 md:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 md:rotate-0">
           <img
             src="/Futuristic-Robotic-Hand-Schematic-revert.png"
             alt="Robotic Hand Schematic Reversed"

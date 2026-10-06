@@ -16,7 +16,8 @@
   --book-border: rgba(0, 168, 255, 0.2);
   --book-border-subtle: rgba(255, 255, 255, 0.08);
   --book-border-glow: rgba(0, 168, 255, 0.4);
-  --book-accent: #00a8ff; /* Electric Cyber Cyan */
+  --book-accent: #00a8ff;
+  /* Electric Cyber Cyan */
   --book-accent-rgb: 0, 168, 255;
   --book-accent-gradient: linear-gradient(135deg, #00d2ff 0%, #00a8ff 50%, #0284c7 100%);
   --book-text-primary: #f8fafc;
@@ -233,12 +234,10 @@
 .book-reader-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 168, 255, 0.09) 0%,
-    rgba(0, 210, 255, 0.03) 45%,
-    transparent 72%
-  );
+  background: radial-gradient(circle at center,
+      rgba(0, 168, 255, 0.09) 0%,
+      rgba(0, 210, 255, 0.03) 45%,
+      transparent 72%);
   pointer-events: none;
   z-index: 1;
 }
@@ -260,12 +259,10 @@
 .book-decor-ambient-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 168, 255, 0.12) 0%,
-    rgba(0, 210, 255, 0.04) 45%,
-    transparent 75%
-  );
+  background: radial-gradient(circle at 50% 50%,
+      rgba(0, 168, 255, 0.12) 0%,
+      rgba(0, 210, 255, 0.04) 45%,
+      transparent 75%);
   pointer-events: none;
 }
 
@@ -301,6 +298,7 @@
     transform: translate(-50%, -50%) scale(0.97) rotate(0deg);
     opacity: 0.11;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1.03) rotate(3deg);
     opacity: 0.16;
@@ -319,21 +317,26 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 120px; /* Adjust width as needed for vertical borders */
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  width: 75px;
+  /* Adjust width as needed for vertical borders */
   pointer-events: none;
   opacity: 0.3;
   filter: drop-shadow(0 0 20px rgba(0, 168, 255, 0.35));
-  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+  overflow: hidden;
+  transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
-.book-decor-side-left .book-decor-side-img {
+.book-decor-side-left::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 100vh;
-  object-fit: contain;
-  object-position: left center;
+  height: 200vh;
+  background-image: url('/book-bg-border.png');
+  background-size: 100% 50%;
+  background-repeat: repeat-y;
+  animation: border-scroll-y 15s linear infinite;
 }
 
 /* Ornate Right Side Border Design ("Round Shape Side" Mandala Arc) */
@@ -342,21 +345,46 @@
   right: 0;
   top: 0;
   bottom: 0;
-  width: 120px; /* Adjust width as needed for vertical borders */
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  width: 75px;
+  /* Adjust width as needed for vertical borders */
   pointer-events: none;
   opacity: 0.42;
   filter: drop-shadow(0 0 20px rgba(0, 168, 255, 0.35));
-  transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+  overflow: hidden;
+  transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
-.book-decor-side-right .book-decor-side-img {
+.book-decor-side-right::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 100vh;
-  object-fit: contain;
-  object-position: right center;
+  height: 200vh;
+  background-image: url('/book-bg-border-right.png');
+  background-size: 100% 50%;
+  background-repeat: repeat-y;
+  animation: border-scroll-y-down 15s linear infinite;
+}
+
+@keyframes border-scroll-y {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes border-scroll-y-down {
+  from {
+    transform: translateY(-50%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* Interactive Illumination on Mouse Presence */
@@ -428,6 +456,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -437,6 +466,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(-360deg);
   }
@@ -477,6 +507,7 @@
   0% {
     stroke-dashoffset: 0;
   }
+
   100% {
     stroke-dashoffset: -1300;
   }
@@ -486,6 +517,7 @@
   0% {
     stroke-dashoffset: -1300;
   }
+
   100% {
     stroke-dashoffset: 0;
   }
@@ -763,26 +795,22 @@
 
 .book-edge-stack-right {
   right: -4px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #f7f4ee 0px,
-    #f7f4ee 2px,
-    #d8d3c7 2px,
-    #d8d3c7 3px
-  );
+  background: repeating-linear-gradient(to bottom,
+      #f7f4ee 0px,
+      #f7f4ee 2px,
+      #d8d3c7 2px,
+      #d8d3c7 3px);
   border-radius: 0 3px 3px 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4), 6px 0 16px rgba(0, 0, 0, 0.5);
 }
 
 .book-edge-stack-left {
   left: -4px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #f7f4ee 0px,
-    #f7f4ee 2px,
-    #d8d3c7 2px,
-    #d8d3c7 3px
-  );
+  background: repeating-linear-gradient(to bottom,
+      #f7f4ee 0px,
+      #f7f4ee 2px,
+      #d8d3c7 2px,
+      #d8d3c7 3px);
   border-radius: 3px 0 0 3px;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.4), -6px 0 16px rgba(0, 0, 0, 0.5);
 }
@@ -1241,8 +1269,13 @@
 }
 
 @keyframes soundBarWave {
-  0% { transform: scaleY(0.3); }
-  100% { transform: scaleY(1); }
+  0% {
+    transform: scaleY(0.3);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 /* ==========================================================================
@@ -1384,17 +1417,29 @@
 
 /* Animations */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* ==========================================================================
@@ -1409,6 +1454,7 @@
   .book-hotspot {
     width: 36px;
   }
+
   .book-hotspot-btn {
     width: 36px;
     height: 36px;
@@ -1512,15 +1558,18 @@
     width: 180px;
     opacity: 0.32;
   }
+
   .book-decor-side-right {
     width: 180px;
     opacity: 0.35;
   }
+
   .book-decor-corner {
     width: 95px;
     height: 95px;
     opacity: 0.28;
   }
+
   .book-decor-mandala-wrap {
     width: 480px;
     height: 480px;
@@ -1534,16 +1583,19 @@
     left: -20px;
     opacity: 0.22;
   }
+
   .book-decor-side-right {
     width: 110px;
     right: -20px;
     opacity: 0.22;
   }
+
   .book-decor-corner {
     width: 65px;
     height: 65px;
     opacity: 0.22;
   }
+
   .book-decor-mandala-wrap {
     width: 340px;
     height: 340px;
@@ -1557,16 +1609,19 @@
     left: -25px;
     opacity: 0.16;
   }
+
   .book-decor-side-right {
     width: 75px;
     right: -25px;
     opacity: 0.16;
   }
+
   .book-decor-corner {
     width: 48px;
     height: 48px;
     opacity: 0.18;
   }
+
   .book-decor-mandala-wrap {
     width: 260px;
     height: 260px;
@@ -1649,7 +1704,30 @@
 }
 
 @keyframes book-circuit-flow {
-  0% { stroke-dashoffset: 100; }
-  100% { stroke-dashoffset: 0; }
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
 }
 
+/* ------------------------------------------------------------- */
+/* Robotic Hand Realistic Hover Animations                     */
+/* ------------------------------------------------------------- */
+@keyframes hand-hover {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(8px, -5px) rotate(1.5deg);
+  }
+  66% {
+    transform: translate(-4px, 5px) rotate(-1deg);
+  }
+}
+
+.animate-hand-hover {
+  animation: hand-hover 6s ease-in-out infinite;
+}
