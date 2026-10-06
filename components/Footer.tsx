@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
   return (
     <footer
       id="site-footer"
-      className="relative w-full min-h-[22vh] max-h-[28vh] bg-[#F1EDE2] text-[#161121] overflow-hidden select-none font-space border-t border-[#D5C9B8] flex flex-col justify-between"
+      className="relative w-full h-auto min-h-[22vh] bg-[#F1EDE2] text-[#161121] overflow-hidden select-none font-space border-t border-[#D5C9B8] flex flex-col justify-between"
     >
       {/* ========================================================================= */}
       {/* VINTAGE ARCHIVAL BACKGROUND & BLUEPRINT MOTIFS (Matching Hero UI)          */}
@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Butterflies Decor (Upper Right) */}
-        <div className="hidden sm:block absolute top-[6%] right-[2%] w-[80px] sm:w-[95px] h-[80px] sm:h-[95px] opacity-45 mix-blend-multiply -rotate-12">
+        <div className="absolute top-[6%] right-[2%] w-[60px] sm:w-[95px] h-[60px] sm:h-[95px] opacity-45 mix-blend-multiply -rotate-12">
           <Image
             src="/page-bg-butterfly.png"
             alt="Butterflies Decor"
@@ -65,7 +65,7 @@ export const Footer: React.FC = () => {
         <svg
           viewBox="0 0 1200 160"
           preserveAspectRatio="none"
-          className="hidden lg:block absolute inset-0 w-full h-full opacity-35 overflow-visible pointer-events-none select-none"
+          className="absolute inset-0 w-full h-full opacity-35 overflow-visible pointer-events-none select-none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -99,14 +99,14 @@ export const Footer: React.FC = () => {
       {/* ========================================================================= */}
       {/* COMPACT MAIN FOOTER CONTENT (~25vh HEIGHT)                                */}
       {/* ========================================================================= */}
-      <div className="relative z-10 max-w-[1600px] w-full mx-auto px-5 sm:px-8 lg:px-12 pt-4 sm:pt-5 pb-2 flex-1 flex flex-col justify-between">
+      <div className="relative z-10 max-w-[1600px] w-full mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-5 pb-12 sm:pb-6 flex-1 flex flex-col justify-between gap-6 lg:gap-0">
         
         {/* Main Content: Split between Left Identity and Right Magazine Archive */}
-        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-5 lg:gap-10">
+        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 lg:gap-10">
           
           {/* LEFT: College & Department Identity */}
-          <div className="space-y-1.5 text-left max-w-xl">
-            <div className="flex items-center gap-3">
+          <div className="space-y-3 text-left max-w-xl">
+            <div className="flex flex-wrap items-center gap-3">
               <div className="w-10 h-10 shrink-0 p-1 rounded-xl bg-white/80 border border-[#D5C9B8] shadow-xs">
                 <img
                   src="/kgec_logo-removebg-preview.png"
@@ -125,7 +125,7 @@ export const Footer: React.FC = () => {
                 </span>
               </div>
 
-              <div className="hidden sm:flex items-center gap-1.5 ml-2 pl-3 border-l border-[#D5C9B8]">
+              <div className="flex items-center gap-1.5 sm:ml-2 sm:pl-3 border-l-0 sm:border-l border-[#D5C9B8]">
                 <span className="w-1.5 h-1.5 bg-[#FF4D00] rounded-xs inline-block" />
                 <span className="font-mono text-[10px] text-[#555555]">
                   &gt; def createImpact(): <span className="inline-block w-1.5 h-[2px] bg-[#FF4D00] animate-pulse align-middle ml-0.5" />
@@ -142,12 +142,12 @@ export const Footer: React.FC = () => {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-mono text-[#666666]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-mono text-[#666666]">
               <span className="text-[#3A3A3A] font-bold uppercase tracking-wider">SAME DREAMS. MORE ALGORITHMS.</span>
               <span>•</span>
               <span>ESTD. 1995</span>
-              <span className="hidden sm:inline">•</span>
-              <span className="hidden sm:inline">Kalyani, Nadia, West Bengal 741235</span>
+              <span>•</span>
+              <span>Kalyani, Nadia, West Bengal 741235</span>
             </div>
           </div>
 
@@ -198,7 +198,7 @@ export const Footer: React.FC = () => {
               <a
                 href="/prisma_content.pdf"
                 download="PRISMA_3.0_CSE_KGEC.pdf"
-                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#FF4D00] hover:bg-[#E64500] text-white transition-all text-[11px] font-mono font-semibold uppercase tracking-wider shadow-2xs cursor-pointer ml-1"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#FF4D00] hover:bg-[#E64500] text-white transition-all text-[11px] font-mono font-semibold uppercase tracking-wider shadow-2xs cursor-pointer ml-1 sm:ml-1"
                 title="Download 2026 PDF"
               >
                 <Download className="w-3 h-3" />
@@ -212,15 +212,15 @@ export const Footer: React.FC = () => {
         {/* ----------------------------------------------------------------------- */}
         {/* COMPACT BOTTOM COLOPHON STRIP                                           */}
         {/* ----------------------------------------------------------------------- */}
-        <div className="pt-2 mt-2 border-t border-[#D5C9B8]/70 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] font-mono text-[#555555]">
-          <div className="flex items-center gap-2 text-center sm:text-left">
+        <div className="pt-3 pb-4 sm:pb-0 mt-4 lg:mt-2 border-t border-[#D5C9B8]/70 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-2 text-[10px] font-mono text-[#555555]">
+          <div className="flex flex-wrap justify-center items-center gap-2 text-center sm:text-left">
             <span>© 2026 KGEC • Department of Computer Science & Engineering</span>
             <span className="text-[#FF4D00]">•</span>
             <span>All Rights Reserved</span>
           </div>
 
-          <div className="flex items-center gap-4">
-            <span className="hidden md:inline text-[#777777]">
+          <div className="flex flex-wrap justify-center items-center gap-4 text-center">
+            <span className="text-[#777777]">
               Crafted with algorithms & passion for PRISMA 3.0
             </span>
 

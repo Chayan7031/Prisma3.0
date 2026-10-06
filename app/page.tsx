@@ -128,7 +128,6 @@ export default function Home() {
         <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 py-10 flex flex-col md:flex-row items-center justify-center gap-16 lg:gap-32">
           
           {/* LEFT COLUMN: Typography & Header */}
-          {/* LEFT COLUMN: Typography & Header */}
           <div className="flex-1 flex flex-col justify-center items-center text-center max-w-lg">
             <style>{`
               @keyframes scaleLineX {

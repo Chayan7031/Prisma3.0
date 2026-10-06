@@ -1241,25 +1241,23 @@ export const Book: React.FC<BookProps> = ({
                 download
                 target="_blank"
                 rel="noopener noreferrer"
-                className="book-btn book-btn-download"
+                className="book-btn book-btn-download book-btn-icon-only"
                 title="Download Magazine PDF"
                 aria-label="Download Magazine PDF"
               >
                 <DownloadIcon />
-                <span className="book-btn-label">Download</span>
               </a>
             )}
 
             {onClose && (
               <button
                 type="button"
-                className="book-btn book-btn-close"
+                className="book-btn book-btn-close book-btn-icon-only"
                 onClick={onClose}
                 title="Close Magazine Viewer (Esc)"
                 aria-label="Close Viewer"
               >
                 <CloseIcon />
-                <span className="book-btn-label">Close</span>
               </button>
             )}
           </div>
