@@ -7,6 +7,7 @@ import {
   Play,
   Download,
 } from 'lucide-react';
+import { SamarkanNumber30 } from './SamarkanNumber30';
 
 export interface HeroProps {
   onOpenReader?: (page?: number) => void;
@@ -111,14 +112,12 @@ export const Hero: React.FC<HeroProps> = ({
       </div>
       <header className="relative z-30 w-full max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 pt-5 sm:pt-6 pb-2 flex items-center justify-between">
         
-        {/* Left: prisma 3.0 Logo in authentic Samarkan glyphs & Gold accent */}
+        {/* Left: prisma 3.0 Logo in authentic Samarkan glyphs & Devanagari 3.0 */}
         <Link href="/" className="cursor-pointer group flex items-baseline gap-2 sm:gap-2.5 z-10">
           <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#161121] lowercase tracking-wide transition-opacity group-hover:opacity-85">
             prisma
           </span>
-          <span className="font-space font-black text-2xl sm:text-3xl lg:text-[32px] text-[#BE953E] tracking-tight">
-            3.0
-          </span>
+          <SamarkanNumber30 className="h-[20px] sm:h-[24px] lg:h-[28px] w-auto inline-block self-baseline" color="#FF5900" />
         </Link>
 
         {/* Center: 3-Item Minimalist Menu */}
@@ -183,9 +182,10 @@ export const Hero: React.FC<HeroProps> = ({
             <h1 className="font-samarkan text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-wide text-[#161121] lowercase">
               prisma
             </h1>
-            <span className="font-space font-black text-5xl sm:text-6xl md:text-7xl lg:text-[72px] xl:text-[82px] tracking-tight text-[#BE953E]">
-              3.0
-            </span>
+            <SamarkanNumber30
+              className="h-[44px] sm:h-[52px] md:h-[64px] lg:h-[70px] xl:h-[78px] w-auto inline-block self-baseline"
+              color="#FF5900"
+            />
           </div>
 
           {/* 3. Department Subtitle */}
@@ -288,123 +288,41 @@ export const Hero: React.FC<HeroProps> = ({
 
             {/* 1. Main Solid Orange Stippled Sun Disk (Displaced Right behind Cyborg Face) */}
             <g transform="translate(595, 345)">
-              <g className="animate-slow-contract-a">
-                <circle cx="0" cy="0" r="200" fill="url(#solarGlow)" />
-                <circle cx="0" cy="0" r="200" fill="url(#stippleDots)" />
-                
-                {/* Radiating Ticks along Sun Perimeter */}
-                <line x1="200" y1="0" x2="218" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                <line x1="0" y1="-200" x2="0" y2="-218" stroke="#FF4D00" strokeWidth="1.3" />
-                <line x1="0" y1="200" x2="0" y2="218" stroke="#FF4D00" strokeWidth="1.3" />
-                <line x1="141" y1="-141" x2="155" y2="-155" stroke="#FF4D00" strokeWidth="1" />
-                <line x1="141" y1="141" x2="155" y2="155" stroke="#FF4D00" strokeWidth="1" />
-              </g>
+              <circle cx="0" cy="0" r="200" fill="url(#solarGlow)" />
+              <circle cx="0" cy="0" r="200" fill="url(#stippleDots)" />
+              
+              {/* Radiating Ticks along Sun Perimeter */}
+              <line x1="200" y1="0" x2="218" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+              <line x1="0" y1="-200" x2="0" y2="-218" stroke="#FF4D00" strokeWidth="1.3" />
+              <line x1="0" y1="200" x2="0" y2="218" stroke="#FF4D00" strokeWidth="1.3" />
+              <line x1="141" y1="-141" x2="155" y2="-155" stroke="#FF4D00" strokeWidth="1" />
+              <line x1="141" y1="141" x2="155" y2="155" stroke="#FF4D00" strokeWidth="1" />
             </g>
 
             {/* 2. Blueprint Ring 1 (Displaced Left around Human Hair) */}
             <g transform="translate(470, 335)">
-              <g className="animate-slow-contract-b">
-                <circle cx="0" cy="0" r="235" stroke="#FF4D00" strokeWidth="1.2" opacity="0.8" />
-                {/* Electric Current Orbit Pulse */}
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="235"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  pathLength={100}
-                  className="animate-ring-current-fast"
-                  filter="url(#electricCurrentGlow)"
-                />
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="235"
-                  stroke="#FFAA00"
-                  strokeWidth="3.2"
-                  strokeLinecap="round"
-                  pathLength={100}
-                  className="animate-ring-current-fast"
-                  filter="url(#electricCurrentGlow)"
-                  opacity="0.85"
-                />
-                <circle cx="-235" cy="0" r="3.5" fill="#FF4D00" />
-                <line x1="-235" y1="0" x2="-252" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                <line x1="0" y1="-235" x2="0" y2="-252" stroke="#FF4D00" strokeWidth="1.3" />
-                <line x1="-166" y1="-166" x2="-180" y2="-180" stroke="#FF4D00" strokeWidth="1" />
-              </g>
+              <circle cx="0" cy="0" r="235" stroke="#FF4D00" strokeWidth="1.2" opacity="0.8" />
+              <circle cx="-235" cy="0" r="3.5" fill="#FF4D00" />
+              <line x1="-235" y1="0" x2="-252" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+              <line x1="0" y1="-235" x2="0" y2="-252" stroke="#FF4D00" strokeWidth="1.3" />
+              <line x1="-166" y1="-166" x2="-180" y2="-180" stroke="#FF4D00" strokeWidth="1" />
             </g>
 
             {/* 3. Blueprint Ring 2 (Dashed Astrolabe Circle, Displaced Center-Mid) */}
             <g transform="translate(525, 355)">
-              <g className="animate-slow-contract-a">
-                <circle cx="0" cy="0" r="275" stroke="#FF4D00" strokeWidth="0.9" strokeDasharray="7 5" opacity="0.7" />
-                {/* Electric Current Counter-Orbit Pulse */}
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="275"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  pathLength={100}
-                  className="animate-ring-current-med"
-                  filter="url(#electricCurrentGlow)"
-                />
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="275"
-                  stroke="#FF8800"
-                  strokeWidth="3.4"
-                  strokeLinecap="round"
-                  pathLength={100}
-                  className="animate-ring-current-med"
-                  filter="url(#electricCurrentGlow)"
-                  opacity="0.8"
-                />
-                <line x1="0" y1="-275" x2="0" y2="-290" stroke="#FF4D00" strokeWidth="1.2" />
-                <circle cx="0" cy="-275" r="3" fill="#FF4D00" />
-              </g>
+              <circle cx="0" cy="0" r="275" stroke="#FF4D00" strokeWidth="0.9" strokeDasharray="7 5" opacity="0.7" />
+              <line x1="0" y1="-275" x2="0" y2="-290" stroke="#FF4D00" strokeWidth="1.2" />
+              <circle cx="0" cy="-275" r="3" fill="#FF4D00" />
             </g>
 
             {/* 4. Blueprint Ring 3 (Outer Wide Horizon Ring, Displaced Lower-Right) */}
             <g transform="translate(550, 370)">
-              <g className="animate-slow-contract-c">
-                <circle cx="0" cy="0" r="325" stroke="#FF4D00" strokeWidth="0.55" strokeDasharray="4 8" opacity="0.4" />
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="325"
-                  stroke="#FFAA33"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  pathLength={100}
-                  className="animate-ring-current-slow"
-                  filter="url(#electricCurrentGlow)"
-                  opacity="0.8"
-                />
-              </g>
+              <circle cx="0" cy="0" r="325" stroke="#FF4D00" strokeWidth="0.55" strokeDasharray="4 8" opacity="0.4" />
             </g>
 
             {/* 5. Inner Calibration Ring (Displaced Upper-Left) */}
             <g transform="translate(505, 320)">
-              <g className="animate-slow-contract-b">
-                <circle cx="0" cy="0" r="160" stroke="#FF4D00" strokeWidth="0.75" strokeDasharray="2 6" opacity="0.45" />
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="160"
-                  stroke="#FFFFFF"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  pathLength={100}
-                  className="animate-ring-current-fast"
-                  filter="url(#electricCurrentGlow)"
-                  opacity="0.9"
-                />
-              </g>
+              <circle cx="0" cy="0" r="160" stroke="#FF4D00" strokeWidth="0.75" strokeDasharray="2 6" opacity="0.45" />
             </g>
 
             {/* --------------------------------------------------------------- */}
@@ -412,11 +330,11 @@ export const Hero: React.FC<HeroProps> = ({
             {/* --------------------------------------------------------------- */}
 
             {/* Branch 1: Upper Left (Connecting from Left Hair Ring towards Left Column) */}
-            <g stroke="#FF4D00" strokeWidth="1.1" fill="none">
+            <g stroke="#ff5900ff" strokeWidth="1.1" fill="none">
               <path d="M 235 335 H 175 L 140 270 V 160 H 90" />
-              <circle cx="90" cy="160" r="4" fill="#FF4D00" />
-              <circle cx="175" cy="335" r="3" fill="#FF4D00" />
-              <rect x="137" y="267" width="6.5" height="6.5" fill="#FF4D00" />
+              <circle cx="90" cy="160" r="4" fill="#ff5900ff" />
+              <circle cx="175" cy="335" r="3" fill="#ff5900ff" />
+              <rect x="137" y="267" width="6.5" height="6.5" fill="#ff5900ff" />
 
               {/* Electric Current Stream Flow */}
               <path
@@ -431,7 +349,7 @@ export const Hero: React.FC<HeroProps> = ({
               <path
                 d="M 235 335 H 175 L 140 270 V 160 H 90"
                 pathLength={100}
-                stroke="#ffb163d7"
+                stroke="#ff5900ff"
                 strokeWidth="3.6"
                 strokeLinecap="round"
                 filter="url(#electricCurrentGlow)"
@@ -445,8 +363,8 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Branch 2: Lower Left (Horizontal line with 45-deg drop) */}
             <g stroke="#ff5900ff" strokeWidth="1.1" fill="none">
               <path d="M 310 540 H 160 L 120 585 H 60" />
-              <circle cx="60" cy="585" r="4" fill="#FF4D00" />
-              <circle cx="160" cy="540" r="3" fill="#FF4D00" />
+              <circle cx="60" cy="585" r="4" fill="#ff5900ff" />
+              <circle cx="160" cy="540" r="3" fill="#ff5900ff" />
               <line x1="240" y1="530" x2="240" y2="550" strokeWidth="1.6" />
 
               {/* Electric Current Stream Flow */}
@@ -474,14 +392,14 @@ export const Hero: React.FC<HeroProps> = ({
             </g>
 
             {/* Branch 3: Top Right (Leading to Innovation Pillar & Foliage) */}
-            <g stroke="#FF4D00" strokeWidth="1.1" fill="none">
+            <g stroke="#ff5900ff" strokeWidth="1.1" fill="none">
               <path d="M 720 220 L 775 165 V 95 H 850" />
-              <circle cx="850" cy="95" r="4" fill="#FF4D00" />
-              <circle cx="775" cy="165" r="3" fill="#FF4D00" />
+              <circle cx="850" cy="95" r="4" fill="#ff5900ff" />
+              <circle cx="775" cy="165" r="3" fill="#ff5900ff" />
               
               {/* Secondary Parallel Trace */}
               <path d="M 750 250 L 805 195 V 135 H 870" strokeWidth="0.85" />
-              <rect x="867" y="132" width="6.5" height="6.5" fill="#FF4D00" />
+              <rect x="867" y="132" width="6.5" height="6.5" fill="#ff5900ff" />
 
               {/* Electric Current Stream Flow */}
               <path
@@ -496,7 +414,7 @@ export const Hero: React.FC<HeroProps> = ({
               <path
                 d="M 720 220 L 775 165 V 95 H 850"
                 pathLength={100}
-                stroke="#FFAA00"
+                stroke="#ff5900ff"
                 strokeWidth="3.6"
                 strokeLinecap="round"
                 filter="url(#electricCurrentGlow)"
@@ -508,10 +426,10 @@ export const Hero: React.FC<HeroProps> = ({
             </g>
 
             {/* Branch 4: Lower Right (Connecting into Wireframe Head & BR Design) */}
-            <g stroke="#FF4D00" strokeWidth="1.1" fill="none">
+            <g stroke="#ff5900ff" strokeWidth="1.1" fill="none">
               <path d="M 750 440 L 810 500 V 630" />
-              <circle cx="810" cy="500" r="3.5" fill="#FF4D00" />
-              <circle cx="810" cy="630" r="4" fill="#FF4D00" />
+              <circle cx="810" cy="500" r="3.5" fill="#ff5900ff" />
+              <circle cx="810" cy="630" r="4" fill="#ff5900ff" />
 
               {/* Electric Current Stream Flow */}
               <path
@@ -526,7 +444,7 @@ export const Hero: React.FC<HeroProps> = ({
               <path
                 d="M 750 440 L 810 500 V 630"
                 pathLength={100}
-                stroke="#FFAA00"
+                stroke="#ff5900ff"
                 strokeWidth="3.6"
                 strokeLinecap="round"
                 filter="url(#electricCurrentGlow)"
