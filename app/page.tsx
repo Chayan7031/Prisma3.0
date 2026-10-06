@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Preloader } from '@/components/Preloader';
 import Hero from '@/components/Hero';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -341,31 +342,10 @@ export default function Home() {
             </Link>
           </div>
         </div>
-
-        {/* Global Footer */}
-        <footer className="mt-14 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
-          <div>
-            © 2026 Kalyani Government Engineering College • Department of Computer Science & Engineering
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <Link href="/read" className="hover:text-white transition-colors">
-              Reader
-            </Link>
-            <a href="#previous-magazines" className="hover:text-white transition-colors text-[#00D9FF]">
-              Previous Magazines
-            </a>
-            <Link href="/v2" className="hover:text-white transition-colors">
-              White Edition
-            </Link>
-            <a href="/prisma_content.pdf" download className="hover:text-white transition-colors">
-              PDF
-            </a>
-          </div>
-        </footer>
       </section>
+
+      {/* Global Archival Footer (Matches Hero UI) */}
+      <Footer />
     </div>
   );
 }
