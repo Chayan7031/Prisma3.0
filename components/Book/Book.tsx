@@ -158,9 +158,9 @@ export interface BookProps {
 }
 
 // ============================================================================
-// Default Pages and Table of Contents (21 Pages via Cloudinary with local fallback)
+// Default Pages and Table of Contents (Pages via Cloudinary with local fallback)
 // ============================================================================
-export const DEFAULT_PAGES: string[] = getMagazinePageUrls(21);
+export const DEFAULT_PAGES: string[] = getMagazinePageUrls();
 
 export const DEFAULT_TOC: TOCItem[] = [
   { title: 'Front Cover', page: 1 },
@@ -171,7 +171,7 @@ export const DEFAULT_TOC: TOCItem[] = [
   { title: 'Technical Articles & Horizons', page: 10 },
   { title: 'Creative Expressions & Poetry', page: 14 },
   { title: 'Department Events & Highlights', page: 18 },
-  { title: 'Special Thanks & Back Cover', page: 21 },
+  { title: 'Special Thanks & Back Cover', page: DEFAULT_PAGES.length || 63 },
 ];
 
 // ============================================================================
@@ -299,6 +299,11 @@ export const Book: React.FC<BookProps> = ({
   useEffect(() => {
     currentPageRef.current = currentPage;
   }, [currentPage]);
+
+  // Keep totalPages in sync with pages array
+  useEffect(() => {
+    setTotalPages(pages.length);
+  }, [pages.length]);
 
   // Sound disabled per user request
   const triggerFlipAudio = useCallback((): void => { }, []);
