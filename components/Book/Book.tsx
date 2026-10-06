@@ -300,7 +300,7 @@ export const Book: React.FC<BookProps> = ({
   }, [currentPage]);
 
   // Sound disabled per user request
-  const triggerFlipAudio = useCallback((): void => {}, []);
+  const triggerFlipAudio = useCallback((): void => { }, []);
 
   // Preload page images to prevent flicker during 3D page turns
   useEffect(() => {
@@ -663,8 +663,8 @@ export const Book: React.FC<BookProps> = ({
     const targetPage = isMobile
       ? Math.max(1, currentPage - 1)
       : (currentPage === totalPages
-          ? Math.max(1, totalPages - 1)
-          : (currentPage <= 3 ? 1 : Math.max(1, currentPage - 2)));
+        ? Math.max(1, totalPages - 1)
+        : (currentPage <= 3 ? 1 : Math.max(1, currentPage - 2)));
 
     // Slide container concurrently with the flip
     setCenteringOffset(getCenteringOffset(targetPage, totalPages, bookDimensions.width, isMobile));

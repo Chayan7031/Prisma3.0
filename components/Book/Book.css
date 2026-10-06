@@ -16,7 +16,8 @@
   --book-border: rgba(0, 168, 255, 0.2);
   --book-border-subtle: rgba(255, 255, 255, 0.08);
   --book-border-glow: rgba(0, 168, 255, 0.4);
-  --book-accent: #00a8ff; /* Electric Cyber Cyan */
+  --book-accent: #00a8ff;
+  /* Electric Cyber Cyan */
   --book-accent-rgb: 0, 168, 255;
   --book-accent-gradient: linear-gradient(135deg, #00d2ff 0%, #00a8ff 50%, #0284c7 100%);
   --book-text-primary: #f8fafc;
@@ -233,12 +234,10 @@
 .book-reader-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 168, 255, 0.09) 0%,
-    rgba(0, 210, 255, 0.03) 45%,
-    transparent 72%
-  );
+  background: radial-gradient(circle at center,
+      rgba(0, 168, 255, 0.09) 0%,
+      rgba(0, 210, 255, 0.03) 45%,
+      transparent 72%);
   pointer-events: none;
   z-index: 1;
 }
@@ -260,12 +259,10 @@
 .book-decor-ambient-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(0, 168, 255, 0.12) 0%,
-    rgba(0, 210, 255, 0.04) 45%,
-    transparent 75%
-  );
+  background: radial-gradient(circle at 50% 50%,
+      rgba(0, 168, 255, 0.12) 0%,
+      rgba(0, 210, 255, 0.04) 45%,
+      transparent 75%);
   pointer-events: none;
 }
 
@@ -277,11 +274,36 @@
   filter: hue-rotate(155deg) saturate(1.8) brightness(1.2) drop-shadow(0 0 16px rgba(0, 168, 255, 0.35));
 }
 
-/* ==========================================================================
-   PRISMA 3.0 Renaissance & Cybernetic Dual Architectural Backdrop
-   Left: Classical Antique Bronze Baroque Filigree & Celestial Network Sphere
-   Right: Glowing Cyan Cybernetic Circuit Board & Blueprint Telemetry
-   ========================================================================== */
+/* Central Watermark Mandala behind the Book Spread */
+.book-decor-mandala-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 580px;
+  height: 580px;
+  max-width: 85vw;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.14;
+  filter: drop-shadow(0 0 35px rgba(0, 168, 255, 0.35));
+  animation: bookMandalaAmbientFloat 25s ease-in-out infinite alternate;
+}
+
+@keyframes bookMandalaAmbientFloat {
+  0% {
+    transform: translate(-50%, -50%) scale(0.97) rotate(0deg);
+    opacity: 0.11;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.03) rotate(3deg);
+    opacity: 0.16;
+  }
+}
 
 /* Full-bleed seamless ambient backdrop layer */
 .book-decor-backdrop {
@@ -303,41 +325,93 @@
 .book-decor-cyber-left {
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: min(620px, 42vw);
-  height: 94vh;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  top: 0;
+  bottom: 0;
+  width: 75px;
+  /* Adjust width as needed for vertical borders */
   pointer-events: none;
-  z-index: 2;
-  opacity: 0.88;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 20px rgba(0, 168, 255, 0.35));
+  overflow: hidden;
   transition: opacity 0.4s ease, filter 0.4s ease;
 }
 
-.book-decor-cyber-left .book-decor-cyber-img {
+.book-decor-side-left::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: left center;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  filter: drop-shadow(0 0 25px rgba(0, 168, 255, 0.2));
+  height: 200vh;
+  background-image: url('/book-bg-border.png');
+  background-size: 100% 50%;
+  background-repeat: repeat-y;
+  animation: border-scroll-y 15s linear infinite;
 }
 
 /* Right Flank: Glowing Cyan Cybernetic Circuit Board & Blueprint Telemetry */
 .book-decor-cyber-right {
   position: absolute;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: min(620px, 42vw);
-  height: 94vh;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  top: 0;
+  bottom: 0;
+  width: 75px;
+  /* Adjust width as needed for vertical borders */
+  pointer-events: none;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 20px rgba(0, 168, 255, 0.35));
+  overflow: hidden;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.book-decor-side-right::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 200vh;
+  background-image: url('/book-bg-border-right.png');
+  background-size: 100% 50%;
+  background-repeat: repeat-y;
+  animation: border-scroll-y-down 15s linear infinite;
+}
+
+@keyframes border-scroll-y {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes border-scroll-y-down {
+  from {
+    transform: translateY(-50%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Interactive Illumination on Mouse Presence */
+.book-reader-container:hover .book-decor-side-left,
+.book-reader-container:hover .book-decor-side-right {
+  opacity: 0.55;
+  filter: drop-shadow(0 0 25px rgba(0, 168, 255, 0.5));
+}
+
+/* ==========================================================================
+   PRISMA 3.0 Vector Path & Dynamic Moving Round Designs
+   ========================================================================== */
+.book-vector-decor-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 2;
   opacity: 0.92;
@@ -361,9 +435,57 @@
   filter: drop-shadow(0 0 30px rgba(0, 168, 255, 0.3));
 }
 
-.book-reader-container:hover .book-decor-cyber-right {
-  opacity: 1;
-  filter: drop-shadow(0 0 32px rgba(0, 168, 255, 0.45));
+/* 360-Degree Hypnotic Celestial Rotation */
+.decor-rotator {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorClockwise 32s linear infinite;
+  will-change: transform;
+}
+
+.decor-rotator-reverse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorCounterClockwise 32s linear infinite;
+  will-change: transform;
+}
+
+@keyframes spinDecorClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinDecorCounterClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Subtle Reticle HUD Pulse & Spin */
+.vector-orbit-reticle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorCounterClockwise 45s linear infinite;
+}
+
+.vector-orbit-reticle-reverse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spinDecorClockwise 45s linear infinite;
+}
+
+/* High-Speed Traveling Energy Pulses along Vector Tracks */
+.vector-dash-pulse {
+  animation: vectorDashPulseAnim 7s linear infinite;
 }
 
 /* Parchment Theme Adaptations */
@@ -382,20 +504,23 @@
   filter: sepia(0.85) hue-rotate(-20deg) brightness(0.6) contrast(1.25);
 }
 
-/* Responsive adjustment on smaller screens */
-@media (max-width: 1024px) {
-  .book-decor-cyber-left,
-  .book-decor-cyber-right {
-    opacity: 0.6;
-    width: min(340px, 35vw);
+@keyframes vectorDashPulseAnim {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -1300;
   }
 }
 
-@media (max-width: 768px) {
-  .book-decor-cyber-left,
-  .book-decor-cyber-right {
-    opacity: 0.35;
-    width: min(240px, 28vw);
+@keyframes vectorDashPulseReverseAnim {
+  0% {
+    stroke-dashoffset: -1300;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -604,26 +729,22 @@
 
 .book-edge-stack-right {
   right: -4px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #f7f4ee 0px,
-    #f7f4ee 2px,
-    #d8d3c7 2px,
-    #d8d3c7 3px
-  );
+  background: repeating-linear-gradient(to bottom,
+      #f7f4ee 0px,
+      #f7f4ee 2px,
+      #d8d3c7 2px,
+      #d8d3c7 3px);
   border-radius: 0 3px 3px 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.4), 6px 0 16px rgba(0, 0, 0, 0.5);
 }
 
 .book-edge-stack-left {
   left: -4px;
-  background: repeating-linear-gradient(
-    to bottom,
-    #f7f4ee 0px,
-    #f7f4ee 2px,
-    #d8d3c7 2px,
-    #d8d3c7 3px
-  );
+  background: repeating-linear-gradient(to bottom,
+      #f7f4ee 0px,
+      #f7f4ee 2px,
+      #d8d3c7 2px,
+      #d8d3c7 3px);
   border-radius: 3px 0 0 3px;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.4), -6px 0 16px rgba(0, 0, 0, 0.5);
 }
@@ -1082,8 +1203,13 @@
 }
 
 @keyframes soundBarWave {
-  0% { transform: scaleY(0.3); }
-  100% { transform: scaleY(1); }
+  0% {
+    transform: scaleY(0.3);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 /* ==========================================================================
@@ -1225,17 +1351,29 @@
 
 /* Animations */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* ==========================================================================
@@ -1250,6 +1388,7 @@
   .book-hotspot {
     width: 36px;
   }
+
   .book-hotspot-btn {
     width: 36px;
     height: 36px;
@@ -1353,15 +1492,18 @@
     width: 180px;
     opacity: 0.32;
   }
+
   .book-decor-side-right {
     width: 180px;
     opacity: 0.35;
   }
+
   .book-decor-corner {
     width: 95px;
     height: 95px;
     opacity: 0.28;
   }
+
   .book-decor-mandala-wrap {
     width: 480px;
     height: 480px;
@@ -1375,16 +1517,19 @@
     left: -20px;
     opacity: 0.22;
   }
+
   .book-decor-side-right {
     width: 110px;
     right: -20px;
     opacity: 0.22;
   }
+
   .book-decor-corner {
     width: 65px;
     height: 65px;
     opacity: 0.22;
   }
+
   .book-decor-mandala-wrap {
     width: 340px;
     height: 340px;
@@ -1398,16 +1543,19 @@
     left: -25px;
     opacity: 0.16;
   }
+
   .book-decor-side-right {
     width: 75px;
     right: -25px;
     opacity: 0.16;
   }
+
   .book-decor-corner {
     width: 48px;
     height: 48px;
     opacity: 0.18;
   }
+
   .book-decor-mandala-wrap {
     width: 260px;
     height: 260px;
@@ -1415,4 +1563,105 @@
   }
 }
 
+/* ==========================================================================
+   Parchment Theme Toolbar Overrides
+   ========================================================================== */
+.book-reader-container.theme-parchment .book-toolbar {
+  background: rgba(244, 239, 230, 0.95);
+  border-color: rgba(184, 134, 78, 0.3);
+  box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.15), 0 0 25px rgba(184, 134, 78, 0.15);
+}
 
+.book-reader-container.theme-parchment .book-toolbar-divider {
+  background: rgba(184, 134, 78, 0.3);
+}
+
+.book-reader-container.theme-parchment .book-btn {
+  color: #6b6255;
+}
+
+.book-reader-container.theme-parchment .book-btn:hover:not(:disabled) {
+  background: rgba(184, 134, 78, 0.15);
+  color: #2c2824;
+  border-color: rgba(184, 134, 78, 0.25);
+}
+
+.book-reader-container.theme-parchment .book-btn:active:not(:disabled) {
+  background: rgba(184, 134, 78, 0.25);
+}
+
+.book-reader-container.theme-parchment .book-btn.is-active {
+  background: rgba(184, 134, 78, 0.2);
+  color: #a67b45;
+  border-color: rgba(184, 134, 78, 0.4);
+}
+
+.book-reader-container.theme-parchment .book-btn-download {
+  background: rgba(220, 210, 195, 0.5);
+  color: #2c2824;
+  border-color: rgba(184, 134, 78, 0.3);
+}
+
+.book-reader-container.theme-parchment .book-btn-download:hover:not(:disabled) {
+  background: rgba(184, 134, 78, 0.2);
+  color: #1a1815;
+  border-color: rgba(184, 134, 78, 0.5);
+}
+
+.book-reader-container.theme-parchment .book-btn-close:not(.book-btn-icon-only) {
+  background: rgba(244, 63, 94, 0.15) !important;
+  color: #b91c1c !important;
+  border-color: rgba(244, 63, 94, 0.3) !important;
+}
+
+.book-reader-container.theme-parchment .book-btn-close:not(.book-btn-icon-only):hover:not(:disabled) {
+  background: rgba(244, 63, 94, 0.25) !important;
+  color: #991b1b !important;
+  border-color: rgba(244, 63, 94, 0.5) !important;
+  box-shadow: 0 2px 14px rgba(244, 63, 94, 0.2) !important;
+}
+
+.book-reader-container.theme-parchment .book-page-input {
+  background: rgba(220, 210, 195, 0.5);
+  color: #2c2824;
+  border-color: rgba(184, 134, 78, 0.3);
+}
+
+.book-reader-container.theme-parchment .book-page-input:focus {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(184, 134, 78, 0.6);
+  box-shadow: 0 0 0 3px rgba(184, 134, 78, 0.15);
+}
+
+.book-reader-container.theme-parchment .book-page-total {
+  color: #6b6255;
+}
+
+@keyframes book-circuit-flow {
+  0% {
+    stroke-dashoffset: 100;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ------------------------------------------------------------- */
+/* Robotic Hand Realistic Hover Animations                     */
+/* ------------------------------------------------------------- */
+@keyframes hand-hover {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(8px, -5px) rotate(1.5deg);
+  }
+  66% {
+    transform: translate(-4px, 5px) rotate(-1deg);
+  }
+}
+
+.animate-hand-hover {
+  animation: hand-hover 6s ease-in-out infinite;
+}
