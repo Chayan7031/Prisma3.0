@@ -2,6 +2,13 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 
+declare global {
+  interface Window {
+    __prismaPreloaderLoaded?: boolean;
+    __prismaPreloaderComplete?: boolean;
+  }
+}
+
 interface PreloaderProps {
   onComplete?: () => void;
 }
@@ -44,6 +51,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         setTimeout(() => {
           setIsLoaded(true);
           if (typeof window !== 'undefined') {
+            window.__prismaPreloaderLoaded = true;
             window.dispatchEvent(new CustomEvent('prisma-preloader-open'));
           }
           
@@ -52,6 +60,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             document.body.style.overflow = '';
             document.documentElement.style.overflow = '';
             if (typeof window !== 'undefined') {
+              window.__prismaPreloaderComplete = true;
               window.dispatchEvent(new CustomEvent('prisma-preloader-complete'));
             }
             if (onComplete) onComplete();
