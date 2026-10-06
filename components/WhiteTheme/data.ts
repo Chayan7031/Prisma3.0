@@ -1,5 +1,5 @@
 import { MagazineArticle, GalleryPageItem, TeamCategory } from './types';
-import { pages as contentPages } from '@/content/content';
+import { pages as contentPages, pageList as contentPageList } from '@/content/content';
 
 export const ARTICLES_DATA: MagazineArticle[] = [
   {
@@ -135,7 +135,7 @@ export const GALLERY_PAGES: GalleryPageItem[] = [
     description: 'Photographic memories, student accomplishments, and departmental milestones.',
   },
   {
-    pageNumber: 21,
+    pageNumber: contentPageList?.length || 63,
     title: 'Special Thanks & Back Cover',
     category: 'Back',
     imageUrl: contentPages.backCover || '/prisma_backcover.png',
@@ -175,7 +175,7 @@ export const EDITORIAL_TEAMS: TeamCategory[] = [
 
 export const MAGAZINE_STATS = [
   { label: 'Edition Year', value: '2026', subtext: 'Annual Flagship' },
-  { label: 'Total Pages', value: '21', subtext: 'Full Color 300 DPI' },
+  { label: 'Total Pages', value: String(contentPageList?.length || 63), subtext: 'Full Color 300 DPI' },
   { label: 'Articles & Poetry', value: '18+', subtext: 'Student & Faculty Voices' },
   { label: 'Interactive Flip', value: '3D', subtext: 'Physics Page Engine' },
 ];
@@ -259,7 +259,7 @@ export const MAGAZINE_INDEX: import('./types').CuratedTheme[] = [
     description:
       'Graduating Class of 2026 gallery, editorial committee citations, departmental symposia recaps, faculty milestones, and patron acknowledgments.',
     themeType: 'gaming',
-    pageRange: 'P. 19 – 21',
+    pageRange: `P. 19 – ${contentPageList?.length || 63}`,
     pageTarget: 19,
   },
 ];

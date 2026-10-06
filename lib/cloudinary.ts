@@ -26,14 +26,30 @@ export { contentPages as pages, contentPageList as pageList };
  * Uses direct URLs from `content/content.js`, or constructs Cloudinary CDN URL,
  * or falls back to local `/prisma_content_page-XXXX.jpg`.
  *
- * @param pageNumber 1-based page number (1 to 21)
+ * @param pageNumber 1-based page number
  * @param options Transformation parameters (e.g. f_auto, q_auto)
  */
 export function getCloudinaryPageUrl(
   pageNumber: number,
   options: CloudinaryTransformOptions = {}
 ): string {
-  const pageKey = `Page${pageNumber}`;
+  // If contentPageList is available, use direct 1-based page lookup (index = pageNumber - 1)
+  if (contentPageList && contentPageList[pageNumber - 1]) {
+    const directUrl = contentPageList[pageNumber - 1];
+    if (Object.keys(options).length === 0) {
+      return directUrl;
+    }
+    if (directUrl.includes('/image/upload/')) {
+      const transforms = buildTransformationString(options);
+      if (transforms) {
+        return directUrl.replace('/image/upload/', `/image/upload/${transforms}/`);
+      }
+      return directUrl;
+    }
+    return directUrl;
+  }
+
+  const pageKey = pageNumber === 1 ? 'cover' : `Page${pageNumber - 1}`;
   const directUrl = (contentPages as Record<string, string>)[pageKey];
 
   if (directUrl && Object.keys(options).length === 0) {
@@ -72,13 +88,17 @@ export function getCloudinaryPageUrl(
  * Returns an array of image URLs for all magazine pages.
  * Prioritizes links configured in `content/content.js`.
  *
- * @param totalPages Total page count (default: 21)
+ * @param totalPages Total page count (defaults to total pages configured in content.js)
  */
-export function getMagazinePageUrls(totalPages = 21): string[] {
-  if (contentPageList && contentPageList.length >= totalPages) {
-    return contentPageList.slice(0, totalPages);
+export function getMagazinePageUrls(totalPages?: number): string[] {
+  const count = typeof totalPages === 'number' ? totalPages : (contentPageList?.length || 63);
+  if (contentPageList && contentPageList.length >= count) {
+    return contentPageList.slice(0, count);
   }
-  return Array.from({ length: totalPages }, (_, index) => getCloudinaryPageUrl(index + 1));
+  if (contentPageList && contentPageList.length > 0 && totalPages === undefined) {
+    return [...contentPageList];
+  }
+  return Array.from({ length: count }, (_, index) => getCloudinaryPageUrl(index + 1));
 }
 
 /**

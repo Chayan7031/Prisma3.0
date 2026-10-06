@@ -63,7 +63,9 @@ export const pages = {
     "Page61": "https://res.cloudinary.com/daybrhbsc/image/upload/v1791320540/page-62.webp",
     "backCover": "https://res.cloudinary.com/daybrhbsc/image/upload/v1791320540/page-63.webp"
 };
-
+export const pdf={
+    "pdf":""
+}
 export const pageList = Object.values(pages);
 
 export default pages;

@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { pageList } from '@/content/content';
 
 const LoadingScreen = () => (
   <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#f4efe6] text-[#9e723e] select-none">
@@ -30,6 +31,7 @@ function ReaderContent() {
 
   return (
     <Book
+      pages={pageList}
       initialPage={initialPage}
       showTOC={false}
       onClose={() => router.push('/')}
