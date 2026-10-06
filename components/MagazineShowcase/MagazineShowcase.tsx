@@ -103,13 +103,17 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
   };
 
   const handleExploreSections = () => {
-    const target = document.getElementById('previous-magazines');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    } else if (onOpenReader) {
-      onOpenReader(1);
+    if ((window as any).__lenis) {
+      (window as any).__lenis.scrollTo('#previous-magazines', { duration: 1.1 });
     } else {
-      router.push('/read');
+      const target = document.getElementById('previous-magazines');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      } else if (onOpenReader) {
+        onOpenReader(1);
+      } else {
+        router.push('/read');
+      }
     }
   };
 
@@ -143,8 +147,20 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             />
           </div>
 
-          {/* 1. Flying Butterflies & Swallows (page-bg-butterfly) - Upper Left & Right */}
-          <div className="absolute top-[73%] left-[2%] sm:left-[5%] lg:left-[7%] w-[160px] sm:w-[210px] lg:w-[250px] aspect-square opacity-85 mix-blend-multiply pointer-events-none select-none z-10 animate-floating">
+          {/* Seamless Top Blur & Gradient Feather Transition from Hero Section */}
+          <div className="absolute -top-1 left-0 right-0 h-28 sm:h-36 lg:h-44 pointer-events-none z-20 select-none overflow-hidden">
+            <div
+              className="absolute inset-0 backdrop-blur-[8px] sm:backdrop-blur-[14px]"
+              style={{
+                maskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+                WebkitMaskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#F1EDE2]/60 to-[#F1EDE2]" />
+          </div>
+
+          {/* 1. Flying Butterflies & Swallows (page-bg-butterfly) - Upper Left & Right (Shifted down) */}
+          <div className="absolute top-[76%] left-[2%] sm:left-[5%] lg:left-[7%] w-[160px] sm:w-[210px] lg:w-[250px] aspect-square opacity-85 mix-blend-multiply pointer-events-none select-none z-10 animate-floating">
             <Image
               src="/page-bg-butterfly.png"
               alt="Butterflies Decor"
@@ -153,7 +169,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
               className="object-contain"
             />
           </div>
-          <div className="hidden sm:block absolute top-[2%] right-[4%] lg:right-[33%] w-[140px] sm:w-[180px] lg:w-[220px] aspect-square opacity-75 mix-blend-multiply pointer-events-none select-none z-10 -rotate-12">
+          <div className="hidden sm:block absolute top-[14%] sm:top-[12%] lg:top-[14%] right-[4%] lg:right-[33%] w-[140px] sm:w-[180px] lg:w-[220px] aspect-square opacity-75 mix-blend-multiply pointer-events-none select-none z-10 -rotate-12 animate-floating">
             <Image
               src="/page-bg-butterfly.png"
               alt="Butterflies Decor"
@@ -163,8 +179,8 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             />
           </div>
 
-          {/* 2. Celestial Earth/Moon with Orbit Trails & 'A SMARTER TOMORROW' (page-bg-earth) - Lower Left */}
-          <div className="absolute -bottom-4 top-[2%] left-[2%] sm:left-[4%] lg:left-[6%] w-[180px] sm:w-[220px] lg:w-[260px] aspect-square opacity-80 lg:opacity-90 mix-blend-multiply pointer-events-none select-none z-10">
+          {/* 2. Celestial Earth/Moon with Orbit Trails (page-bg-earth) - Shifted down away from seam */}
+          <div className="absolute top-[13%] sm:top-[14%] lg:top-[16%] left-[2%] sm:left-[4%] lg:left-[6%] w-[180px] sm:w-[220px] lg:w-[260px] aspect-square opacity-80 lg:opacity-90 mix-blend-multiply pointer-events-none select-none z-10">
             <Image
               src="/page-bg-earth-removebg.png"
               alt="A Smarter Tomorrow Earth Decor"
@@ -174,8 +190,8 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             />
           </div>
 
-          {/* 3. Anatomical Cybernetic Profile Blueprint (page-bg-face) - Right Flank Editorial Backdrop */}
-          <div className="absolute top-[10%] sm:top-[8%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
+          {/* 3. Anatomical Cybernetic Profile Blueprint (page-bg-face) - Right Flank Editorial Backdrop (Shifted down) */}
+          <div className="absolute top-[18%] sm:top-[16%] lg:top-[18%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
             <Image
               src="/page-bg-face.png"
               alt="Cybernetic Anatomical Face Blueprint"
@@ -499,6 +515,20 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
 
         </div>
 
+      </div>
+
+      {/* ========================================================================= */}
+      {/* SEAMLESS BOTTOM BLUR & GRADIENT FEATHER TO NEXT SECTION                   */}
+      {/* ========================================================================= */}
+      <div className="absolute -bottom-1 left-0 right-0 h-28 sm:h-36 lg:h-44 pointer-events-none z-20 select-none overflow-hidden">
+        <div
+          className="absolute inset-0 backdrop-blur-[8px] sm:backdrop-blur-[14px]"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#F1EDE2]/60 to-[#F1EDE2]" />
       </div>
     </section>
   );

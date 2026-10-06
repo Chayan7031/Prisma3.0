@@ -80,6 +80,10 @@ export const Hero: React.FC<HeroProps> = ({
       window.scrollTo(0, 0);
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
+      (window as any).__prismaScrollLocked = true;
+      if ((window as any).__lenis) {
+        (window as any).__lenis.stop();
+      }
       window.addEventListener('wheel', preventDefault, { passive: false });
       window.addEventListener('touchmove', preventDefault, { passive: false });
       window.addEventListener('keydown', preventScrollKeys, { passive: false });
@@ -91,6 +95,11 @@ export const Hero: React.FC<HeroProps> = ({
       window.removeEventListener('keydown', preventScrollKeys);
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
+      (window as any).__prismaScrollLocked = false;
+      if ((window as any).__lenis) {
+        (window as any).__lenis.start();
+      }
+      window.dispatchEvent(new CustomEvent('prisma-scroll-unlocked'));
     };
 
     lockScroll();
@@ -185,6 +194,7 @@ export const Hero: React.FC<HeroProps> = ({
 
   return (
     <section
+      id="hero-section"
       className="relative w-full min-h-screen bg-[#F1EDE2] overflow-x-hidden flex flex-col justify-between font-space select-none transition-colors duration-300"
       style={{
         backgroundImage: `radial-gradient(ellipse 70% 60% at 65% 55%, rgba(255, 110, 30, ${revealProgress * 0.11}) 0%, transparent 75%)`,
@@ -706,8 +716,8 @@ export const Hero: React.FC<HeroProps> = ({
           {/* BOTTOM RIGHT (BR): Wireframe Head Upward + Bottom Space Quote       */}
           {/* ------------------------------------------------------------------- */}
           
-          {/* 1. Wireframe Head & Foliage Drawing (Shifted Slightly Down) */}
-          <div className="absolute right-0 sm:right-2 lg:right-4 top-[20%] sm:top-[16%] lg:top-[18%] z-15 w-[85px] xs:w-[100px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto animate-floating">
+          {/* 1. Wireframe Head & Foliage Drawing (Shifted slightly down) */}
+          <div className="absolute right-0 sm:right-2 lg:right-4 top-[24%] sm:top-[20%] lg:top-[22%] z-15 w-[85px] xs:w-[100px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto animate-floating">
             <Image
               src="/br_design_tight.png"
               alt="Wireframe Head and Circuit Graphics"
@@ -737,6 +747,22 @@ export const Hero: React.FC<HeroProps> = ({
 
         </div>
 
+      </div>
+
+      {/* ========================================================================= */}
+      {/* SEAMLESS BLUR & GRADIENT FEATHER TO SECOND SECTION                        */}
+      {/* ========================================================================= */}
+      <div className="absolute -bottom-1 left-0 right-0 h-28 sm:h-36 lg:h-44 pointer-events-none z-20 select-none overflow-hidden">
+        {/* Soft directional backdrop blur to dissolve the bottom cut of the artwork */}
+        <div
+          className="absolute inset-0 backdrop-blur-[8px] sm:backdrop-blur-[14px]"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+          }}
+        />
+        {/* Gradient fade to #F1EDE2 matching section background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#F1EDE2]/60 to-[#F1EDE2]" />
       </div>
 
     </section>
