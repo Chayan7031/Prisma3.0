@@ -44,10 +44,15 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         // Fully loaded
         setTimeout(() => {
           setIsLoaded(true);
-          document.body.style.overflow = 'auto'; // Restore scrolling
+          if (typeof window !== 'undefined') {
+            window.dispatchEvent(new CustomEvent('prisma-preloader-open'));
+          }
           
           setTimeout(() => {
             setIsHidden(true);
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new CustomEvent('prisma-preloader-complete'));
+            }
             if (onComplete) onComplete();
           }, 1100); // Matches CSS transition duration
         }, 200); // Tiny pause for visual confirmation
