@@ -64,7 +64,7 @@ const createPageGeometry = () => {
 const sharedPageGeometry = createPageGeometry();
 
 const whiteColor = new Color('white');
-const emissiveColor = new Color('#00a8ff');
+const emissiveColor = new Color('#FF6600');
 
 const pageMaterials = [
   new MeshStandardMaterial({ color: whiteColor }),
@@ -604,7 +604,7 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
   title = 'Click to Read Magazine',
   badgeText = 'Read Magazine',
   showBadge = false,
-  glowColor = 'rgba(0,168,255,0.12)',
+  glowColor = 'rgba(255, 77, 0, 0.10)',
   cameraDistance = 4.3,
   scale = 1.0,
 }) => {

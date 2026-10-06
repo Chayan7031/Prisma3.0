@@ -1,11 +1,21 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { Preloader } from '@/components/Preloader';
 import Hero from '@/components/Hero';
 import Link from 'next/link';
 import Image from 'next/image';
+
+const MagazineShowcase = dynamic(() => import('@/components/MagazineShowcase'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full min-h-[500px] bg-[#F1EDE2] flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-[#FF4D00]/30 border-t-[#FF4D00] rounded-full animate-spin" />
+    </div>
+  ),
+});
 import {
   ArrowRight,
   Download,
@@ -107,6 +117,9 @@ export default function Home() {
       
       {/* Flagship Hero Section */}
       <Hero onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
+
+      {/* 3D Magazine Showcase Section (Placed right after Hero) */}
+      <MagazineShowcase onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
 
       {/* ========================================================================= */}
       {/* PREVIOUS MAGAZINES SECTION (On the same page, right after Hero)            */}
