@@ -30,7 +30,6 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       const easeOut = 1 - Math.pow(1 - progressRatio, 3);
       const currentProgress = easeOut * 100;
 
-      // Direct DOM mutation completely bypasses React re-renders (ZERO lag)
       if (progressBarRef.current) {
         progressBarRef.current.style.width = `${currentProgress}%`;
       }
