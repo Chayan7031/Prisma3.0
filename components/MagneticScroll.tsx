@@ -3,6 +3,13 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Lenis from 'lenis';
 
+declare global {
+  interface Window {
+    __lenis?: Lenis | null;
+    __prismaScrollLocked?: boolean;
+  }
+}
+
 export interface MagneticScrollProps {
   sectionIds?: string[];
   duration?: number;
@@ -26,8 +33,8 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     'site-footer',
   ],
   duration = 1.1,
-  threshold = 24,
-  cooldown = 400,
+  threshold = 18,
+  cooldown = 350,
   showIndicators = true,
 }) => {
   const lenisRef = useRef<Lenis | null>(null);
@@ -38,11 +45,13 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
   const accumulatedDeltaRef = useRef(0);
   const accumulatedTimerRef = useRef<NodeJS.Timeout | null>(null);
   const lastTransitionEndTimeRef = useRef(0);
+  const safetyTimerRef = useRef<NodeJS.Timeout | null>(null);
   const touchStartRef = useRef<{ y: number; time: number } | null>(null);
 
-  // Measure document offset tops for each registered section
-  const getOffsets = useCallback(() => {
-    if (typeof window === 'undefined') return [];
+  // Measure document offset tops for each registered section with robust fallbacks
+  const getSectionOffsets = useCallback(() => {
+    if (typeof window === 'undefined') return [0];
+
     const maxScroll = Math.max(
       0,
       document.documentElement.scrollHeight - window.innerHeight
@@ -51,38 +60,32 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     return sectionIds.map((id, index) => {
       if (index === 0) return 0;
       const el = document.getElementById(id);
-      if (!el) return 0;
-
-      // For footer / final section, ensure we scroll to maxScroll so the entire footer is visible
-      if (id === 'site-footer' || index === sectionIds.length - 1) {
+      if (el) {
         const rect = el.getBoundingClientRect();
         const top = Math.round(rect.top + window.scrollY);
-        return Math.min(top, maxScroll);
+        return Math.min(Math.max(0, top), maxScroll);
       }
-
-      const rect = el.getBoundingClientRect();
-      return Math.round(rect.top + window.scrollY);
+      // Reliable fallback based on index if element is briefly not found
+      return Math.min(Math.round(window.innerHeight * index), maxScroll);
     });
   }, [sectionIds]);
 
   // Magnetic scroll smoothly to target section
   const scrollToSection = useCallback(
-    (targetIndex: number, userInitiated = true) => {
+    (targetIndex: number) => {
       const lenis = lenisRef.current;
       if (!lenis) return;
 
-      const offsets = getOffsets();
+      const offsets = getSectionOffsets();
       if (offsets.length === 0) return;
 
       const clampedIndex = Math.max(0, Math.min(targetIndex, offsets.length - 1));
       const targetOffset = offsets[clampedIndex];
 
-      // Avoid redundant trigger if already at target
-      if (
-        userInitiated &&
-        clampedIndex === activeIndexRef.current &&
-        Math.abs(window.scrollY - targetOffset) < 5
-      ) {
+      const currentScroll = window.scrollY || lenis.scroll || 0;
+      if (Math.abs(currentScroll - targetOffset) < 10) {
+        activeIndexRef.current = clampedIndex;
+        setActiveSectionIndex(clampedIndex);
         return;
       }
 
@@ -90,10 +93,19 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       activeIndexRef.current = clampedIndex;
       setActiveSectionIndex(clampedIndex);
 
+      // Safety timeout: guarantee isTransitioning resets even in case of interruptions
+      if (safetyTimerRef.current) {
+        clearTimeout(safetyTimerRef.current);
+      }
+      safetyTimerRef.current = setTimeout(() => {
+        isTransitioningRef.current = false;
+        accumulatedDeltaRef.current = 0;
+      }, duration * 1000 + 350);
+
       lenis.scrollTo(targetOffset, {
         duration,
         lock: true,
-        // Silky smooth exponential easeOut curve
+        force: true, // Guarantees execution even if stopped
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         onComplete: () => {
           lastTransitionEndTimeRef.current = Date.now();
@@ -104,7 +116,7 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
         },
       });
     },
-    [duration, cooldown, getOffsets]
+    [duration, cooldown, getSectionOffsets]
   );
 
   useEffect(() => {
@@ -113,8 +125,9 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       history.scrollRestoration = 'manual';
     }
 
-    // 1. Initialize Lenis Smooth Scroll engine
+    // 1. Initialize Lenis Smooth Scroll engine with autoRaf
     const lenis = new Lenis({
+      autoRaf: true,
       duration,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
@@ -126,30 +139,16 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     });
 
     lenisRef.current = lenis;
-    (window as any).__lenis = lenis;
+    window.__lenis = lenis;
 
-    // Start with Lenis stopped if the hero preloader lock is currently active
-    if ((window as any).__prismaScrollLocked) {
-      lenis.stop();
-    }
-
-    // 2. RequestAnimationFrame loop for Lenis
-    let rafId: number;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
-
-    // Sync active index if scrolled programmatically (e.g. from internal buttons)
+    // Sync active index when scroll position changes
     lenis.on('scroll', (e: { scroll: number }) => {
       if (!isTransitioningRef.current) {
-        const offsets = getOffsets();
-        const current = e.scroll;
+        const offsets = getSectionOffsets();
         let closest = 0;
         let minDiff = Infinity;
         for (let i = 0; i < offsets.length; i++) {
-          const diff = Math.abs(current - offsets[i]);
+          const diff = Math.abs(e.scroll - offsets[i]);
           if (diff < minDiff) {
             minDiff = diff;
             closest = i;
@@ -162,15 +161,15 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       }
     });
 
-    // 3. Wheel & Trackpad Gesture Handler
+    // 2. Wheel & Trackpad Gesture Handler
     const handleWheel = (e: WheelEvent) => {
-      // If hero reveal / preloader is still locking the page:
-      if ((window as any).__prismaScrollLocked) {
+      // If hero reveal / preloader is active:
+      if (typeof window !== 'undefined' && window.__prismaScrollLocked) {
         e.preventDefault();
         return;
       }
 
-      // Intercept wheel to prevent stopping at intermediate positions!
+      // Prevent native scroll to stop intermediate section pauses
       e.preventDefault();
 
       if (isTransitioningRef.current) {
@@ -189,19 +188,33 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       }
       accumulatedTimerRef.current = setTimeout(() => {
         accumulatedDeltaRef.current = 0;
-      }, 140);
+      }, 120);
 
       if (Math.abs(accumulatedDeltaRef.current) >= threshold) {
         const direction = accumulatedDeltaRef.current > 0 ? 1 : -1;
         accumulatedDeltaRef.current = 0;
-        const nextIndex = activeIndexRef.current + direction;
+
+        // Compute current section from actual scroll position
+        const offsets = getSectionOffsets();
+        const currentScroll = window.scrollY || lenisRef.current?.scroll || 0;
+        let closestIndex = 0;
+        let minDiff = Infinity;
+        for (let i = 0; i < offsets.length; i++) {
+          const diff = Math.abs(currentScroll - offsets[i]);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIndex = i;
+          }
+        }
+
+        const nextIndex = closestIndex + direction;
         scrollToSection(nextIndex);
       }
     };
 
-    // 4. Touch swipe gesture handling (Mobile / Tablet)
+    // 3. Touch swipe gesture handling (Mobile / Tablet)
     const handleTouchStart = (e: TouchEvent) => {
-      if ((window as any).__prismaScrollLocked) return;
+      if (typeof window !== 'undefined' && window.__prismaScrollLocked) return;
       if (e.touches.length > 0) {
         touchStartRef.current = {
           y: e.touches[0].clientY,
@@ -211,40 +224,64 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if ((window as any).__prismaScrollLocked || isTransitioningRef.current) {
+      if ((typeof window !== 'undefined' && window.__prismaScrollLocked) || isTransitioningRef.current) {
         if (e.cancelable) e.preventDefault();
       }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if ((window as any).__prismaScrollLocked || isTransitioningRef.current) return;
+      if ((typeof window !== 'undefined' && window.__prismaScrollLocked) || isTransitioningRef.current) return;
       if (!touchStartRef.current || e.changedTouches.length === 0) return;
 
       const deltaY = touchStartRef.current.y - e.changedTouches[0].clientY;
       const deltaTime = Date.now() - touchStartRef.current.time;
       touchStartRef.current = null;
 
-      // Deliberate vertical swipe detected
-      if (Math.abs(deltaY) > 38 && deltaTime < 700) {
+      if (Math.abs(deltaY) > 35 && deltaTime < 800) {
         const direction = deltaY > 0 ? 1 : -1;
-        const nextIndex = activeIndexRef.current + direction;
-        scrollToSection(nextIndex);
+        const offsets = getSectionOffsets();
+        const currentScroll = window.scrollY || lenisRef.current?.scroll || 0;
+        let closestIndex = 0;
+        let minDiff = Infinity;
+        for (let i = 0; i < offsets.length; i++) {
+          const diff = Math.abs(currentScroll - offsets[i]);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIndex = i;
+          }
+        }
+        scrollToSection(closestIndex + direction);
       }
     };
 
-    // 5. Keyboard Navigation (Arrow Keys, PageUp/Down, Space, Home, End)
+    // 4. Keyboard Navigation
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((window as any).__prismaScrollLocked) return;
+      if (typeof window !== 'undefined' && window.__prismaScrollLocked) return;
 
       const downKeys = ['ArrowDown', 'PageDown', ' '];
       const upKeys = ['ArrowUp', 'PageUp'];
 
+      const getClosest = () => {
+        const offsets = getSectionOffsets();
+        const currentScroll = window.scrollY || 0;
+        let closest = 0;
+        let minDiff = Infinity;
+        for (let i = 0; i < offsets.length; i++) {
+          const diff = Math.abs(currentScroll - offsets[i]);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closest = i;
+          }
+        }
+        return closest;
+      };
+
       if (downKeys.includes(e.key) && !e.shiftKey) {
         e.preventDefault();
-        scrollToSection(activeIndexRef.current + 1);
+        scrollToSection(getClosest() + 1);
       } else if (upKeys.includes(e.key) || (e.key === ' ' && e.shiftKey)) {
         e.preventDefault();
-        scrollToSection(activeIndexRef.current - 1);
+        scrollToSection(getClosest() - 1);
       } else if (e.key === 'Home') {
         e.preventDefault();
         scrollToSection(0);
@@ -254,24 +291,30 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       }
     };
 
-    // 6. Preloader / Hero scroll unlock listener
+    // 5. Preloader / Hero scroll unlock listener
     const handleScrollUnlocked = () => {
       setIsUnlocked(true);
-      (window as any).__prismaScrollLocked = false;
-      lenisRef.current?.start();
+      if (typeof window !== 'undefined') {
+        window.__prismaScrollLocked = false;
+      }
     };
 
-    // Check if already unlocked at mount time
-    if (!(window as any).__prismaScrollLocked) {
-      setIsUnlocked(true);
+    if (typeof window !== 'undefined' && !window.__prismaScrollLocked) {
+      setTimeout(() => {
+        setIsUnlocked(true);
+      }, 0);
     }
 
-    // 7. Window resize handler
+    // Safety fallback: unlock after 4.5 seconds no matter what
+    const safetyUnlockTimeout = setTimeout(() => {
+      handleScrollUnlocked();
+    }, 4500);
+
+    // 6. Window resize handler
     const handleResize = () => {
       lenis.resize();
     };
 
-    // Attach passive: false listeners to intercept intermediate stopping
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -281,7 +324,9 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     window.addEventListener('prisma-scroll-unlocked', handleScrollUnlocked);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      clearTimeout(safetyUnlockTimeout);
+      if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+      if (accumulatedTimerRef.current) clearTimeout(accumulatedTimerRef.current);
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
@@ -290,9 +335,9 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('prisma-scroll-unlocked', handleScrollUnlocked);
       lenis.destroy();
-      (window as any).__lenis = null;
+      window.__lenis = null;
     };
-  }, [duration, threshold, cooldown, sectionIds, scrollToSection, getOffsets]);
+  }, [duration, threshold, cooldown, sectionIds, scrollToSection, getSectionOffsets]);
 
   if (!showIndicators) return null;
 
@@ -312,7 +357,7 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
             key={id}
             onClick={() => scrollToSection(index)}
             aria-label={`Scroll to ${label}`}
-            className="group relative flex items-center justify-end pointer-events-auto p-1.5 focus:outline-none"
+            className="group relative flex items-center justify-end pointer-events-auto p-1.5 focus:outline-none cursor-pointer"
           >
             {/* Tooltip on hover */}
             <span

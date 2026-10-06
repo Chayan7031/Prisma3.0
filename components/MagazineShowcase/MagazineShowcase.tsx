@@ -103,8 +103,8 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
   };
 
   const handleExploreSections = () => {
-    if ((window as any).__lenis) {
-      (window as any).__lenis.scrollTo('#previous-magazines', { duration: 1.1 });
+    if (typeof window !== 'undefined' && window.__lenis) {
+      window.__lenis.scrollTo('#previous-magazines', { duration: 1.1 });
     } else {
       const target = document.getElementById('previous-magazines');
       if (target) {
@@ -123,7 +123,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
     <section
       className={`relative w-full text-[#161121] overflow-hidden select-none font-space h-[100dvh] lg:h-auto lg:min-h-[100dvh] flex items-center justify-center ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
         } ${className}`}
-      id="magazine-showcase-section"
+      id="magazine-showcase-inner"
     >
       {!isTransparent && (
         <>

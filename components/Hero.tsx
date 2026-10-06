@@ -80,9 +80,8 @@ export const Hero: React.FC<HeroProps> = ({
       window.scrollTo(0, 0);
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-      (window as any).__prismaScrollLocked = true;
-      if ((window as any).__lenis) {
-        (window as any).__lenis.stop();
+      if (typeof window !== 'undefined') {
+        window.__prismaScrollLocked = true;
       }
       window.addEventListener('wheel', preventDefault, { passive: false });
       window.addEventListener('touchmove', preventDefault, { passive: false });
@@ -95,9 +94,11 @@ export const Hero: React.FC<HeroProps> = ({
       window.removeEventListener('keydown', preventScrollKeys);
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      (window as any).__prismaScrollLocked = false;
-      if ((window as any).__lenis) {
-        (window as any).__lenis.start();
+      if (typeof window !== 'undefined') {
+        window.__prismaScrollLocked = false;
+        if (window.__lenis) {
+          window.__lenis.start();
+        }
       }
       window.dispatchEvent(new CustomEvent('prisma-scroll-unlocked'));
     };
@@ -159,10 +160,16 @@ export const Hero: React.FC<HeroProps> = ({
       }
     }, 3100);
 
+    // Hard safety guarantee: unconditionally unlock after 4.5s
+    const safetyUnlockTimeout = setTimeout(() => {
+      unlockScroll();
+    }, 4500);
+
     return () => {
       window.removeEventListener('prisma-preloader-open', handlePreloaderOpen);
       clearTimeout(animTimeoutId);
       clearTimeout(fallbackTimeout);
+      clearTimeout(safetyUnlockTimeout);
       cancelAnimationFrame(animFrameId);
       unlockScroll();
     };

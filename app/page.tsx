@@ -102,7 +102,9 @@ export default function Home() {
       <Hero onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
 
       {/* 3D Magazine Showcase Section (Placed right after Hero) */}
-      <MagazineShowcase onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
+      <div id="magazine-showcase-section" className="w-full">
+        <MagazineShowcase onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
+      </div>
 
       {/* ========================================================================= */}
       {/* PREVIOUS MAGAZINES SECTION (Light Theme)                                  */}
