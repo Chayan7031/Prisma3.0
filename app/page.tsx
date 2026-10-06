@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Preloader } from '@/components/Preloader';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import MagneticScroll from '@/components/MagneticScroll';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -94,6 +95,9 @@ export default function Home() {
     <div className="relative w-full min-h-screen bg-[#121110] text-[#F8FAFC] overflow-x-hidden selection:bg-[#FF4D00]/30 selection:text-white flex flex-col justify-between">
       <Preloader />
       
+      {/* Lenis Smooth Scroll & Magnetic Section Snapping */}
+      <MagneticScroll />
+      
       {/* Flagship Hero Section */}
       <Hero onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
 
@@ -105,8 +109,20 @@ export default function Home() {
       {/* ========================================================================= */}
       <section
         id="previous-magazines"
-        className="relative z-20 w-full h-[100dvh] bg-[#F1EDE2] text-[#161121] overflow-hidden font-space flex items-center justify-center border-t border-[#161121]/10"
+        className="relative z-20 w-full h-[100dvh] bg-[#F1EDE2] text-[#161121] overflow-hidden font-space flex items-center justify-center"
       >
+        {/* Seamless Top Blur & Gradient Feather Transition from MagazineShowcase */}
+        <div className="absolute -top-1 left-0 right-0 h-28 sm:h-36 lg:h-44 pointer-events-none z-20 select-none overflow-hidden">
+          <div
+            className="absolute inset-0 backdrop-blur-[8px] sm:backdrop-blur-[14px]"
+            style={{
+              maskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+              WebkitMaskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 30%, black 85%)',
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-[#F1EDE2]/60 to-[#F1EDE2]" />
+        </div>
+
         {/* Background Decorative Images & Animations */}
         <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
           {/* Left Flower (Right half visible) */}
