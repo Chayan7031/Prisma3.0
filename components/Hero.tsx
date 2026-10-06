@@ -38,15 +38,7 @@ export const Hero: React.FC<HeroProps> = ({
       {/* ========================================================================= */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
         
-        {/* 1. Top-Left: Behind prisma 3.0 headline & code line */}
-        <div className="absolute -top-10 left-[2%] sm:left-[5%] w-[190px] sm:w-[250px] aspect-[215/230] opacity-25 -rotate-[35deg] mix-blend-multiply filter contrast-125">
-          <Image
-            src="/design0.png"
-            alt="Botanical Sketch Flourish"
-            fill
-            className="object-contain"
-          />
-        </div>
+
 
         {/* 2. Mid/Bottom-Left: Behind buttons & tagline */}
         <div className="absolute bottom-[3%] -left-6 sm:left-[1%] w-[200px] sm:w-[280px] aspect-[275/291] opacity-25 scale-x-[-1] rotate-[22deg] mix-blend-multiply">
@@ -88,15 +80,7 @@ export const Hero: React.FC<HeroProps> = ({
           />
         </div> */}
 
-        {/* 6. Top-Right: Near pillar / header area */}
-        <div className="hidden sm:block absolute top-3 right-[18%] lg:right-[22%] w-[160px] sm:w-[210px] aspect-[275/291] opacity-20 -rotate-[48deg] mix-blend-multiply">
-          <Image
-            src="/left_design_tight.png"
-            alt="Botanical Sketch Flourish"
-            fill
-            className="object-contain"
-          />
-        </div>
+
 
         {/* 7. Far Right: Floating behind wireframe head / circuitry */}
           {/* <div className="hidden sm:block absolute bottom-[-10%] -right-4 lg:right-[60%] w-[190px] sm:w-[240px] aspect-[215/230] opacity-25 rotate-[105deg] mix-blend-multiply">
@@ -109,54 +93,28 @@ export const Hero: React.FC<HeroProps> = ({
           </div> */}
 
       </div>
-      <header className="relative z-30 w-full max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 pt-5 sm:pt-6 pb-2 flex items-center justify-between">
+      <header className="relative z-30 w-full max-w-[1840px] mx-auto px-4 sm:px-10 lg:px-16 pt-6 sm:pt-8 pb-2 flex flex-col md:flex-row items-center justify-center md:justify-start gap-3 md:gap-5">
         
-        {/* Left: prisma 3.0 Logo in authentic Samarkan glyphs & Gold accent */}
-        <Link href="/" className="cursor-pointer group flex items-baseline gap-2 sm:gap-2.5 z-10">
-          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#161121] lowercase tracking-wide transition-opacity group-hover:opacity-85">
-            prisma
-          </span>
-          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#BE953E] tracking-tight">
-            3.0
-          </span>
-        </Link>
+        {/* KGEC Logo */}
+        <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] shrink-0 animate-fade-in-up" style={{ animationDelay: '100ms', opacity: 0, animationFillMode: 'forwards' }}>
+          <img
+            src="/kgec_logo-removebg-preview.png"
+            alt="KGEC Logo"
+            className="w-full h-full object-contain"
+            draggable={false}
+          />
+        </div>
 
-        {/* Center: 3-Item Minimalist Menu */}
-        <nav
-          className="flex absolute left-1/2 -translate-x-1/2 items-center gap-4 sm:gap-7 md:gap-9 lg:gap-12 text-[10px] sm:text-xs lg:text-[13px] font-space font-bold tracking-[0.14em] sm:tracking-[0.18em] uppercase whitespace-nowrap"
-          aria-label="Main Navigation"
-        >
-          {/* 1. HOME with Active Orange Accent Bar */}
-          <div className="flex flex-col items-center">
-            <Link
-              href="/"
-              className="text-[#FF4D00] hover:text-[#E64500] transition-colors"
-            >
-              HOME
-            </Link>
-            <span className="w-5 sm:w-6 h-[2.5px] bg-[#FF4D00] rounded-full mt-1.5" />
-          </div>
+        {/* College Name & Department Text */}
+        <div className="text-center md:text-left animate-fade-in-up flex flex-col gap-0.5 sm:gap-1" style={{ animationDelay: '200ms', opacity: 0, animationFillMode: 'forwards' }}>
+          <h2 className="text-[#1F1F1F] font-space font-extrabold uppercase tracking-[0.05em] sm:tracking-[0.12em] lg:tracking-[0.18em] text-[15px] sm:text-[17px] lg:text-[20px] leading-tight max-w-[95vw] md:max-w-none whitespace-nowrap">
+            Kalyani Government Engineering College
+          </h2>
+          <p className="text-[#FF4D00] font-space font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] lg:tracking-[0.2em] text-[10px] sm:text-[12px] lg:text-[14px] leading-tight whitespace-nowrap">
+            Computer Science and Engineering
+          </p>
+        </div>
 
-          {/* 2. CURRENT YEAR MAGAZINE */}
-          <Link
-            href="/read"
-            onClick={(e) => {
-              e.preventDefault();
-              handleLaunchReader(1);
-            }}
-            className="text-[#282828] hover:text-[#FF4D00] transition-colors cursor-pointer"
-          >
-            CURRENT YEAR MAGAZINE
-          </Link>
-
-          {/* 3. PREVIOUS YEAR MAGAZINE */}
-          <button
-            onClick={handleScrollToPrevious}
-            className="text-[#282828] hover:text-[#FF4D00] transition-colors cursor-pointer"
-          >
-            PREVIOUS YEAR MAGAZINE
-          </button>
-        </nav>
       </header>
 
       {/* ========================================================================= */}
@@ -190,8 +148,8 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* 3. Department Subtitle */}
           <div className="mt-2 sm:mt-4 text-[9px] sm:text-xs font-mono tracking-[0.15em] sm:tracking-[0.24em] text-[#555555] uppercase leading-relaxed font-semibold select-none animate-fade-in-up" style={{ animationDelay: '500ms', opacity: 0, animationFillMode: 'forwards' }}>
-            <p>KGEC CSE DEPARTMENT / ANNUAL</p>
-            <p>MAGAZINE</p>
+            <p>KGEC CSE DEPARTMENT</p>
+            <p>ANNUAL MAGAZINE</p>
           </div>
 
           {/* 4. Tagline: SAME DREAMS. MORE ALGORITHMS. */}
@@ -253,7 +211,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* ------------------------------------------------------------------- */}
           <svg
             viewBox="0 0 1000 800"
-            className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
+            className="absolute -bottom-[2%] left-[48%] -translate-x-1/2 w-[135%] h-auto sm:left-0 sm:translate-x-0 sm:-translate-y-20 sm:bottom-auto sm:inset-0 sm:w-full sm:h-full sm:scale-[1.05] pointer-events-none z-0 overflow-visible"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -472,11 +430,11 @@ export const Hero: React.FC<HeroProps> = ({
           {/* ------------------------------------------------------------------- */}
           {/* CENTERPIECE: Woman Image (Enlarged Heroic Presence, Grounded, Static) */}
           {/* ------------------------------------------------------------------- */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-full max-w-[400px] xs:max-w-[480px] sm:max-w-[580px] md:max-w-[680px] lg:max-w-[780px] xl:max-w-[850px] 2xl:max-w-[920px] flex items-end justify-center pointer-events-auto overflow-hidden">
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[110vw] xs:w-[105vw] sm:w-[85vw] md:w-full max-w-[500px] sm:max-w-[580px] md:max-w-[680px] lg:max-w-[780px] xl:max-w-[850px] 2xl:max-w-[920px] flex items-end justify-center pointer-events-none sm:pointer-events-auto overflow-visible origin-bottom scale-[1.0] sm:scale-100">
             <img
               src="/Face_woman_prisma-removebg-preview.png"
               alt="PRISMA 3.0 Renaissance Cyborg Woman"
-              className="w-full h-auto object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.14)]"
+              className="relative z-10 w-full h-auto object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.14)]"
             />
           </div>
 
