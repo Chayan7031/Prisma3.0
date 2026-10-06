@@ -7,7 +7,6 @@ import {
   Play,
   Download,
 } from 'lucide-react';
-import { SamarkanNumber30 } from './SamarkanNumber30';
 
 export interface HeroProps {
   onOpenReader?: (page?: number) => void;
@@ -112,12 +111,14 @@ export const Hero: React.FC<HeroProps> = ({
       </div>
       <header className="relative z-30 w-full max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 pt-5 sm:pt-6 pb-2 flex items-center justify-between">
         
-        {/* Left: prisma 3.0 Logo in authentic Samarkan glyphs & Devanagari 3.0 */}
+        {/* Left: prisma 3.0 Logo in authentic Samarkan glyphs & Gold accent */}
         <Link href="/" className="cursor-pointer group flex items-baseline gap-2 sm:gap-2.5 z-10">
-          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#161121] tracking-wide transition-opacity group-hover:opacity-85">
-            PRISMA
+          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#161121] lowercase tracking-wide transition-opacity group-hover:opacity-85">
+            prisma
           </span>
-          <SamarkanNumber30 className="h-[20px] sm:h-[24px] lg:h-[28px] w-auto inline-block self-baseline" color="#FF5900" />
+          <span className="font-samarkan text-3xl sm:text-4xl lg:text-[42px] text-[#BE953E] tracking-tight">
+            3.0
+          </span>
         </Link>
 
         {/* Center: 3-Item Minimalist Menu */}
@@ -177,15 +178,14 @@ export const Hero: React.FC<HeroProps> = ({
             </span>
           </div>
 
-          {/* 2. Monumental Headline: PRISMA 3.0 */}
+          {/* 2. Monumental Headline: prisma 3.0 */}
           <div className="flex items-baseline gap-2 sm:gap-4 leading-none select-none mb-2 sm:mb-4 animate-fade-in-up" style={{ animationDelay: '400ms', opacity: 0, animationFillMode: 'forwards' }}>
-            <h1 className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-wide text-[#161121]">
-              PRISMA
+            <h1 className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-wide text-[#161121] lowercase">
+              prisma
             </h1>
-            <SamarkanNumber30
-              className="h-[44px] sm:h-[52px] md:h-[64px] lg:h-[70px] xl:h-[78px] w-auto inline-block self-baseline"
-              color="#FF5900"
-            />
+            <span className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[86px] xl:text-[96px] tracking-tight text-[#BE953E]">
+              3.0
+            </span>
           </div>
 
           {/* 3. Department Subtitle */}
