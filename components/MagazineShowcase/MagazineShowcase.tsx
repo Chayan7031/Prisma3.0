@@ -224,25 +224,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     <circle cx="4" cy="1.5" r="0.6" fill="#FF6B1A" opacity="0.5" />
                   </pattern>
 
-                  {/* Electric Current Glowing Filter */}
-                  <filter id="showcaseElectricGlow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur1" />
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur2" />
-                    <feMerge>
-                      <feMergeNode in="blur2" />
-                      <feMergeNode in="blur1" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                  <filter id="electricCurrentGlow" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur1" />
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur2" />
-                    <feMerge>
-                      <feMergeNode in="blur2" />
-                      <feMergeNode in="blur1" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
+
                 </defs>
 
                 {/* Main Solid Orange Stippled Sun Disk */}
@@ -310,7 +292,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     stroke="#FFFFFF"
                     strokeWidth="2.5"
                     strokeLinecap="round"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-current-branch-3"
                   />
                   <path
@@ -319,7 +301,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     stroke="#ff5900ff"
                     strokeWidth="3.8"
                     strokeLinecap="round"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-current-branch-3"
                     opacity="0.85"
                   />
@@ -329,7 +311,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     cy="140"
                     r="4.5"
                     fill="#FFFFFF"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-spark-1"
                   />
                 </g>
@@ -354,7 +336,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     stroke="#FFFFFF"
                     strokeWidth="2.5"
                     strokeLinecap="round"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-current-branch-2"
                   />
                   <path
@@ -363,7 +345,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     stroke="#ff5900ff"
                     strokeWidth="3.8"
                     strokeLinecap="round"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-current-branch-2"
                     opacity="0.85"
                   />
@@ -373,7 +355,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     cy="510"
                     r="4.5"
                     fill="#FFFFFF"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-spark-2"
                   />
                 </g>
@@ -391,7 +373,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     stroke="#FFFFFF"
                     strokeWidth="2.4"
                     strokeLinecap="round"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-current-branch-1"
                   />
                   <path
@@ -400,11 +382,11 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                     stroke="#ff5900ff"
                     strokeWidth="3.6"
                     strokeLinecap="round"
-                    filter="url(#showcaseElectricGlow)"
+                   
                     className="animate-current-branch-1"
                     opacity="0.8"
                   />
-                  <circle cx="120" cy="170" r="4" fill="#FFFFFF" filter="url(#showcaseElectricGlow)" className="animate-spark-1" />
+                  <circle cx="120" cy="170" r="4" fill="#FFFFFF" className="animate-spark-1" />
                 </g>
 
                 {/* Precision Target Crosshairs (+) */}
