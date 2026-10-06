@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { SamarkanNumber30 } from './SamarkanNumber30';
 
 interface PrismaLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -29,9 +30,7 @@ export const PrismaLogo: React.FC<PrismaLogoProps> = ({
           <span className="font-samarkan lowercase tracking-wide text-[#161121] transition-opacity group-hover:opacity-85">
             prisma
           </span>
-          <span className="font-space font-black text-[#BE953E] tracking-tight">
-            3.0
-          </span>
+          <SamarkanNumber30 className="h-[0.74em] w-auto inline-block self-baseline" color="#FF5900" />
         </div>
         {showSubtitle && (
           <div className="flex items-center gap-2 mt-1 sm:mt-1.5">
