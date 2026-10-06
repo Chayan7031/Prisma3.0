@@ -7,9 +7,9 @@
 
 /* Design Tokens & Theme Variables */
 :root {
-  /* Default: Deep Navy & Electric Cyber Cyan (Matches Home Screen Theme) */
-  --book-bg: #070d18;
-  --book-bg-gradient: radial-gradient(circle at 50% 45%, #0c182c 0%, #050a12 85%);
+  /* Default: Warm Editorial Dark (Matches Home Screen Theme) */
+  --book-bg: #11100F;
+  --book-bg-gradient: none;
   --book-surface: rgba(11, 22, 38, 0.92);
   --book-surface-hover: rgba(16, 32, 56, 0.96);
   --book-surface-active: rgba(22, 44, 76, 0.98);
@@ -38,8 +38,8 @@
 
 /* Light Parchment Theme (Exact match with user's PRISMA 3.0 page) */
 .book-reader-container.theme-parchment {
-  --book-bg: #f4efe6;
-  --book-bg-gradient: radial-gradient(circle at 50% 45%, #faf7f0 0%, #ede6d8 85%);
+  --book-bg: #fceac5;
+  --book-bg-gradient: none;
   --book-surface: rgba(247, 244, 237, 0.94);
   --book-surface-hover: rgba(238, 232, 222, 0.98);
   --book-surface-active: rgba(226, 218, 204, 1);
@@ -305,24 +305,14 @@
   }
 }
 
-/* Full-bleed seamless ambient backdrop layer */
-.book-decor-backdrop {
-  position: absolute;
-  inset: 0;
+.book-decor-mandala {
   width: 100%;
   height: 100%;
-  background-image: url('/design/reader_backdrop.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  opacity: 0.95;
-  pointer-events: none;
-  z-index: 1;
-  transition: opacity 0.5s ease;
+  object-fit: contain;
 }
 
-/* Left Flank: Antique Baroque Bronze Filigree & Celestial Network Sphere */
-.book-decor-cyber-left {
+/* Ornate Left Side Border Design ("Round Shape Side" Mandala Arc) */
+.book-decor-side-left {
   position: absolute;
   left: 0;
   top: 0;
@@ -349,8 +339,8 @@
   animation: border-scroll-y 15s linear infinite;
 }
 
-/* Right Flank: Glowing Cyan Cybernetic Circuit Board & Blueprint Telemetry */
-.book-decor-cyber-right {
+/* Ornate Right Side Border Design ("Round Shape Side" Mandala Arc) */
+.book-decor-side-right {
   position: absolute;
   right: 0;
   top: 0;
@@ -414,25 +404,37 @@
   height: 100%;
   pointer-events: none;
   z-index: 2;
-  opacity: 0.92;
-  transition: opacity 0.4s ease, filter 0.4s ease;
+  overflow: hidden;
+  opacity: 0.42;
+  transition: opacity 0.4s ease;
 }
 
-.book-decor-cyber-right .book-decor-cyber-img {
+.book-reader-container:hover .book-vector-decor-container {
+  opacity: 0.55;
+}
+
+.book-reader-container.theme-parchment .book-vector-decor-container {
+  opacity: 0.45;
+}
+
+.book-vector-decor-svg {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: right center;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.book-decor-moving-img {
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-  filter: drop-shadow(0 0 25px rgba(0, 168, 255, 0.35));
+  filter: hue-rotate(155deg) saturate(1.8) brightness(1.2) drop-shadow(0 0 16px rgba(0, 168, 255, 0.35));
+  transition: filter 0.4s ease;
 }
 
-/* Subtle Interactive Illumination on Mouse Presence */
-.book-reader-container:hover .book-decor-cyber-left {
-  opacity: 0.95;
-  filter: drop-shadow(0 0 30px rgba(0, 168, 255, 0.3));
+.theme-parchment .book-decor-moving-img {
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.58) contrast(1.3) drop-shadow(0 0 16px rgba(184, 134, 78, 0.3));
 }
 
 /* 360-Degree Hypnotic Celestial Rotation */
@@ -488,20 +490,17 @@
   animation: vectorDashPulseAnim 7s linear infinite;
 }
 
-/* Parchment Theme Adaptations */
-.book-reader-container.theme-parchment .book-decor-backdrop {
-  opacity: 0.25;
-  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.65) contrast(1.2);
+.vector-dash-pulse-delayed {
+  animation: vectorDashPulseAnim 7s linear infinite;
+  animation-delay: -3.5s;
 }
 
-.book-reader-container.theme-parchment .book-decor-cyber-left {
-  opacity: 0.55;
-  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.6) contrast(1.25);
+.vector-dash-pulse-fast {
+  animation: vectorDashPulseAnim 5s linear infinite;
 }
 
-.book-reader-container.theme-parchment .book-decor-cyber-right {
-  opacity: 0.5;
-  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.6) contrast(1.25);
+.vector-dash-pulse-reverse {
+  animation: vectorDashPulseReverseAnim 5s linear infinite;
 }
 
 @keyframes vectorDashPulseAnim {
@@ -522,6 +521,73 @@
   100% {
     stroke-dashoffset: 0;
   }
+}
+
+/* Hover illumination on desktop presence */
+.book-reader-container:hover .book-vector-tracks-group {
+  filter: drop-shadow(0 0 10px rgba(0, 168, 255, 0.35));
+  transition: filter 0.5s ease;
+}
+
+.book-reader-container.theme-parchment:hover .book-vector-tracks-group {
+  filter: drop-shadow(0 0 10px rgba(184, 134, 78, 0.35));
+}
+
+/* Four Architectural Corner Filigrees */
+.book-decor-corner {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  pointer-events: none;
+  opacity: 0.35;
+  filter: drop-shadow(0 0 12px rgba(0, 168, 255, 0.3));
+  transition: opacity 0.3s ease;
+}
+
+.book-decor-corner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.book-corner-tl {
+  bottom: 0;
+  left: 0;
+}
+
+.book-corner-tr {
+  bottom: 0;
+  right: 0;
+  transform: scaleX(-1);
+}
+
+.book-corner-bl {
+  top: 7%;
+  left: 0;
+  transform: scaleY(-1);
+}
+
+.book-corner-br {
+  top: 7%;
+  right: 0;
+  transform: scale(-1, -1);
+}
+
+/* Parchment Theme Adaptations */
+.book-reader-container.theme-parchment .book-decor-mandala-wrap {
+  opacity: 0.5;
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.62) contrast(1.25) drop-shadow(0 0 25px rgba(184, 134, 78, 0.25));
+}
+
+.book-reader-container.theme-parchment .book-decor-side-left,
+.book-reader-container.theme-parchment .book-decor-side-right {
+  opacity: 0.8;
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.58) contrast(1.3) drop-shadow(0 0 16px rgba(184, 134, 78, 0.3));
+}
+
+.book-reader-container.theme-parchment .book-decor-corner {
+  opacity: 0.8;
+  filter: sepia(0.85) hue-rotate(-20deg) brightness(0.58) contrast(1.3);
 }
 
 /* Top Subtle Header Bar */

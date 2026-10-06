@@ -7,7 +7,21 @@ export interface VectorPathDecorProps {
   className?: string;
 }
 
-
+/**
+ * VectorPathDecor implements a unified, non-intersecting closed perimeter
+ * vector motion path around the reader.
+ * 
+ * 4 full round mandalas travel along this continuous track locked at exact
+ * 25% phase offsets (separated by ~950px along the circuit):
+ * - They continuously change position, traveling along the left flank,
+ *   across the top, down the right flank, and across the bottom.
+ * - Because all 4 share the exact same trajectory in the same direction,
+ *   they can MATHEMATICALLY NEVER overlap or touch each other.
+ * - The path corridor stays strictly clear of the static side border
+ *   designs (maintaining a 40px+ safety buffer), corner filigrees, and toolbar.
+ * - The vector path is 100% invisible (defined strictly in <defs>).
+ * - No light/glow halos: exact same aesthetic as the static filigree designs.
+ */
 export const VectorPathDecor: React.FC<VectorPathDecorProps> = ({
   currentTheme = 'charcoal',
   className = '',
