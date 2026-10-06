@@ -64,12 +64,14 @@ export interface MagazineShowcaseProps {
   onOpenReader?: (page?: number) => void;
   pdfUrl?: string;
   className?: string;
+  hideCta?: boolean;
 }
 
 export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
   onOpenReader,
   pdfUrl = '/prisma_content.pdf',
   className = '',
+  hideCta,
 }) => {
   const router = useRouter();
   const pages = useMemo(() => buildMagazineShowcasePages(), []);
