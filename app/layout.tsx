@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rajdhani, Space_Grotesk, JetBrains_Mono, Caveat, Playfair_Display } from "next/font/google";
+import { Rajdhani, JetBrains_Mono, Caveat, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const rajdhani = Rajdhani({
@@ -8,9 +8,22 @@ const rajdhani = Rajdhani({
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
+import localFont from "next/font/local";
+
+const playFont = localFont({
+  src: [
+    {
+      path: '../public/fonts/Play/Play-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Play/Play-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    }
+  ],
+  variable: '--font-space', // Keep as font-space to apply globally across existing classes
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -43,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${rajdhani.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${caveat.variable} ${playfair.variable} h-full antialiased`}
+      className={`${rajdhani.variable} ${playFont.variable} ${jetbrainsMono.variable} ${caveat.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#050a12] text-[#f8fafc]">{children}</body>
     </html>
