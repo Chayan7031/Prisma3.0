@@ -455,7 +455,7 @@ const BookShowcasePhysics: React.FC<BookShowcasePhysicsProps> = ({
         entranceProgressRef.current + delta * 1.0
       );
       const entrance = entranceProgressRef.current;
-      const time = state.clock.getElapsedTime();
+      const time = performance.now() / 1000;
       const currentPhase = showcasePhaseRef.current;
 
       if (currentPhase === 'ROTATING') {

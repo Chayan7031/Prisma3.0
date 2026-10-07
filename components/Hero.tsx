@@ -225,6 +225,7 @@ export const Hero: React.FC<HeroProps> = ({
             src="/left_design_tight.png"
             alt="Botanical Sketch Flourish"
             fill
+            sizes="(max-width: 768px) 200px, 280px"
             className="object-contain"
           />
         </div>
@@ -235,6 +236,7 @@ export const Hero: React.FC<HeroProps> = ({
             src="/left_design_tight.png"
             alt="Botanical Sketch Flourish"
             fill
+            sizes="160px"
             className="object-contain"
           />
         </div>
@@ -245,6 +247,7 @@ export const Hero: React.FC<HeroProps> = ({
             src="/design0.png"
             alt="Botanical Sketch Flourish"
             fill
+            sizes="(max-width: 768px) 170px, 220px"
             className="object-contain"
           />
         </div>
@@ -255,7 +258,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* KGEC Logo */}
         <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] shrink-0 animate-fade-in-up" style={{ animationDelay: '100ms', opacity: 0, animationFillMode: 'forwards' }}>
           <img
-            src="/kgec_logo-removebg-preview.png"
+            src="https://res.cloudinary.com/db9l85phg/image/upload/v1791353718/kgec_logo-removebg-preview_shf3cd.png"
             alt="KGEC Logo"
             className="w-full h-full object-contain"
             draggable={false}
@@ -735,6 +738,7 @@ export const Hero: React.FC<HeroProps> = ({
               src="/br_design_tight.png"
               alt="Wireframe Head and Circuit Graphics"
               fill
+              sizes="(max-width: 768px) 165px, 220px"
               className="object-contain object-top"
             />
           </div>

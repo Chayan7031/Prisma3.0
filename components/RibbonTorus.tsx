@@ -164,12 +164,12 @@ export const RibbonTorus: React.FC<RibbonTorusProps> = ({
 
     // Animation variables
     let animationFrameId: number;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      const elapsedTime = clock.getElapsedTime() * speed;
+      const elapsedTime = ((performance.now() - startTime) / 1000) * speed;
 
       // Smooth mouse interpolation
       mouseRef.current.x += (mouseRef.current.targetX - mouseRef.current.x) * 0.08;
