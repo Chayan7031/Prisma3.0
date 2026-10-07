@@ -13,7 +13,7 @@ export function buildMagazineShowcasePages(): PageData[] {
     contentPages.cover ||
     'https://res.cloudinary.com/daybrhbsc/image/upload/f_auto,q_auto,w_1000/v1790614624/prisma_magazine_cover_page.jpg';
 
-  const backCover = contentPages.backCover || '/prisma_backcover.png';
+  const backCover = contentPages.backCover || '/prisma_backcover.webp';
   // Inside content pages from Cloudinary
   const contentList: string[] = [];
   for (let i = 1; i <= 16; i++) {
@@ -27,8 +27,8 @@ export function buildMagazineShowcasePages(): PageData[] {
     } else {
       contentList.push(
         i % 2 === 0
-          ? '/textures/prisma_content_page-0020.jpg'
-          : '/textures/prisma_content_page-0021.jpg'
+          ? '/textures/prisma_content_page-0020.webp'
+          : '/textures/prisma_content_page-0021.webp'
       );
     }
   }
@@ -157,7 +157,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           {/* 1. Flying Butterflies & Swallows (page-bg-butterfly) - Upper Left & Right (Shifted down) */}
           <div className="absolute top-[76%] left-[2%] sm:left-[5%] lg:left-[7%] w-[160px] sm:w-[210px] lg:w-[250px] aspect-square opacity-85 mix-blend-multiply pointer-events-none select-none z-10 animate-floating">
             <Image
-              src="/page-bg-butterfly.png"
+              src="/page-bg-butterfly.webp"
               alt="Butterflies Decor"
               fill
               sizes="(max-width: 768px) 180px, 250px"
@@ -166,7 +166,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           </div>
           <div className="hidden sm:block absolute top-[14%] sm:top-[12%] lg:top-[14%] right-[4%] lg:right-[33%] w-[140px] sm:w-[180px] lg:w-[220px] aspect-square opacity-75 mix-blend-multiply pointer-events-none select-none z-10 -rotate-12 animate-floating">
             <Image
-              src="/page-bg-butterfly.png"
+              src="/page-bg-butterfly.webp"
               alt="Butterflies Decor"
               fill
               sizes="(max-width: 768px) 160px, 220px"
@@ -177,7 +177,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           {/* 2. Celestial Earth/Moon with Orbit Trails (page-bg-earth) */}
           <div className="absolute top-[10%] sm:top-[12%] lg:top-[14%] left-[1%] sm:left-[2%] lg:left-[3%] xl:left-[4%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[420px] aspect-square opacity-85 lg:opacity-95 mix-blend-multiply pointer-events-none select-none z-10">
             <Image
-              src="/page-bg-earth-removebg.png"
+              src="/page-bg-earth-removebg.webp"
               alt="A Smarter Tomorrow Earth Decor"
               fill
               sizes="(max-width: 768px) 240px, 420px"
@@ -188,7 +188,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           {/* 3. Anatomical Cybernetic Profile Blueprint (page-bg-face) - Right Flank Editorial Backdrop (Shifted down) */}
           <div className="absolute hidden md:block top-[18%] sm:top-[16%] lg:top-[18%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
             <Image
-              src="/page-bg-face.png"
+              src="/page-bg-face.webp"
               alt="Cybernetic Anatomical Face Blueprint"
               fill
               sizes="(max-width: 768px) 280px, 390px"

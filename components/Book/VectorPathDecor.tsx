@@ -79,7 +79,7 @@ export const VectorPathDecor: React.FC<VectorPathDecorProps> = ({
           </animateMotion>
           <g className="decor-rotator">
             <image
-              href="/design/full_round_design.png"
+              href="/design/full_round_design.webp"
               x="-80"
               y="-80"
               width="250"
@@ -97,7 +97,7 @@ export const VectorPathDecor: React.FC<VectorPathDecorProps> = ({
           </animateMotion>
           <g className="decor-rotator-reverse">
             <image
-              href="/design/full_round_design.png"
+              href="/design/full_round_design.webp"
               x="-80"
               y="-80"
               width="250"
@@ -115,7 +115,7 @@ export const VectorPathDecor: React.FC<VectorPathDecorProps> = ({
           </animateMotion>
           <g className="decor-rotator">
             <image
-              href="/design/full_round_design.png"
+              href="/design/full_round_design.webp"
               x="-80"
               y="-80"
               width="250"
@@ -133,7 +133,7 @@ export const VectorPathDecor: React.FC<VectorPathDecorProps> = ({
           </animateMotion>
           <g className="decor-rotator-reverse">
             <image
-              href="/design/full_round_design.png"
+              href="/design/full_round_design.webp"
               x="-80"
               y="-80"
               width="250"

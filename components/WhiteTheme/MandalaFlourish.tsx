@@ -43,8 +43,8 @@ export const MandalaFlourish: React.FC<MandalaFlourishProps> = ({
       <Image
         src={
           variant === 'white'
-            ? '/assets/mandala-flourish-white.png'
-            : '/assets/mandala-flourish-orange.png'
+            ? '/assets/mandala-flourish-white.webp'
+            : '/assets/mandala-flourish-orange.webp'
         }
         alt="Mandala Flourish Ornament"
         width={410}

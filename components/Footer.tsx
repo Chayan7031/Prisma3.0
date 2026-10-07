@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
         {/* Botanical Sketch Flourish (Bottom Left, Subtle) */}
         <div className="absolute -bottom-6 -left-6 sm:left-[1%] w-[160px] sm:w-[200px] h-[170px] sm:h-[210px] opacity-15 scale-x-[-1] rotate-[20deg] mix-blend-multiply">
           <Image
-            src="/left_design_tight.png"
+            src="/left_design_tight.webp"
             alt="Botanical Sketch Flourish"
             fill
             sizes="200px"
@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
         {/* Butterflies Decor (Upper Right) */}
         <div className="absolute top-[6%] right-[2%] w-[60px] sm:w-[95px] h-[60px] sm:h-[95px] opacity-45 mix-blend-multiply -rotate-12">
           <Image
-            src="/page-bg-butterfly.png"
+            src="/page-bg-butterfly.webp"
             alt="Butterflies Decor"
             fill
             sizes="95px"

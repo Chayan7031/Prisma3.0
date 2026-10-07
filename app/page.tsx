@@ -125,12 +125,12 @@ export default function Home() {
         <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
           {/* Left Flower (Right half visible) */}
           <div className="absolute top-1/2 -translate-y-1/2 left-0 -translate-x-1/2 w-[80vw] sm:w-[60vw] max-w-[800px] aspect-square opacity-70">
-            <Image src="/book-bg-flower.png" alt="Flower Decoration" fill sizes="(max-width: 768px) 80vw, 60vw" className="object-contain" />
+            <Image src="/book-bg-flower.webp" alt="Flower Decoration" fill sizes="(max-width: 768px) 80vw, 60vw" className="object-contain" />
           </div>
           
           {/* Right Flower (Left half visible) */}
           <div className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-1/2 w-[80vw] sm:w-[60vw] max-w-[800px] aspect-square opacity-70">
-            <Image src="/book-bg-flower.png" alt="Flower Decoration" fill sizes="(max-width: 768px) 80vw, 60vw" className="object-contain" />
+            <Image src="/book-bg-flower.webp" alt="Flower Decoration" fill sizes="(max-width: 768px) 80vw, 60vw" className="object-contain" />
           </div>
           
           {/* Animated Tech Orbits */}

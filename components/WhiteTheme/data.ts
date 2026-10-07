@@ -138,7 +138,7 @@ export const GALLERY_PAGES: GalleryPageItem[] = [
     pageNumber: contentPageList?.length || 63,
     title: 'Special Thanks & Back Cover',
     category: 'Back',
-    imageUrl: contentPages.backCover || '/prisma_backcover.png',
+    imageUrl: contentPages.backCover || '/prisma_backcover.webp',
     description: 'The concluding artistic back cover and credits to all contributors and patrons.',
   },
 ];

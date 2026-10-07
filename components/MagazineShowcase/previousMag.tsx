@@ -20,20 +20,20 @@ export const PreviousMag: React.FC<PreviousMagProps> = ({
   const prisma1Pages: PageData[] = useMemo(
     () => [
       {
-        front: '/showcase/previous/prisma1_cover.jpg',
-        back: '/textures/prisma_content_page-0020.jpg',
+        front: '/showcase/previous/prisma1_cover.webp',
+        back: '/textures/prisma_content_page-0020.webp',
       },
       {
-        front: '/textures/prisma_content_page-0021.jpg',
-        back: '/textures/prisma_content_page-0020.jpg',
+        front: '/textures/prisma_content_page-0021.webp',
+        back: '/textures/prisma_content_page-0020.webp',
       },
       {
-        front: '/textures/prisma_content_page-0021.jpg',
-        back: '/textures/prisma_content_page-0020.jpg',
+        front: '/textures/prisma_content_page-0021.webp',
+        back: '/textures/prisma_content_page-0020.webp',
       },
       {
-        front: '/textures/prisma_content_page-0021.jpg',
-        back: '/showcase/previous/prisma1_back.jpg',
+        front: '/textures/prisma_content_page-0021.webp',
+        back: '/showcase/previous/prisma1_back.webp',
       },
     ],
     []
@@ -43,20 +43,20 @@ export const PreviousMag: React.FC<PreviousMagProps> = ({
   const prisma2Pages: PageData[] = useMemo(
     () => [
       {
-        front: '/showcase/previous/prisma2_cover.jpg',
-        back: '/textures/prisma_content_page-0020.jpg',
+        front: '/showcase/previous/prisma2_cover.webp',
+        back: '/textures/prisma_content_page-0020.webp',
       },
       {
-        front: '/textures/prisma_content_page-0021.jpg',
-        back: '/textures/prisma_content_page-0020.jpg',
+        front: '/textures/prisma_content_page-0021.webp',
+        back: '/textures/prisma_content_page-0020.webp',
       },
       {
-        front: '/textures/prisma_content_page-0021.jpg',
-        back: '/textures/prisma_content_page-0020.jpg',
+        front: '/textures/prisma_content_page-0021.webp',
+        back: '/textures/prisma_content_page-0020.webp',
       },
       {
-        front: '/textures/prisma_content_page-0021.jpg',
-        back: '/showcase/previous/prisma2_back.jpg',
+        front: '/textures/prisma_content_page-0021.webp',
+        back: '/showcase/previous/prisma2_back.webp',
       },
     ],
     []
@@ -82,7 +82,7 @@ export const PreviousMag: React.FC<PreviousMagProps> = ({
         isTransparent
           ? undefined
           : {
-              backgroundImage: "url('/textures/parchment_texture.jpg')",
+              backgroundImage: "url('/textures/parchment_texture.webp')",
               backgroundRepeat: 'repeat',
               backgroundSize: '400px 400px',
             }

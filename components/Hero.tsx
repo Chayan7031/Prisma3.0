@@ -248,7 +248,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* 2. Mid/Bottom-Left: Behind buttons & tagline */}
         <div className="absolute bottom-[3%] -left-6 sm:left-[1%] w-[200px] sm:w-[280px] aspect-[275/291] opacity-25 scale-x-[-1] rotate-[22deg] mix-blend-multiply">
           <Image
-            src="/left_design_tight.png"
+            src="/left_design_tight.webp"
             alt="Botanical Sketch Flourish"
             fill
             sizes="(max-width: 768px) 200px, 280px"
@@ -259,7 +259,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* 3. Upper-Center: Subtle whisper below top navbar */}
         <div className="hidden lg:block absolute top-[5%] left-[42%] w-[160px] aspect-[275/291] opacity-20 -rotate-[18deg] mix-blend-multiply">
           <Image
-            src="/left_design_tight.png"
+            src="/left_design_tight.webp"
             alt="Botanical Sketch Flourish"
             fill
             sizes="160px"
@@ -270,7 +270,7 @@ export const Hero: React.FC<HeroProps> = ({
         {/* 4. Center-Mid: Tilted between left typography and center artwork */}
         <div className="hidden md:block absolute top-[28%] left-[34%] lg:left-[22%] w-[170px] sm:w-[220px] aspect-[215/230] opacity-25 rotate-[35deg] scale-y-[-1] mix-blend-multiply">
           <Image
-            src="/design0.png"
+            src="/design0.webp"
             alt="Botanical Sketch Flourish"
             fill
             sizes="(max-width: 768px) 170px, 220px"
@@ -710,7 +710,7 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="relative w-full h-auto">
               {/* 1. Underlying Base Layer: Architectural Blueprint Line Sketch (Visible at 0% scroll) */}
               <img
-                src="/woman_sketch_fine.png"
+                src="/woman_sketch_fine.webp"
                 alt="PRISMA 3.0 Renaissance Cyborg Woman Blueprint Sketch"
                 className="relative z-10 w-full h-auto object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.08)] select-none pointer-events-none"
                 draggable={false}
@@ -757,7 +757,7 @@ export const Hero: React.FC<HeroProps> = ({
                     </defs>
 
                     <image
-                      href="/Face_woman_prisma-removebg-preview.png"
+                      href="/Face_woman_prisma-removebg-preview.webp"
                       x="0"
                       y="0"
                       width="577"
@@ -778,7 +778,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* 1. Wireframe Head & Foliage Drawing (Shifted slightly down) */}
           <div className="absolute right-0 sm:right-2 lg:right-4 top-[24%] sm:top-[20%] lg:top-[22%] z-0 w-[85px] xs:w-[100px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto animate-floating">
             <Image
-              src="/br_design_tight.png"
+              src="/br_design_tight.webp"
               alt="Wireframe Head and Circuit Graphics"
               fill
               sizes="(max-width: 768px) 165px, 220px"

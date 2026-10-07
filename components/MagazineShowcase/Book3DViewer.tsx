@@ -87,7 +87,7 @@ const resolveTextureUrl = (urlOrName: string, texturePath = '/textures/') => {
   if (/\.(jpg|jpeg|png|webp|avif)$/i.test(urlOrName)) {
     return `${texturePath}${urlOrName}`;
   }
-  return `${texturePath}${urlOrName}.jpg`;
+  return `${texturePath}${urlOrName}.webp`;
 };
 
 export interface PageData {

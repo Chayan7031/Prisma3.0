@@ -1005,7 +1005,7 @@ export const Book: React.FC<BookProps> = ({
         {/* Butterfly Above Right Hand */}
         <div className="absolute top-[15%] sm:top-[18%] md:top-[5%] right-[5%] sm:right-[10%] md:right-[15%] lg:right-[8%] w-[150px] sm:w-[180px] md:w-[220px] lg:w-[250px] opacity-75 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 -rotate-12">
           <img
-            src="/page-bg-butterfly.png"
+            src="/page-bg-butterfly.webp"
             alt="Butterfly Decor"
             className="w-full h-auto object-contain"
             draggable={false}
@@ -1015,7 +1015,7 @@ export const Book: React.FC<BookProps> = ({
         {/* Bottom Left Decor (Right beside the left border) */}
         <div className="absolute bottom-0 left-[10%] sm:left-[12%] md:left-[14%] lg:left-[4%] w-[250px] sm:w-[300px] md:w-[400px] lg:w-[500px] opacity-100 pointer-events-none z-10 transition-all duration-700">
           <img
-            src="/design/left_side-removebg-preview.png"
+            src="/design/left_side-removebg-preview.webp"
             alt="Bottom Left Decor"
             className="w-full h-auto object-contain object-bottom"
             style={{ filter: 'drop-shadow(0px 0px 10px rgba(0,0,0,0.3))' }}
@@ -1026,7 +1026,7 @@ export const Book: React.FC<BookProps> = ({
         {/* Bottom Right Decor (Left beside the right border) */}
         <div className="absolute bottom-0 right-[10%] sm:right-[12%] md:right-[14%] lg:right-[4%] w-[250px] sm:w-[300px] md:w-[400px] lg:w-[500px] opacity-100 pointer-events-none z-10 transition-all duration-700">
           <img
-            src="/left_side-removebg-preview-right.png"
+            src="/left_side-removebg-preview-right.webp"
             alt="Bottom Right Decor"
             className="w-full h-auto object-contain object-bottom"
             style={{ filter: 'drop-shadow(0px 0px 10px rgba(0,0,0,0.3))' }}
