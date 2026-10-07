@@ -59,6 +59,52 @@ function getSvgMaskPath(p: number): string {
   return `M -60 -60 L 640 -60 ${points.join(' ')} Z`;
 }
 
+// Generate multiple chaotic intersecting strokes that draw simultaneously like a frantic sketch
+function getScribbleMaskPaths(): string[] {
+  const paths: string[] = [];
+  let seed = 12345;
+  const random = () => {
+    seed = (seed * 16807) % 2147483647;
+    return seed / 2147483647;
+  };
+  
+  // Create 50 horizontal-ish chaotic strokes
+  for (let y = -20; y <= 440; y += 10) {
+    const isRTL = random() > 0.5;
+    let d = isRTL ? `M 600 ${y} ` : `M -20 ${y} `;
+    let currentX = isRTL ? 600 : -20;
+    
+    for (let i = 0; i < 15; i++) {
+      const nextX = isRTL ? currentX - 45 : currentX + 45;
+      const cpX = currentX + (isRTL ? -20 : 20);
+      const nextY = y + (random() * 25 - 12.5);
+      d += `Q ${cpX.toFixed(1)} ${(y + (random() * 30 - 15)).toFixed(1)} ${nextX.toFixed(1)} ${nextY.toFixed(1)} `;
+      currentX = nextX;
+    }
+    paths.push(d);
+  }
+  
+  // Create 40 vertical-ish chaotic strokes
+  for (let x = -20; x <= 580; x += 15) {
+    const isBTT = random() > 0.5;
+    let d = isBTT ? `M ${x} 450 ` : `M ${x} -20 `;
+    let currentY = isBTT ? 450 : -20;
+    
+    for (let i = 0; i < 12; i++) {
+      const nextY = isBTT ? currentY - 45 : currentY + 45;
+      const cpY = currentY + (isBTT ? -20 : 20);
+      const nextX = x + (random() * 25 - 12.5);
+      d += `Q ${(x + (random() * 30 - 15)).toFixed(1)} ${cpY.toFixed(1)} ${nextX.toFixed(1)} ${nextY.toFixed(1)} `;
+      currentY = nextY;
+    }
+    paths.push(d);
+  }
+  
+  return paths;
+}
+
+const SCRIBBLE_PATHS = getScribbleMaskPaths();
+
 export interface HeroProps {
   onOpenReader?: (page?: number) => void;
   pdfUrl?: string;
@@ -69,6 +115,7 @@ export const Hero: React.FC<HeroProps> = ({
   pdfUrl = '/prisma_content.pdf',
 }) => {
   const [revealProgress, setRevealProgress] = useState(0);
+  const [sketchDrawProgress, setSketchDrawProgress] = useState(1);
   // Entrance animations are held until the preloader curtain has opened
   const [hasEntered, setHasEntered] = useState(false);
 
@@ -142,27 +189,41 @@ export const Hero: React.FC<HeroProps> = ({
 
       window.scrollTo(0, 0);
 
-      const animDuration = 3800; // Slower, luxurious 3.8s reveal for cinematic organic bloom
-      let startTime: number | null = null;
+      const drawDuration = 2200; // 2.2s sketch drawing phase
+      const revealDuration = 3800; // 3.8s color bloom phase
+      
+      let drawStartTime: number | null = null;
+      let revealStartTime: number | null = null;
 
       const step = (timestamp: number) => {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const rawT = Math.min(elapsed / animDuration, 1);
-
-        // Silky smooth cubic easeInOut for organic acceleration and soft deceleration
-        const easedT = rawT < 0.5
-          ? 4 * rawT * rawT * rawT
-          : 1 - Math.pow(-2 * rawT + 2, 3) / 2;
-
-        setRevealProgress(easedT);
-
-        if (rawT < 1) {
+        if (!drawStartTime) drawStartTime = timestamp;
+        const elapsedDraw = timestamp - drawStartTime;
+        
+        if (elapsedDraw < drawDuration) {
+          // Drawing phase
+          const rawT = Math.min(elapsedDraw / drawDuration, 1);
+          const easedT = 1 - Math.pow(-rawT + 1, 3); // cubic easeOut
+          setSketchDrawProgress(1 - easedT);
           animFrameId = requestAnimationFrame(step);
         } else {
-          // Animation complete: lock is released, allowing the user to freely scroll
-          setRevealProgress(1);
-          unlockScroll();
+          // Drawing finished, hold sketchDrawProgress at 0
+          setSketchDrawProgress(0);
+          
+          if (!revealStartTime) revealStartTime = timestamp;
+          const elapsedReveal = timestamp - revealStartTime;
+          const rawT = Math.min(elapsedReveal / revealDuration, 1);
+          
+          const easedT = 1 - Math.pow(1 - rawT, 3); // cubic easeOut for immediate start
+
+          setRevealProgress(easedT);
+
+          if (rawT < 1) {
+            animFrameId = requestAnimationFrame(step);
+          } else {
+            // Animation complete
+            setRevealProgress(1);
+            unlockScroll();
+          }
         }
       };
 
@@ -708,66 +769,84 @@ export const Hero: React.FC<HeroProps> = ({
           {/* ------------------------------------------------------------------- */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[110vw] xs:w-[105vw] sm:w-[85vw] md:w-full max-w-[500px] sm:max-w-[580px] md:max-w-[680px] lg:max-w-[780px] xl:max-w-[850px] 2xl:max-w-[920px] flex items-end justify-center pointer-events-none sm:pointer-events-auto overflow-visible origin-bottom scale-[1.0] sm:scale-100">
             <div className="relative w-full h-auto">
-              {/* 1. Underlying Base Layer: Architectural Blueprint Line Sketch (Visible at 0% scroll) */}
-              <img
-                src="/woman_sketch_fine.webp"
-                alt="PRISMA 3.0 Renaissance Cyborg Woman Blueprint Sketch"
-                className="relative z-10 w-full h-auto object-contain object-bottom drop-shadow-[0_12px_32px_rgba(0,0,0,0.08)] select-none pointer-events-none"
-                draggable={false}
-              />
-
-              {/* 2. Top Revealed Layer: Photorealistic Color Render with Displacement Filter Mask (Heron AI ink mask, NO dark overlay line) */}
-              {revealProgress > 0.001 && (
-                <div className="absolute inset-0 z-20 pointer-events-none select-none overflow-visible">
-                  <svg
-                    viewBox="0 0 577 418"
-                    className="w-full h-full object-contain object-bottom pointer-events-none select-none drop-shadow-[0_12px_32px_rgba(0,0,0,0.14)]"
-                    preserveAspectRatio="xMidYMid meet"
-                  >
-                    <defs>
-                      <filter id="sharedDisplacementFilter" x="-20%" y="-20%" width="140%" height="140%">
-                        <feTurbulence
-                          type="fractalNoise"
-                          baseFrequency="0.045 0.055"
-                          numOctaves={4}
-                          seed={5}
-                          result="noise"
-                        />
-                        <feDisplacementMap
-                          in="SourceGraphic"
-                          in2="noise"
-                          scale={55}
-                          xChannelSelector="R"
-                          yChannelSelector="G"
-                          result="displaced"
-                        />
-                        <feGaussianBlur in="displaced" stdDeviation="1.6" result="blurred" />
-                        <feComponentTransfer in="blurred" result="contrast">
-                          <feFuncA type="linear" slope="2.2" intercept="-0.6" />
-                        </feComponentTransfer>
-                      </filter>
-
-                      <mask id="womanInkMask" maskContentUnits="userSpaceOnUse" x="-80" y="-80" width="750" height="600">
-                        <path
-                          fill="#FFFFFF"
-                          style={{ filter: 'url(#sharedDisplacementFilter)' }}
-                          d={svgMaskPath}
-                        />
-                      </mask>
-                    </defs>
-
-                    <image
-                      href="/Face_woman_prisma-removebg-preview.webp"
-                      x="0"
-                      y="0"
-                      width="577"
-                      height="418"
-                      mask="url(#womanInkMask)"
-                      preserveAspectRatio="xMidYMid meet"
+              <svg
+                viewBox="0 0 577 418"
+                className="w-full h-full object-contain object-bottom pointer-events-none select-none drop-shadow-[0_12px_32px_rgba(0,0,0,0.14)] relative z-10"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <defs>
+                  <filter id="sharedDisplacementFilter" x="-20%" y="-20%" width="140%" height="140%">
+                    <feTurbulence
+                      type="fractalNoise"
+                      baseFrequency="0.045 0.055"
+                      numOctaves={4}
+                      seed={5}
+                      result="noise"
                     />
-                  </svg>
-                </div>
-              )}
+                    <feDisplacementMap
+                      in="SourceGraphic"
+                      in2="noise"
+                      scale={55}
+                      xChannelSelector="R"
+                      yChannelSelector="G"
+                      result="displaced"
+                    />
+                    <feGaussianBlur in="displaced" stdDeviation="1.6" result="blurred" />
+                    <feComponentTransfer in="blurred" result="contrast">
+                      <feFuncA type="linear" slope="2.2" intercept="-0.6" />
+                    </feComponentTransfer>
+                  </filter>
+
+                  <mask id="womanInkMask" maskContentUnits="userSpaceOnUse" x="-80" y="-80" width="750" height="600">
+                    <path
+                      fill="#FFFFFF"
+                      style={{ filter: 'url(#sharedDisplacementFilter)' }}
+                      d={svgMaskPath}
+                    />
+                  </mask>
+
+                  <mask id="sketchDrawMask" maskContentUnits="userSpaceOnUse" x="-50" y="-50" width="677" height="518">
+                    {SCRIBBLE_PATHS.map((d, i) => (
+                      <path
+                        key={i}
+                        fill="none"
+                        stroke="#FFFFFF"
+                        strokeWidth="12"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        pathLength="100"
+                        strokeDasharray="100"
+                        strokeDashoffset={sketchDrawProgress * 100}
+                        d={d}
+                      />
+                    ))}
+                  </mask>
+                </defs>
+
+                {/* 1. Underlying Base Layer: Architectural Blueprint Line Sketch (Revealed by drawing mask) */}
+                <image
+                  href="/woman_sketch_fine.webp"
+                  x="0"
+                  y="0"
+                  width="577"
+                  height="418"
+                  mask="url(#sketchDrawMask)"
+                  preserveAspectRatio="xMidYMid meet"
+                />
+
+                {/* 2. Top Revealed Layer: Photorealistic Color Render */}
+                {revealProgress > 0.001 && (
+                  <image
+                    href="/Face_woman_prisma-removebg-preview.webp"
+                    x="0"
+                    y="0"
+                    width="577"
+                    height="418"
+                    mask="url(#womanInkMask)"
+                    preserveAspectRatio="xMidYMid meet"
+                  />
+                )}
+              </svg>
             </div>
           </div>
 
