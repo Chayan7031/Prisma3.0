@@ -377,14 +377,14 @@ const BookShowcasePhysics: React.FC<BookShowcasePhysicsProps> = ({
   const { viewport } = useThree();
 
   const targetScale = useMemo(() => {
-    let base = 1.22;
-    if (screenWidth >= 1600) base = 1.35;
-    else if (screenWidth >= 1400) base = 1.28;
-    else if (screenWidth >= 1200) base = 1.22;
-    else if (screenWidth >= 1024) base = 1.14;
-    else if (screenWidth >= 768) base = 1.04;
-    else if (screenWidth >= 480) base = 0.94;
-    else base = 0.86;
+    let base = 1.25;
+    if (screenWidth >= 1600) base = 1.40;
+    else if (screenWidth >= 1400) base = 1.34;
+    else if (screenWidth >= 1200) base = 1.28;
+    else if (screenWidth >= 1024) base = 1.20;
+    else if (screenWidth >= 768) base = 1.10;
+    else if (screenWidth >= 480) base = 1.00;
+    else base = 0.92;
     return base * scale;
   }, [screenWidth, scale]);
 
@@ -400,7 +400,11 @@ const BookShowcasePhysics: React.FC<BookShowcasePhysicsProps> = ({
   useFrame((state, delta) => {
     if (!bookGroupRef.current) return;
 
-    const maxSafeScale = ((viewport.width * 0.92) / (PAGE_WIDTH * 2)) * scale;
+    // When book is closed or static showcase pose, width is single page (not open 2-page spread)
+    const effectiveBookWidth = delayedPage === 0 ? PAGE_WIDTH * 1.15 : PAGE_WIDTH * 2;
+    const maxSafeScaleX = ((viewport.width * 0.90) / effectiveBookWidth) * scale;
+    const maxSafeScaleY = ((viewport.height * 0.86) / PAGE_HEIGHT) * scale;
+    const maxSafeScale = Math.min(maxSafeScaleX, maxSafeScaleY);
     const activeScale = Math.min(targetScale, maxSafeScale);
 
 
@@ -713,7 +717,7 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
               ref={controlsRef}
               enablePan={false}
               enableZoom={false}
-              minDistance={2.5}
+              minDistance={2.0}
               maxDistance={5.5}
               maxPolarAngle={Math.PI / 2 + 0.15}
               minPolarAngle={Math.PI / 4}
@@ -735,10 +739,10 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
             <directionalLight position={[0, 3, -3.5]} intensity={0.45} />
 
             <ContactShadows
-              position={[0, -1.3, 0]}
-              opacity={0.45}
-              scale={8.5}
-              blur={2.6}
+              position={[0, -1.25, 0]}
+              opacity={0.48}
+              scale={9.5}
+              blur={2.4}
               far={3}
             />
           </Suspense>

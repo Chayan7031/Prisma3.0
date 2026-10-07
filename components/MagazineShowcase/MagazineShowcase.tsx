@@ -178,13 +178,13 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             />
           </div>
 
-          {/* 2. Celestial Earth/Moon with Orbit Trails (page-bg-earth) - Shifted down away from seam */}
-          <div className="absolute top-[13%] sm:top-[14%] lg:top-[16%] left-[2%] sm:left-[4%] lg:left-[6%] w-[180px] sm:w-[220px] lg:w-[260px] aspect-square opacity-80 lg:opacity-90 mix-blend-multiply pointer-events-none select-none z-10">
+          {/* 2. Celestial Earth/Moon with Orbit Trails (page-bg-earth) */}
+          <div className="absolute top-[10%] sm:top-[12%] lg:top-[14%] left-[1%] sm:left-[2%] lg:left-[3%] xl:left-[4%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[420px] aspect-square opacity-85 lg:opacity-95 mix-blend-multiply pointer-events-none select-none z-10">
             <Image
               src="/page-bg-earth-removebg.png"
               alt="A Smarter Tomorrow Earth Decor"
               fill
-              sizes="(max-width: 768px) 200px, 260px"
+              sizes="(max-width: 768px) 240px, 420px"
               className="object-contain"
             />
           </div>
@@ -206,19 +206,19 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
       <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 pt-4 sm:pt-20 lg:pt-28 pb-32 sm:pb-36 lg:pb-28 h-full flex flex-col justify-center">
 
         {/* Two-Column Grid: 3D Magazine Showcase (Left) + Editorial Text (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-14 xl:gap-20 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 xl:gap-14 items-center w-full">
 
           {/* LEFT COLUMN: 3D Animated Magazine Viewer with Hero Section Woman Background Element */}
-          <div className="lg:col-span-6 relative flex items-center justify-center min-h-[38vh] sm:min-h-[540px] lg:min-h-[620px] overflow-visible">
+          <div className="lg:col-span-7 xl:col-span-7 relative flex items-center justify-center min-h-[46vh] sm:min-h-[580px] lg:min-h-[660px] xl:min-h-[740px] overflow-visible">
 
             {/* 1. Hero Section Solar Halo, Blueprint Rings & Circuit Vectors (Enlarged Monumental Presence) */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-visible">
               {/* Soft Ambient Warmth Diffusion Halo */}
-              <div className="absolute w-[480px] sm:w-[580px] lg:w-[680px] h-[480px] sm:h-[580px] lg:h-[680px] rounded-full pointer-events-none opacity-45 blur-3xl bg-[radial-gradient(circle_at_50%_50%,rgba(255,77,0,0.25)_0%,rgba(190,149,62,0.14)_50%,transparent_72%)]" />
+              <div className="absolute w-[580px] sm:w-[720px] lg:w-[860px] xl:w-[980px] 2xl:w-[1080px] h-[580px] sm:h-[720px] lg:h-[860px] xl:h-[980px] 2xl:h-[1080px] rounded-full pointer-events-none opacity-50 blur-3xl bg-[radial-gradient(circle_at_50%_50%,rgba(255,77,0,0.30)_0%,rgba(190,149,62,0.16)_50%,transparent_72%)]" />
 
               <svg
                 viewBox="0 0 800 800"
-                className="w-[165%] sm:w-[155%] md:w-[145%] lg:w-[140%] max-w-[850px] sm:max-w-[980px] lg:max-w-[1100px] h-auto overflow-visible pointer-events-none scale-110 sm:scale-120 lg:scale-130 transform-gpu"
+                className="w-[185%] sm:w-[175%] md:w-[165%] lg:w-[160%] max-w-[1000px] sm:max-w-[1180px] lg:max-w-[1360px] xl:max-w-[1480px] h-auto overflow-visible pointer-events-none scale-125 sm:scale-138 lg:scale-150 xl:scale-160 transform-gpu"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -244,44 +244,44 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
 
                 {/* Main Solid Orange Stippled Sun Disk */}
                 <g transform="translate(400, 400)">
-                  <circle cx="0" cy="0" r="175" fill="url(#showcaseSolarGlow)" opacity="0.92" />
-                  <circle cx="0" cy="0" r="175" fill="url(#showcaseStippleDots)" />
+                  <circle cx="0" cy="0" r="215" fill="url(#showcaseSolarGlow)" opacity="0.92" />
+                  <circle cx="0" cy="0" r="215" fill="url(#showcaseStippleDots)" />
 
                   {/* Radiating Ticks along Sun Perimeter */}
-                  <line x1="175" y1="0" x2="192" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="-175" y1="0" x2="-192" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="0" y1="-175" x2="0" y2="-192" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="0" y1="175" x2="0" y2="192" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="124" y1="-124" x2="136" y2="-136" stroke="#FF4D00" strokeWidth="1.1" />
-                  <line x1="124" y1="124" x2="136" y2="136" stroke="#FF4D00" strokeWidth="1.1" />
-                  <line x1="-124" y1="-124" x2="-136" y2="-136" stroke="#FF4D00" strokeWidth="1.1" />
-                  <line x1="-124" y1="124" x2="-136" y2="136" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="215" y1="0" x2="234" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="-215" y1="0" x2="-234" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="0" y1="-215" x2="0" y2="-234" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="0" y1="215" x2="0" y2="234" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="152" y1="-152" x2="166" y2="-166" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="152" y1="152" x2="166" y2="166" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="-152" y1="-152" x2="-166" y2="-166" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="-152" y1="152" x2="-166" y2="166" stroke="#FF4D00" strokeWidth="1.1" />
                 </g>
 
                 {/* Blueprint Ring 1 */}
                 <g transform="translate(375, 390)">
-                  <circle cx="0" cy="0" r="215" stroke="#FF4D00" strokeWidth="1.2" opacity="0.8" />
-                  <circle cx="-215" cy="0" r="3.5" fill="#FF4D00" />
-                  <line x1="-215" y1="0" x2="-230" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="0" y1="-215" x2="0" y2="-230" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="-152" y1="-152" x2="-165" y2="-165" stroke="#FF4D00" strokeWidth="1" />
+                  <circle cx="0" cy="0" r="255" stroke="#FF4D00" strokeWidth="1.2" opacity="0.8" />
+                  <circle cx="-255" cy="0" r="3.5" fill="#FF4D00" />
+                  <line x1="-255" y1="0" x2="-272" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="0" y1="-255" x2="0" y2="-272" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="-180" y1="-180" x2="-195" y2="-195" stroke="#FF4D00" strokeWidth="1" />
                 </g>
 
                 {/* Blueprint Ring 2 (Dashed Astrolabe Circle) */}
                 <g transform="translate(420, 410)">
-                  <circle cx="0" cy="0" r="255" stroke="#FF4D00" strokeWidth="0.9" strokeDasharray="7 5" opacity="0.7" />
-                  <line x1="0" y1="-255" x2="0" y2="-270" stroke="#FF4D00" strokeWidth="1.2" />
-                  <circle cx="0" cy="-255" r="3" fill="#FF4D00" />
+                  <circle cx="0" cy="0" r="295" stroke="#FF4D00" strokeWidth="0.9" strokeDasharray="7 5" opacity="0.7" />
+                  <line x1="0" y1="-295" x2="0" y2="-312" stroke="#FF4D00" strokeWidth="1.2" />
+                  <circle cx="0" cy="-295" r="3" fill="#FF4D00" />
                 </g>
 
                 {/* Blueprint Ring 3 (Outer Wide Horizon Ring) */}
                 <g transform="translate(430, 420)">
-                  <circle cx="0" cy="0" r="300" stroke="#FF4D00" strokeWidth="0.55" strokeDasharray="4 8" opacity="0.4" />
+                  <circle cx="0" cy="0" r="345" stroke="#FF4D00" strokeWidth="0.55" strokeDasharray="4 8" opacity="0.4" />
                 </g>
 
                 {/* Inner Calibration Ring */}
                 <g transform="translate(390, 380)">
-                  <circle cx="0" cy="0" r="145" stroke="#FF4D00" strokeWidth="0.75" strokeDasharray="2 6" opacity="0.45" />
+                  <circle cx="0" cy="0" r="170" stroke="#FF4D00" strokeWidth="0.75" strokeDasharray="2 6" opacity="0.45" />
                 </g>
 
                 {/* ------------------------------------------------------------- */}
@@ -419,15 +419,15 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             </div>
 
             {/* 3D WebGL Book Viewport (Static Showcase Pose) */}
-            <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[38vh] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
+            <div className="relative z-10 w-full max-w-[500px] sm:max-w-[600px] lg:max-w-[680px] xl:max-w-[760px] 2xl:max-w-[820px] h-[44vh] sm:h-[520px] lg:h-[620px] xl:h-[680px] 2xl:h-[720px]">
               <Book3DViewer
                 pages={pages}
                 onNavigateToRead={() => handleNavigateToRead(1)}
                 title="Click or drag to explore PRISMA 3.0 in 3D"
                 showBadge={false}
-                glowColor="rgba(255, 77, 0, 0.08)"
-                scale={1.05}
-                cameraDistance={4.4}
+                glowColor="rgba(255, 77, 0, 0.12)"
+                scale={1.12}
+                cameraDistance={3.85}
                 tiltX={-0.18}
                 tiltZ={-0.10}
                 autoAnimate={false}
@@ -438,7 +438,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           {/* RIGHT COLUMN: Editorial Title, Copy & Actions matching Hero UI */}
           <div
             ref={editorialBlockRef}
-            className="lg:col-span-6 flex flex-col justify-center lg:pl-6 xl:pl-10 text-left relative z-10"
+            className="lg:col-span-5 xl:col-span-5 flex flex-col justify-center lg:pl-2 xl:pl-6 text-left relative z-10"
           >
             {/* Kicker: THE MAGAZINE with Hero Orange Bar */}
             <div
