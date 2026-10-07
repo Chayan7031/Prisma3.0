@@ -102,17 +102,13 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
   };
 
   const handleExploreSections = () => {
-    if (typeof window !== 'undefined' && window.__lenis) {
-      window.__lenis.scrollTo('#previous-magazines', { duration: 1.1 });
+    const target = document.getElementById('previous-magazines');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    } else if (onOpenReader) {
+      onOpenReader(1);
     } else {
-      const target = document.getElementById('previous-magazines');
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      } else if (onOpenReader) {
-        onOpenReader(1);
-      } else {
-        router.push('/read');
-      }
+      router.push('/read');
     }
   };
 

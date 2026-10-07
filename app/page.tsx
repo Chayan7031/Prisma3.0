@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Preloader } from '@/components/Preloader';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
-import MagneticScroll from '@/components/MagneticScroll';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -72,7 +71,7 @@ export default function Home() {
       theme: 'Genesis of Innovation • Coding Tomorrow',
       description:
         'The historic inaugural publication that established the PRISMA legacy — uniting student engineers, faculty mentors, open-source contributors, and creative tech writers.',
-      coverImage: '/prisma_1_cover.jpg',
+      coverImage: 'https://res.cloudinary.com/db9l85phg/image/upload/v1791352632/WhatsApp_Image_2026-10-07_at_10.19.42_j2mil9.jpg',
       pages: '20 Spreads',
       readUrl: '/read?page=1',
       pdfUrl: '/prisma_content.pdf',
@@ -94,9 +93,6 @@ export default function Home() {
   return (
     <div className="relative w-full min-h-screen bg-[#121110] text-[#F8FAFC] overflow-x-clip selection:bg-[#FF4D00]/30 selection:text-white flex flex-col justify-between">
       <Preloader />
-      
-      {/* Lenis Smooth Scroll & Magnetic Section Snapping */}
-      <MagneticScroll />
       
       {/* Flagship Hero Section */}
       <Hero onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />
@@ -228,13 +224,13 @@ export default function Home() {
                     {edition.title.replace('PRISMA', 'prisma')}
                   </h3>
                   
-                  <Link
+                  {/* <Link
                     href={edition.readUrl}
                     className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 w-full sm:w-auto rounded-none bg-[#FF4D00] hover:bg-[#E64500] text-white font-mono font-bold text-[9px] sm:text-[10px] tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_4px_15px_rgba(255,77,0,0.3)] hover:shadow-[0_8px_25px_rgba(255,77,0,0.4)]"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Read</span>
-                  </Link>
+                  </Link> */}
                 </div>
                 
               </div>

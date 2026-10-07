@@ -113,18 +113,46 @@ body {
 }
 
 /* Hero: hold entrance animations until the preloader has finished */
-#hero-section:not([data-entered]) .hero-title-char {
+#hero-section:not([data-entered]) .hero-title-char,
+#hero-section:not([data-entered]) .hero-logo-stroke,
+#hero-section:not([data-entered]) .hero-logo-fill {
   animation-name: none;
 }
 
-/* Ink-drop entrance: hidden until useInkDrops lands a drop and bleeds the mask open */
-.ink-drop {
-  -webkit-mask-image: url('/ink-drop.svg');
-  mask-image: url('/ink-drop.svg');
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 0 0;
-  mask-size: 0 0;
+/* KGEC seal: outlines trace in one after another, then the solid seal fills over them */
+@keyframes heroLogoStroke {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  75% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes heroLogoFill {
+  0% {
+    fill-opacity: 0;
+  }
+  100% {
+    fill-opacity: 1;
+  }
+}
+
+.hero-logo-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: heroLogoStroke 1.6s ease-in-out both;
+}
+
+.hero-logo-fill {
+  fill-opacity: 0;
+  animation: heroLogoFill 0.9s ease-out 1.5s both;
 }
 
 /* Masthead outline-draw then fill (mirrors the preloader title) */
@@ -151,9 +179,14 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ink-drop {
-    -webkit-mask-image: none;
-    mask-image: none;
+  .hero-logo-stroke {
+    animation: none;
+    opacity: 0;
+  }
+
+  .hero-logo-fill {
+    animation: none;
+    fill-opacity: 1;
   }
 
   .hero-title-char {

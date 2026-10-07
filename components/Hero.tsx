@@ -7,7 +7,8 @@ import {
   Play,
   Download,
 } from 'lucide-react';
-import { useInkDrops } from './useInkDrops';
+import KgecLogo from './KgecLogo';
+import DrawnText from './DrawnText';
 
 declare global {
   interface Window {
@@ -73,8 +74,6 @@ export const Hero: React.FC<HeroProps> = ({
 
   // Masthead SVG is sized to its measured text box so it lines up like real text
   const titleTextRef = useRef<SVGTextElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  useInkDrops(sectionRef, hasEntered);
   const [titleBox, setTitleBox] = useState({ x: 0, y: -78, width: 470, height: 104 });
 
   useEffect(() => {
@@ -125,9 +124,6 @@ export const Hero: React.FC<HeroProps> = ({
       document.body.style.overflow = '';
       if (typeof window !== 'undefined') {
         window.__prismaScrollLocked = false;
-        if (window.__lenis) {
-          window.__lenis.start();
-        }
       }
       window.dispatchEvent(new CustomEvent('prisma-scroll-unlocked'));
     };
@@ -237,7 +233,6 @@ export const Hero: React.FC<HeroProps> = ({
   return (
     <section
       id="hero-section"
-      ref={sectionRef}
       data-entered={hasEntered ? 'true' : undefined}
       className="relative w-full min-h-screen bg-[#F1EDE2] overflow-x-clip flex flex-col justify-between font-space select-none transition-colors duration-300"
       style={{
@@ -284,26 +279,28 @@ export const Hero: React.FC<HeroProps> = ({
       <header className="relative z-30 w-full max-w-[1840px] mx-auto px-4 sm:px-10 lg:px-16 pt-6 sm:pt-8 pb-2 flex flex-col md:flex-row items-center justify-center md:justify-start gap-3 md:gap-5">
         
         {/* KGEC Logo */}
-        <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] shrink-0 ink-drop" data-ink-delay="100" data-ink-x="0.5">
-          <img
-            src="/kgec_logo-removebg-preview.png"
-            alt="KGEC Logo"
-            className="w-full h-full object-contain"
-            draggable={false}
-          />
+        <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-[90px] lg:h-[90px] shrink-0">
+          <KgecLogo className="w-full h-full" />
         </div>
 
         {/* College Name & Department Text */}
-        <div className="text-center md:text-left ink-drop flex flex-col gap-0.5 sm:gap-1" data-ink-delay="250" data-ink-x="0.12">
-          <h2 className="text-[#1F1F1F] font-space font-extrabold uppercase tracking-[0.05em] sm:tracking-[0.12em] lg:tracking-[0.18em] text-[15px] sm:text-[17px] lg:text-[20px] leading-tight max-w-[95vw] md:max-w-none whitespace-nowrap">
-            Kalyani Government Engineering College
-          </h2>
-          <p
-            className="font-space font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] lg:tracking-[0.2em] text-[10px] sm:text-[12px] lg:text-[14px] leading-tight whitespace-nowrap transition-colors duration-200"
-            style={{ color: deptHeaderColor }}
-          >
-            Computer Science and Engineering
-          </p>
+        <div className="text-center md:text-left flex flex-col gap-0.5 sm:gap-1">
+          <DrawnText
+            as="h2"
+            text="KALYANI GOVERNMENT ENGINEERING COLLEGE"
+            color="#1F1F1F"
+            startDelay={300}
+            stagger={35}
+            className="font-space font-extrabold tracking-[0.05em] sm:tracking-[0.12em] lg:tracking-[0.18em] text-[15px] sm:text-[17px] lg:text-[20px] leading-tight max-w-[95vw] md:max-w-none"
+          />
+          <DrawnText
+            as="p"
+            text="COMPUTER SCIENCE AND ENGINEERING"
+            color={deptHeaderColor}
+            startDelay={700}
+            stagger={30}
+            className="font-space font-bold tracking-[0.1em] sm:tracking-[0.15em] lg:tracking-[0.2em] text-[10px] sm:text-[12px] lg:text-[14px] leading-tight"
+          />
         </div>
 
       </header>
@@ -319,7 +316,7 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="w-full lg:max-w-[480px] xl:max-w-[530px] flex flex-col items-start text-left z-20 py-2 sm:py-10 flex-none relative pointer-events-auto">
           
           {/* 1. Code Line with Orange Vertical Bar (Color transforming on scroll) */}
-          <div className="flex items-center gap-2 mb-3 sm:mb-4 select-none ink-drop" data-ink-delay="200">
+          <div className="flex items-center gap-2 mb-3 sm:mb-4 select-none">
             <span
               className="w-[3px] h-[18px] rounded-sm inline-block mr-0.5 transition-colors duration-200"
               style={{ backgroundColor: codeBarColor }}
@@ -369,8 +366,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* 3. Department Subtitle (Color transforming on scroll) */}
           <div
-            className="mt-2 sm:mt-4 text-[9px] sm:text-xs font-mono tracking-[0.15em] sm:tracking-[0.24em] uppercase leading-relaxed font-semibold select-none ink-drop transition-colors duration-200"
-            data-ink-delay="500"
+            className="mt-2 sm:mt-4 text-[9px] sm:text-xs font-mono tracking-[0.15em] sm:tracking-[0.24em] uppercase leading-relaxed font-semibold select-none transition-colors duration-200"
             style={{ color: subtitleColor }}
           >
             <p>KGEC CSE DEPARTMENT</p>
@@ -378,7 +374,7 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* 4. Tagline: SAME DREAMS. MORE ALGORITHMS. (Text highlight effect like heronai) */}
-          <div className="mt-5 sm:mt-8 mb-5 sm:mb-8 text-[10px] sm:text-sm font-space font-black tracking-[0.18em] sm:tracking-[0.22em] uppercase space-y-1 select-none ink-drop" data-ink-delay="650">
+          <div className="mt-5 sm:mt-8 mb-5 sm:mb-8 text-[10px] sm:text-sm font-space font-black tracking-[0.18em] sm:tracking-[0.22em] uppercase space-y-1 select-none">
             <div className="transition-colors duration-200" style={{ color: taglineDreamColor }}>
               SAME DREAMS.
             </div>
@@ -388,7 +384,7 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* 5. Action Buttons (Read Magazine blooms into brand orange) */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full ink-drop" data-ink-delay="800">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full">
             {/* Primary Button: Read Magazine */}
             <Link
               href="/read"
@@ -429,7 +425,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* ------------------------------------------------------------------- */}
           {/* TOP RIGHT: Pillar Typography (Color transforming on scroll)         */}
           {/* ------------------------------------------------------------------- */}
-          <div className="absolute top-20 sm:top-2 lg:top-3 right-4 sm:right-10 lg:right-14 xl:right-16 z-20 text-right select-none pointer-events-auto ink-drop" data-ink-delay="1000" data-ink-x="0.75" data-ink-y="0.3">
+          <div className="absolute top-20 sm:top-2 lg:top-3 right-4 sm:right-10 lg:right-14 xl:right-16 z-20 text-right select-none pointer-events-auto">
             <div
               className="text-[7px] sm:text-[11px] lg:text-[12px] font-space font-bold tracking-[0.2em] sm:tracking-[0.28em] uppercase space-y-0.5 sm:space-y-1 transition-colors duration-200"
               style={{ color: pillarsTextColor }}
@@ -777,7 +773,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* ------------------------------------------------------------------- */}
           
           {/* 1. Wireframe Head & Foliage Drawing (Shifted slightly down) */}
-          <div className="absolute right-0 sm:right-2 lg:right-4 top-[24%] sm:top-[20%] lg:top-[22%] z-15 w-[85px] xs:w-[100px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto animate-floating ink-drop" data-ink-delay="1200" data-ink-x="0.5" data-ink-y="0.35">
+          <div className="absolute right-0 sm:right-2 lg:right-4 top-[24%] sm:top-[20%] lg:top-[22%] z-0 w-[85px] xs:w-[100px] sm:w-[165px] lg:w-[195px] xl:w-[220px] aspect-[326/582] opacity-85 pointer-events-auto animate-floating">
             <Image
               src="/br_design_tight.png"
               alt="Wireframe Head and Circuit Graphics"
@@ -787,7 +783,7 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* 2. Downside Editorial Quote at the Bottom Space (Color transforming on scroll) */}
-          <div className="absolute right-0 sm:right-5 lg:right-7 bottom-2 sm:bottom-6 lg:bottom-8 z-30 max-w-[85px] xs:max-w-[105px] sm:max-w-[125px] lg:max-w-[140px] text-right pointer-events-auto select-none ink-drop" data-ink-delay="1400" data-ink-x="0.7">
+          <div className="absolute right-0 sm:right-5 lg:right-7 bottom-2 sm:bottom-6 lg:bottom-8 z-30 max-w-[85px] xs:max-w-[105px] sm:max-w-[125px] lg:max-w-[140px] text-right pointer-events-auto select-none">
             <p
               className="font-serif-italic text-[8.5px] xs:text-[10px] sm:text-[12.5px] lg:text-[13.5px] italic leading-[1.24] tracking-tight font-medium transition-colors duration-200"
               style={{ color: quoteTextColor }}
