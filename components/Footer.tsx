@@ -17,11 +17,12 @@ export const Footer: React.FC = () => {
   return (
     <footer
       id="site-footer"
-      className="relative w-full h-auto min-h-[22vh] bg-[#F1EDE2] text-[#161121] overflow-hidden select-none font-space border-t border-[#D5C9B8] flex flex-col justify-between"
+      className="relative w-full bg-[#F1EDE2] text-[#161121] overflow-hidden select-none font-space border-t border-[#D5C9B8]"
     >
       {/* ========================================================================= */}
       {/* VINTAGE ARCHIVAL BACKGROUND & BLUEPRINT MOTIFS (Matching Hero UI)          */}
       {/* ========================================================================= */}
+      {false && (
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         {/* Soft Archival Lighting */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_30%,rgba(255,255,255,0.75)_0%,transparent_60%)]" />
@@ -95,13 +96,16 @@ export const Footer: React.FC = () => {
           </g>
         </svg>
       </div>
+      )}
 
       {/* ========================================================================= */}
       {/* COMPACT MAIN FOOTER CONTENT (~25vh HEIGHT)                                */}
       {/* ========================================================================= */}
-      <div className="relative z-10 max-w-[1600px] w-full mx-auto px-5 sm:px-8 lg:px-12 pt-6 sm:pt-5 pb-12 sm:pb-6 flex-1 flex flex-col justify-between gap-6 lg:gap-0">
+      <div className="relative z-10 max-w-[1600px] w-full mx-auto px-5 sm:px-8 lg:px-12 py-3">
         
         {/* Main Content: Split between Left Identity and Right Magazine Archive */}
+        {/* Hidden as per user request */}
+        {false && (
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 lg:gap-10">
           
           {/* LEFT: College & Department Identity */}
@@ -208,11 +212,12 @@ export const Footer: React.FC = () => {
           </div>
 
         </div>
+        )}
 
         {/* ----------------------------------------------------------------------- */}
         {/* COMPACT BOTTOM COLOPHON STRIP                                           */}
         {/* ----------------------------------------------------------------------- */}
-        <div className="pt-3 pb-4 sm:pb-0 mt-4 lg:mt-2 border-t border-[#D5C9B8]/70 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-2 text-[10px] font-mono text-[#555555]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-2 text-[10px] font-mono text-[#555555]">
           <div className="flex flex-wrap justify-center items-center gap-2 text-center sm:text-left">
             <span>© 2026 KGEC • Department of Computer Science & Engineering</span>
             <span className="text-[#FF4D00]">•</span>
