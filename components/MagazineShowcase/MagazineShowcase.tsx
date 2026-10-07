@@ -14,7 +14,6 @@ export function buildMagazineShowcasePages(): PageData[] {
     'https://res.cloudinary.com/daybrhbsc/image/upload/f_auto,q_auto,w_1000/v1790614624/prisma_magazine_cover_page.jpg';
 
   const backCover = contentPages.backCover || '/prisma_backcover.png';
-
   // Inside content pages from Cloudinary
   const contentList: string[] = [];
   for (let i = 1; i <= 16; i++) {
@@ -121,7 +120,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
 
   return (
     <section
-      className={`relative w-full text-[#161121] overflow-hidden select-none font-space h-[100dvh] lg:h-auto lg:min-h-[100dvh] flex items-center justify-center ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
+      className={`relative w-full text-[#161121] overflow-hidden select-none font-space min-h-[100dvh] lg:h-auto lg:min-h-[100dvh] flex items-center justify-center ${isTransparent ? 'bg-transparent' : 'bg-[#F1EDE2]'
         } ${className}`}
       id="magazine-showcase-inner"
     >
@@ -179,19 +178,19 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             />
           </div>
 
-          {/* 2. Celestial Earth/Moon with Orbit Trails (page-bg-earth) - Shifted down away from seam */}
-          <div className="absolute top-[13%] sm:top-[14%] lg:top-[16%] left-[2%] sm:left-[4%] lg:left-[6%] w-[180px] sm:w-[220px] lg:w-[260px] aspect-square opacity-80 lg:opacity-90 mix-blend-multiply pointer-events-none select-none z-10">
+          {/* 2. Celestial Earth/Moon with Orbit Trails (page-bg-earth) */}
+          <div className="absolute top-[10%] sm:top-[12%] lg:top-[14%] left-[1%] sm:left-[2%] lg:left-[3%] xl:left-[4%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[420px] aspect-square opacity-85 lg:opacity-95 mix-blend-multiply pointer-events-none select-none z-10">
             <Image
               src="/page-bg-earth-removebg.png"
               alt="A Smarter Tomorrow Earth Decor"
               fill
-              sizes="(max-width: 768px) 200px, 260px"
+              sizes="(max-width: 768px) 240px, 420px"
               className="object-contain"
             />
           </div>
 
           {/* 3. Anatomical Cybernetic Profile Blueprint (page-bg-face) - Right Flank Editorial Backdrop (Shifted down) */}
-          <div className="absolute top-[18%] sm:top-[16%] lg:top-[18%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
+          <div className="absolute hidden md:block top-[18%] sm:top-[16%] lg:top-[18%] right-[0%] sm:right-[2%] lg:right-[3%] w-[220px] sm:w-[280px] lg:w-[350px] xl:w-[390px] h-[300px] sm:h-[380px] lg:h-[460px] opacity-25 lg:opacity-30 mix-blend-multiply pointer-events-none select-none z-0">
             <Image
               src="/page-bg-face.png"
               alt="Cybernetic Anatomical Face Blueprint"
@@ -204,22 +203,22 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
       )}
 
       {/* Main Container */}
-      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 py-6 sm:py-20 lg:py-28 h-full flex flex-col justify-center">
+      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 pt-4 sm:pt-20 lg:pt-28 pb-32 sm:pb-36 lg:pb-28 h-full flex flex-col justify-center">
 
         {/* Two-Column Grid: 3D Magazine Showcase (Left) + Editorial Text (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-14 xl:gap-20 items-center w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 xl:gap-14 items-center w-full">
 
           {/* LEFT COLUMN: 3D Animated Magazine Viewer with Hero Section Woman Background Element */}
-          <div className="lg:col-span-6 relative flex items-center justify-center min-h-[50vh] sm:min-h-[540px] lg:min-h-[620px] overflow-visible">
+          <div className="lg:col-span-7 xl:col-span-7 relative flex items-center justify-center min-h-[46vh] sm:min-h-[580px] lg:min-h-[660px] xl:min-h-[740px] overflow-visible">
 
             {/* 1. Hero Section Solar Halo, Blueprint Rings & Circuit Vectors (Enlarged Monumental Presence) */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-visible">
               {/* Soft Ambient Warmth Diffusion Halo */}
-              <div className="absolute w-[480px] sm:w-[580px] lg:w-[680px] h-[480px] sm:h-[580px] lg:h-[680px] rounded-full pointer-events-none opacity-45 blur-3xl bg-[radial-gradient(circle_at_50%_50%,rgba(255,77,0,0.25)_0%,rgba(190,149,62,0.14)_50%,transparent_72%)]" />
+              <div className="absolute w-[580px] sm:w-[720px] lg:w-[860px] xl:w-[980px] 2xl:w-[1080px] h-[580px] sm:h-[720px] lg:h-[860px] xl:h-[980px] 2xl:h-[1080px] rounded-full pointer-events-none opacity-50 blur-3xl bg-[radial-gradient(circle_at_50%_50%,rgba(255,77,0,0.30)_0%,rgba(190,149,62,0.16)_50%,transparent_72%)]" />
 
               <svg
                 viewBox="0 0 800 800"
-                className="w-[165%] sm:w-[155%] md:w-[145%] lg:w-[140%] max-w-[850px] sm:max-w-[980px] lg:max-w-[1100px] h-auto overflow-visible pointer-events-none scale-110 sm:scale-120 lg:scale-130 transform-gpu"
+                className="w-[185%] sm:w-[175%] md:w-[165%] lg:w-[160%] max-w-[1000px] sm:max-w-[1180px] lg:max-w-[1360px] xl:max-w-[1480px] h-auto overflow-visible pointer-events-none scale-125 sm:scale-138 lg:scale-150 xl:scale-160 transform-gpu"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -245,44 +244,44 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
 
                 {/* Main Solid Orange Stippled Sun Disk */}
                 <g transform="translate(400, 400)">
-                  <circle cx="0" cy="0" r="175" fill="url(#showcaseSolarGlow)" opacity="0.92" />
-                  <circle cx="0" cy="0" r="175" fill="url(#showcaseStippleDots)" />
+                  <circle cx="0" cy="0" r="215" fill="url(#showcaseSolarGlow)" opacity="0.92" />
+                  <circle cx="0" cy="0" r="215" fill="url(#showcaseStippleDots)" />
 
                   {/* Radiating Ticks along Sun Perimeter */}
-                  <line x1="175" y1="0" x2="192" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="-175" y1="0" x2="-192" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="0" y1="-175" x2="0" y2="-192" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="0" y1="175" x2="0" y2="192" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="124" y1="-124" x2="136" y2="-136" stroke="#FF4D00" strokeWidth="1.1" />
-                  <line x1="124" y1="124" x2="136" y2="136" stroke="#FF4D00" strokeWidth="1.1" />
-                  <line x1="-124" y1="-124" x2="-136" y2="-136" stroke="#FF4D00" strokeWidth="1.1" />
-                  <line x1="-124" y1="124" x2="-136" y2="136" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="215" y1="0" x2="234" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="-215" y1="0" x2="-234" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="0" y1="-215" x2="0" y2="-234" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="0" y1="215" x2="0" y2="234" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="152" y1="-152" x2="166" y2="-166" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="152" y1="152" x2="166" y2="166" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="-152" y1="-152" x2="-166" y2="-166" stroke="#FF4D00" strokeWidth="1.1" />
+                  <line x1="-152" y1="152" x2="-166" y2="166" stroke="#FF4D00" strokeWidth="1.1" />
                 </g>
 
                 {/* Blueprint Ring 1 */}
                 <g transform="translate(375, 390)">
-                  <circle cx="0" cy="0" r="215" stroke="#FF4D00" strokeWidth="1.2" opacity="0.8" />
-                  <circle cx="-215" cy="0" r="3.5" fill="#FF4D00" />
-                  <line x1="-215" y1="0" x2="-230" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="0" y1="-215" x2="0" y2="-230" stroke="#FF4D00" strokeWidth="1.3" />
-                  <line x1="-152" y1="-152" x2="-165" y2="-165" stroke="#FF4D00" strokeWidth="1" />
+                  <circle cx="0" cy="0" r="255" stroke="#FF4D00" strokeWidth="1.2" opacity="0.8" />
+                  <circle cx="-255" cy="0" r="3.5" fill="#FF4D00" />
+                  <line x1="-255" y1="0" x2="-272" y2="0" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="0" y1="-255" x2="0" y2="-272" stroke="#FF4D00" strokeWidth="1.3" />
+                  <line x1="-180" y1="-180" x2="-195" y2="-195" stroke="#FF4D00" strokeWidth="1" />
                 </g>
 
                 {/* Blueprint Ring 2 (Dashed Astrolabe Circle) */}
                 <g transform="translate(420, 410)">
-                  <circle cx="0" cy="0" r="255" stroke="#FF4D00" strokeWidth="0.9" strokeDasharray="7 5" opacity="0.7" />
-                  <line x1="0" y1="-255" x2="0" y2="-270" stroke="#FF4D00" strokeWidth="1.2" />
-                  <circle cx="0" cy="-255" r="3" fill="#FF4D00" />
+                  <circle cx="0" cy="0" r="295" stroke="#FF4D00" strokeWidth="0.9" strokeDasharray="7 5" opacity="0.7" />
+                  <line x1="0" y1="-295" x2="0" y2="-312" stroke="#FF4D00" strokeWidth="1.2" />
+                  <circle cx="0" cy="-295" r="3" fill="#FF4D00" />
                 </g>
 
                 {/* Blueprint Ring 3 (Outer Wide Horizon Ring) */}
                 <g transform="translate(430, 420)">
-                  <circle cx="0" cy="0" r="300" stroke="#FF4D00" strokeWidth="0.55" strokeDasharray="4 8" opacity="0.4" />
+                  <circle cx="0" cy="0" r="345" stroke="#FF4D00" strokeWidth="0.55" strokeDasharray="4 8" opacity="0.4" />
                 </g>
 
                 {/* Inner Calibration Ring */}
                 <g transform="translate(390, 380)">
-                  <circle cx="0" cy="0" r="145" stroke="#FF4D00" strokeWidth="0.75" strokeDasharray="2 6" opacity="0.45" />
+                  <circle cx="0" cy="0" r="170" stroke="#FF4D00" strokeWidth="0.75" strokeDasharray="2 6" opacity="0.45" />
                 </g>
 
                 {/* ------------------------------------------------------------- */}
@@ -420,15 +419,15 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             </div>
 
             {/* 3D WebGL Book Viewport (Static Showcase Pose) */}
-            <div className="relative z-10 w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[600px] xl:max-w-[640px] h-[50vh] sm:h-[480px] lg:h-[540px] xl:h-[580px]">
+            <div className="relative z-10 w-full max-w-[500px] sm:max-w-[600px] lg:max-w-[680px] xl:max-w-[760px] 2xl:max-w-[820px] h-[44vh] sm:h-[520px] lg:h-[620px] xl:h-[680px] 2xl:h-[720px]">
               <Book3DViewer
                 pages={pages}
                 onNavigateToRead={() => handleNavigateToRead(1)}
                 title="Click or drag to explore PRISMA 3.0 in 3D"
                 showBadge={false}
-                glowColor="rgba(255, 77, 0, 0.08)"
-                scale={1.05}
-                cameraDistance={4.4}
+                glowColor="rgba(255, 77, 0, 0.12)"
+                scale={1.12}
+                cameraDistance={3.85}
                 tiltX={-0.18}
                 tiltZ={-0.10}
                 autoAnimate={false}
@@ -439,41 +438,41 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
           {/* RIGHT COLUMN: Editorial Title, Copy & Actions matching Hero UI */}
           <div
             ref={editorialBlockRef}
-            className="lg:col-span-6 flex flex-col justify-center lg:pl-6 xl:pl-10 text-left relative z-10"
+            className="lg:col-span-5 xl:col-span-5 flex flex-col justify-center lg:pl-2 xl:pl-6 text-left relative z-10"
           >
             {/* Kicker: THE MAGAZINE with Hero Orange Bar */}
             <div
-              className={`flex items-center gap-2 mb-3.5 select-none transition-all duration-700 ease-out transform ${
+              className={`flex items-center gap-2 mb-2 sm:mb-3.5 select-none transition-all duration-700 ease-out transform ${
                 isBlockInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-6'
               }`}
             >
               <span className="w-3.5 h-[2.5px] bg-[#FF4D00] inline-block rounded-xs animate-pulse" />
-              <span className="text-xs sm:text-sm font-space font-extrabold tracking-[0.28em] uppercase text-[#555555]">
+              <span className="text-[11px] sm:text-sm font-space font-extrabold tracking-[0.28em] uppercase text-[#555555]">
                 THE MAGAZINE
               </span>
             </div>
 
             {/* Monumental Headline: prisma 3.0 in Samarkan Font matching Hero Section */}
             <div
-              className={`flex items-baseline gap-2.5 sm:gap-4 leading-none select-none mb-4 sm:mb-6 transition-all duration-800 delay-150 ease-out transform ${
+              className={`flex items-baseline gap-2 sm:gap-4 leading-none select-none mb-2.5 sm:mb-6 transition-all duration-800 delay-150 ease-out transform ${
                 isBlockInView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-95'
               }`}
             >
-              <h2 className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-wide text-[#161121] lowercase transition-all duration-500 hover:tracking-wider cursor-default">
+              <h2 className="font-samarkan text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-wide text-[#161121] lowercase transition-all duration-500 hover:tracking-wider cursor-default">
                 prisma
               </h2>
-              <span className="font-samarkan text-[3.2rem] xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-tight text-[#BE953E] transition-all duration-500 hover:scale-105 drop-shadow-[0_2px_16px_rgba(190,149,62,0.25)] cursor-default">
+              <span className="font-samarkan text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-[78px] xl:text-[88px] tracking-tight text-[#FF4D00] transition-all duration-500 hover:scale-105 cursor-default">
                 3.0
               </span>
             </div>
 
             {/* Editorial Description Copy */}
             <div
-              className={`relative mb-8 sm:mb-10 max-w-2xl transition-all duration-800 delay-300 ease-out transform ${
+              className={`relative mb-4 sm:mb-10 max-w-2xl transition-all duration-800 delay-300 ease-out transform ${
                 isBlockInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             >
-              <p className="relative z-10 text-base sm:text-lg lg:text-[19px] xl:text-xl text-[#3A3A3A] leading-relaxed font-space font-normal">
+              <p className="relative z-10 text-[13px] xs:text-sm sm:text-lg lg:text-[19px] xl:text-xl text-[#3A3A3A] leading-relaxed font-space font-normal">
                 A celebration of ideas, innovation and the incredible women shaping the future of technology.
                 This edition explores how research, intelligence and empathy come together to build a more inclusive
                 and innovative tomorrow.
@@ -483,14 +482,14 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
             {/* Action Buttons with Micro-Animations */}
             {!hideCta && (
               <div
-                className={`flex flex-wrap items-center gap-4 sm:gap-5 transition-all duration-800 delay-450 ease-out transform ${
+                className={`flex flex-wrap items-center gap-2.5 sm:gap-5 transition-all duration-800 delay-450 ease-out transform ${
                   isBlockInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                 }`}
               >
                 {/* Primary CTA: Explore the Sections > */}
                 <button
                   onClick={handleExploreSections}
-                  className="group inline-flex items-center justify-center gap-3 px-8 py-3.5 sm:px-9 sm:py-4 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E64500] hover:from-[#FF5D1A] hover:to-[#FF4D00] text-white text-sm sm:text-base font-space font-bold tracking-wide shadow-[0_4px_16px_rgba(255,77,0,0.28)] hover:shadow-[0_8px_26px_rgba(255,77,0,0.45)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 sm:gap-3 px-6 py-3 sm:px-9 sm:py-4 rounded-xl bg-gradient-to-r from-[#FF4D00] to-[#E64500] hover:from-[#FF5D1A] hover:to-[#FF4D00] text-white text-xs sm:text-base font-space font-bold tracking-wide shadow-[0_4px_16px_rgba(255,77,0,0.28)] hover:shadow-[0_8px_26px_rgba(255,77,0,0.45)] transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
                 >
                   <span>Explore the Sections</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1.5 font-bold">
@@ -503,9 +502,9 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
                   <a
                     href={pdfUrl}
                     download="PRISMA_3.0_Magazine.pdf"
-                    className="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl bg-[#FAF6EE] hover:bg-white text-[#161121] border border-[#C8BCAB] hover:border-[#FF4D00] text-sm sm:text-base font-space font-semibold tracking-wide shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
+                    className="group inline-flex items-center justify-center gap-2 sm:gap-2.5 px-5 py-3 sm:px-8 sm:py-4 rounded-xl bg-[#FAF6EE] hover:bg-white text-[#161121] border border-[#C8BCAB] hover:border-[#FF4D00] text-xs sm:text-base font-space font-semibold tracking-wide shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-[0.98] cursor-pointer"
                   >
-                    <Download className="w-4 h-4 text-[#FF4D00] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" />
+                    <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FF4D00] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-110" />
                     <span>Download PDF</span>
                   </a>
                 )}
