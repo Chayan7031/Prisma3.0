@@ -138,7 +138,7 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      syncTouch: true,
+      syncTouch: false,
       wheelMultiplier: 1,
       touchMultiplier: 1.2,
       infinite: false,
