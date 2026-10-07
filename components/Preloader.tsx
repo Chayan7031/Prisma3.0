@@ -119,22 +119,33 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         }
       `}</style>
 
-      {/* 
-        The "Window" Box. 
-        It has a massive box-shadow that acts as the screen background.
-        When isLoaded is true, it stretches out to fill the screen, revealing the page underneath.
-      */}
+      {/* The Expanding Window Mask (GPU Accelerated thick border trick) */}
       <div
-        className="relative flex items-center justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.77,0,0.175,1)] border"
+        className="fixed top-1/2 left-1/2 z-10 transition-transform duration-[1200ms] ease-[cubic-bezier(0.77,0,0.175,1)]"
         style={{
-          width: isLoaded ? '100vw' : 'min(70vw, 450px)',
-          height: isLoaded ? '100vh' : '36px',
-          boxShadow: '0 0 0 200vmax #111111', // Pure dark screen
-          backgroundColor: isLoaded ? 'transparent' : '#1A1A1A', // Track color
-          borderColor: isLoaded ? 'transparent' : 'rgba(255, 255, 255, 0.08)',
+          width: 'min(70vw, 450px)',
+          height: '36px',
+          border: '200vmax solid #111111',
+          boxSizing: 'content-box',
+          transform: isLoaded 
+            ? 'translate(-50%, -50%) scaleX(20) scaleY(60)' 
+            : 'translate(-50%, -50%) scale(1)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* The Central Static Track (fades out) */}
+      <div
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center transition-opacity duration-[500ms]"
+        style={{
+          width: 'min(70vw, 450px)',
+          height: '36px',
+          backgroundColor: '#1A1A1A',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          opacity: isLoaded ? 0 : 1,
+          pointerEvents: 'none',
         }}
       >
-
         {/* Progress Bar Fill - Ultra optimized without React state bindings */}
         <div
           ref={progressBarRef}
