@@ -640,6 +640,33 @@ export const Book: React.FC<BookProps> = ({
     };
   }, [bookDimensions.width, bookDimensions.height, isMobile, pages, prefersReducedMotion, initialPage, isOdd, resetFlippingStateWithTimer, onPageChange, triggerFlipAudio]);
 
+  // Observer to make the back of portrait pages blank on mobile
+  useEffect(() => {
+    if (!isMobile || !isReady) return;
+    const blockEl = mountContainerRef.current?.querySelector('.stf__block');
+    if (!blockEl) return;
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node instanceof HTMLElement && node.classList.contains('book-page')) {
+            // This is the temporary clone created by StPageFlip for the back of the turning page in portrait mode!
+            // The user requested that this back page be completely blank on mobile.
+            const content = node.querySelector('.book-page-content');
+            if (content) {
+              (content as HTMLElement).style.opacity = '0'; // Hide the mirrored image
+              node.style.backgroundColor = '#fceac5'; // Set to parchment theme base color
+              node.style.backgroundImage = 'none';
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(blockEl, { childList: true });
+    return () => observer.disconnect();
+  }, [isMobile, isReady]);
+
   const handleNextPage = useCallback((): void => {
     if (isFlippingRef.current) return;
     if (currentPage >= totalPages) return;
@@ -834,13 +861,7 @@ export const Book: React.FC<BookProps> = ({
     const diffX = endX - pointerStartXRef.current;
     const diffY = endY - pointerStartYRef.current;
 
-    if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
-      if (diffX < 0) {
-        handleNextPage();
-      } else {
-        handlePrevPage();
-      }
-    } else if (Math.abs(diffX) < 20 && Math.abs(diffY) < 20) {
+    if (Math.abs(diffX) < 20 && Math.abs(diffY) < 20) {
       const target = e.target as HTMLElement;
       if (
         !target.closest('.book-btn') &&
