@@ -92,7 +92,7 @@ export default function Home() {
       : editions.filter((ed) => ed.year === selectedTag);
 
   return (
-    <div className="relative w-full min-h-screen bg-[#121110] text-[#F8FAFC] overflow-x-hidden selection:bg-[#FF4D00]/30 selection:text-white flex flex-col justify-between">
+    <div className="relative w-full min-h-screen bg-[#121110] text-[#F8FAFC] overflow-x-clip selection:bg-[#FF4D00]/30 selection:text-white flex flex-col justify-between">
       <Preloader />
       
       {/* Lenis Smooth Scroll & Magnetic Section Snapping */}

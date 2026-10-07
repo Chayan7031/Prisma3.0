@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <filter id="ink" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045 0.055" numOctaves="4" seed="5" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="34" xChannelSelector="R" yChannelSelector="G" result="displaced" />
+      <feGaussianBlur in="displaced" stdDeviation="1.2" result="blurred" />
+      <feComponentTransfer in="blurred">
+        <feFuncA type="linear" slope="2.2" intercept="-0.6" />
+      </feComponentTransfer>
+    </filter>
+  </defs>
+  <g fill="#000" filter="url(#ink)">
+    <circle cx="100" cy="100" r="62" />
+    <circle cx="168" cy="72" r="9" />
+    <circle cx="30" cy="140" r="11" />
+    <circle cx="142" cy="166" r="7" />
+    <circle cx="48" cy="38" r="6" />
+  </g>
+</svg>

@@ -147,6 +147,11 @@ export const MagneticScroll: React.FC<MagneticScrollProps> = ({
     lenisRef.current = lenis;
     window.__lenis = lenis;
 
+    // Hero intro may already hold the scroll lock; Lenis scrolls via scrollTo, which ignores overflow:hidden
+    if (window.__prismaScrollLocked) {
+      lenis.stop();
+    }
+
     // 2. Desktop Wheel & Trackpad gesture handler
     const handleWheel = (e: WheelEvent) => {
       if (typeof window !== 'undefined' && window.__prismaScrollLocked) {

@@ -112,6 +112,57 @@ body {
   animation: fadeInUp 1.5s ease-out 1s forwards;
 }
 
+/* Hero: hold entrance animations until the preloader has finished */
+#hero-section:not([data-entered]) .hero-title-char {
+  animation-name: none;
+}
+
+/* Ink-drop entrance: hidden until useInkDrops lands a drop and bleeds the mask open */
+.ink-drop {
+  -webkit-mask-image: url('/ink-drop.svg');
+  mask-image: url('/ink-drop.svg');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 0 0;
+  mask-size: 0 0;
+}
+
+/* Masthead outline-draw then fill (mirrors the preloader title) */
+@keyframes heroTitleDraw {
+  0% {
+    stroke-dashoffset: 400;
+    fill-opacity: 0;
+  }
+  45% {
+    stroke-dashoffset: 0;
+    fill-opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+}
+
+.hero-title-char {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  fill-opacity: 0;
+  animation: heroTitleDraw 1.4s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ink-drop {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero-title-char {
+    animation: none;
+    stroke-dashoffset: 0;
+    fill-opacity: 1;
+  }
+}
+
 .animate-pulse-glow {
   animation: pulseGlow 4s infinite ease-in-out;
 }

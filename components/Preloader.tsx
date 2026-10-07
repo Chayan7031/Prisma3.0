@@ -6,6 +6,7 @@ declare global {
   interface Window {
     __prismaPreloaderLoaded?: boolean;
     __prismaPreloaderComplete?: boolean;
+    __prismaScrollLocked?: boolean;
   }
 }
 
@@ -57,8 +58,11 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           
           setTimeout(() => {
             setIsHidden(true);
-            document.body.style.overflow = '';
-            document.documentElement.style.overflow = '';
+            // Hero keeps the page locked until its intro animations finish
+            if (!window.__prismaScrollLocked) {
+              document.body.style.overflow = '';
+              document.documentElement.style.overflow = '';
+            }
             if (typeof window !== 'undefined') {
               window.__prismaPreloaderComplete = true;
               window.dispatchEvent(new CustomEvent('prisma-preloader-complete'));
@@ -73,7 +77,9 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      document.body.style.overflow = 'auto';
+      if (!window.__prismaScrollLocked) {
+        document.body.style.overflow = '';
+      }
     };
   }, [onComplete]);
 
