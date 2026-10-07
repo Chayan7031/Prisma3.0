@@ -199,7 +199,7 @@ export const MagazineShowcase: React.FC<MagazineShowcaseProps> = ({
       )}
 
       {/* Main Container */}
-      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 pt-4 sm:pt-20 lg:pt-28 pb-32 sm:pb-36 lg:pb-28 h-full flex flex-col justify-center">
+      <div className="relative z-10 w-full max-w-[1440px] xl:max-w-[1560px] mx-auto px-6 sm:px-10 lg:px-16 pt-4 sm:pt-20 lg:pt-28 pb-10 sm:pb-12 lg:pb-10 h-full flex flex-col justify-center">
 
         {/* Two-Column Grid: 3D Magazine Showcase (Left) + Editorial Text (Right) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10 xl:gap-14 items-center w-full">

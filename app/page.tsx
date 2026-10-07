@@ -107,7 +107,7 @@ export default function Home() {
       {/* ========================================================================= */}
       <section
         id="previous-magazines"
-        className="relative z-20 w-full h-[100dvh] bg-[#F1EDE2] text-[#161121] overflow-hidden font-space flex items-center justify-center"
+        className="relative z-20 w-full pt-0 py-4 sm:py-12 lg:py-16 bg-[#F1EDE2] text-[#161121] overflow-hidden font-space flex items-center justify-center"
       >
         {/* Seamless Top Blur & Gradient Feather Transition from MagazineShowcase */}
         <div className="absolute -top-1 left-0 right-0 h-28 sm:h-36 lg:h-44 pointer-events-none z-20 select-none overflow-hidden">
@@ -139,8 +139,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-[url('/design_grid.svg')] opacity-[0.03] mix-blend-multiply" />
         </div>
 
-        <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 py-10 flex flex-col md:flex-row items-center justify-center gap-16 lg:gap-32">
-          
+        <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 py-6 sm:py-10 flex flex-col md:flex-row items-center justify-center gap-12 sm:gap-16 lg:gap-32">       
           {/* LEFT COLUMN: Typography & Header */}
           <div className="flex-1 flex flex-col justify-center items-center text-center max-w-lg">
             <style>{`
@@ -165,7 +164,7 @@ export default function Home() {
               <div className="h-[2px] w-full bg-gradient-to-r from-[#FF4D00] to-transparent origin-left animate-scale-line scale-x-0" />
             </div>
 
-            <h2 className="relative z-10 font-samarkan text-6xl sm:text-[80px] lg:text-[100px] xl:text-[120px] tracking-wide text-[#161121] lowercase leading-[0.85] mb-6 md:mb-8 select-none animate-fade-in-up" style={{ animationDelay: '400ms' }}>
+            <h2 className="relative z-10 font-samarkan text-5xl xs:text-6xl sm:text-[80px] lg:text-[100px] xl:text-[120px] tracking-wide text-[#161121] lowercase leading-[0.85] mb-6 md:mb-8 select-none animate-fade-in-up" style={{ animationDelay: '400ms' }}>
               previous<br/><span className="text-[#FF4D00]">editions</span>
             </h2>
             

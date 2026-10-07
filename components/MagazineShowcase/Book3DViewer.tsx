@@ -661,20 +661,11 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
     }
   };
 
+  const [interactEl, setInteractEl] = useState<HTMLElement | null>(null);
+
   return (
     <div
       className={`relative w-full h-full select-none cursor-pointer group ${className}`.trim()}
-      onPointerDown={(e) => {
-        pointerDownPos.current = { x: e.clientX, y: e.clientY, time: Date.now() };
-      }}
-      onPointerUp={() => {
-        isInteractingRef.current = false;
-        lastInteractionRef.current = performance.now();
-      }}
-      onPointerLeave={() => {
-        isInteractingRef.current = false;
-      }}
-      onClick={handleClick}
       title={title}
     >
       {/* Soft Ambient Behind-Book Glow pool */}
@@ -685,8 +676,25 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
         }}
       />
 
+      {/* Restricted Touch Area for OrbitControls (Prevents hijacking page scroll from sides) */}
+      <div 
+        ref={setInteractEl}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[65vw] sm:w-[320px] lg:w-[400px] aspect-[1/1.45] z-20 touch-none"
+        onPointerDown={(e) => {
+          pointerDownPos.current = { x: e.clientX, y: e.clientY, time: Date.now() };
+        }}
+        onPointerUp={() => {
+          isInteractingRef.current = false;
+          lastInteractionRef.current = performance.now();
+        }}
+        onPointerLeave={() => {
+          isInteractingRef.current = false;
+        }}
+        onClick={handleClick}
+      />
+
       {/* 3D WebGL Canvas */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full pointer-events-none">
         <Canvas
           dpr={[1, 2]}
           gl={{
@@ -713,23 +721,26 @@ export const Book3DViewer: React.FC<Book3DViewerProps> = ({
             />
 
 
-            <OrbitControls
-              ref={controlsRef}
-              enablePan={false}
-              enableZoom={false}
-              minDistance={2.0}
-              maxDistance={5.5}
-              maxPolarAngle={Math.PI / 2 + 0.15}
-              minPolarAngle={Math.PI / 4}
-              dampingFactor={0.06}
-              onStart={() => {
-                isInteractingRef.current = true;
-              }}
-              onEnd={() => {
-                isInteractingRef.current = false;
-                lastInteractionRef.current = performance.now();
-              }}
-            />
+            {interactEl && (
+              <OrbitControls
+                ref={controlsRef}
+                domElement={interactEl}
+                enablePan={false}
+                enableZoom={false}
+                minDistance={2.0}
+                maxDistance={5.5}
+                maxPolarAngle={Math.PI / 2 + 0.15}
+                minPolarAngle={Math.PI / 4}
+                dampingFactor={0.06}
+                onStart={() => {
+                  isInteractingRef.current = true;
+                }}
+                onEnd={() => {
+                  isInteractingRef.current = false;
+                  lastInteractionRef.current = performance.now();
+                }}
+              />
+            )}
 
             <Environment preset="studio" environmentIntensity={0.25} />
             <ambientLight intensity={0.85} />

@@ -32,7 +32,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const elapsed = timestamp - startTime;
-      
+
       // Smooth ease-out cubic for realistic loading feel
       const progressRatio = Math.min(elapsed / duration, 1);
       const easeOut = 1 - Math.pow(1 - progressRatio, 3);
@@ -55,7 +55,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             window.__prismaPreloaderLoaded = true;
             window.dispatchEvent(new CustomEvent('prisma-preloader-open'));
           }
-          
+
           setTimeout(() => {
             setIsHidden(true);
             // Hero keeps the page locked until its intro animations finish
@@ -87,7 +87,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none font-space overflow-hidden">
-      
+
       <style>{`
         @keyframes svg-text-draw-white {
           0% {
@@ -124,7 +124,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         It has a massive box-shadow that acts as the screen background.
         When isLoaded is true, it stretches out to fill the screen, revealing the page underneath.
       */}
-      <div 
+      <div
         className="relative flex items-center justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.77,0,0.175,1)] border"
         style={{
           width: isLoaded ? '100vw' : 'min(70vw, 450px)',
@@ -134,27 +134,27 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           borderColor: isLoaded ? 'transparent' : 'rgba(255, 255, 255, 0.08)',
         }}
       >
-        
+
         {/* Progress Bar Fill - Ultra optimized without React state bindings */}
-        <div 
+        <div
           ref={progressBarRef}
           className="absolute top-0 left-0 h-full bg-white transition-opacity duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-          style={{ 
+          style={{
             width: '0%', // Controlled via requestAnimationFrame
             opacity: isLoaded ? 0 : 1,
           }}
         />
 
         {/* PRISMA 3.0 Animated Text */}
-        <div 
+        <div
           className={`absolute -top-36 sm:-top-48 w-full flex justify-center transition-opacity duration-300 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
         >
           <svg viewBox="0 0 700 150" className="w-[340px] sm:w-[500px] h-auto overflow-visible">
-            <text 
-              x="50%" 
-              y="50%" 
-              textAnchor="middle" 
-              dominantBaseline="middle" 
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dominantBaseline="middle"
               className="font-samarkan text-[90px] sm:text-[130px] lowercase tracking-wide"
               strokeWidth="2"
             >
@@ -183,7 +183,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         </div>
 
         {/* Progress Number - Ultra optimized without React state bindings */}
-        <div 
+        <div
           className={`absolute -bottom-16 sm:-bottom-20 text-white text-5xl sm:text-7xl font-samarkan tracking-wider transition-opacity duration-300 ${isLoaded ? 'opacity-0' : 'opacity-100'}`}
         >
           <span ref={progressTextRef}>0</span><span className="text-2xl sm:text-4xl text-white/40 ml-1">%</span>

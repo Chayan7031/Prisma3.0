@@ -294,7 +294,7 @@ export const Hero: React.FC<HeroProps> = ({
             color="#1F1F1F"
             startDelay={300}
             stagger={35}
-            className="font-space font-extrabold tracking-[0.05em] sm:tracking-[0.12em] lg:tracking-[0.18em] text-[15px] sm:text-[17px] lg:text-[20px] leading-tight max-w-[95vw] md:max-w-none"
+            className="font-space font-extrabold tracking-[0.02em] xs:tracking-[0.05em] sm:tracking-[0.12em] lg:tracking-[0.18em] text-[11px] xs:text-[13px] sm:text-[17px] lg:text-[20px] leading-tight whitespace-nowrap"
           />
           <DrawnText
             as="p"
@@ -302,7 +302,7 @@ export const Hero: React.FC<HeroProps> = ({
             color={deptHeaderColor}
             startDelay={700}
             stagger={30}
-            className="font-space font-bold tracking-[0.1em] sm:tracking-[0.15em] lg:tracking-[0.2em] text-[10px] sm:text-[12px] lg:text-[14px] leading-tight"
+            className="font-space font-bold tracking-[0.05em] sm:tracking-[0.15em] lg:tracking-[0.2em] text-[9px] xs:text-[10px] sm:text-[12px] lg:text-[14px] leading-tight whitespace-nowrap mx-auto md:mx-0"
           />
         </div>
 
@@ -387,7 +387,7 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* 5. Action Buttons (Read Magazine blooms into brand orange) */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full">
+          <div className="flex flex-nowrap items-center gap-2 xs:gap-3 sm:gap-4 w-full">
             {/* Primary Button: Read Magazine */}
             <Link
               href="/read"
@@ -399,9 +399,9 @@ export const Hero: React.FC<HeroProps> = ({
                 backgroundColor: btnBgColor,
                 boxShadow: `0 4px 20px rgba(255, 77, 0, ${0.12 + revealProgress * 0.32})`,
               }}
-              className="inline-flex items-center justify-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-white font-space font-bold text-xs uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              className="inline-flex flex-1 sm:flex-none items-center justify-center gap-1.5 sm:gap-2.5 px-3 xs:px-4 sm:px-7 py-2.5 sm:py-3.5 rounded-xl text-white font-space font-bold text-[9px] xs:text-[10px] sm:text-xs uppercase tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap"
             >
-              <Play className="w-3.5 h-3.5 fill-white text-white" />
+              <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white text-white" />
               <span>READ MAGAZINE</span>
             </Link>
 
@@ -410,9 +410,9 @@ export const Hero: React.FC<HeroProps> = ({
               <a
                 href={pdfUrl}
                 download="PRISMA_3.0_CSE_KGEC.pdf"
-                className="inline-flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl bg-transparent hover:bg-black/[0.03] border border-[#C8BCAB] hover:border-[#FF4D00] text-[#222222] font-space font-semibold text-xs transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="inline-flex flex-1 sm:flex-none items-center justify-center gap-1.5 sm:gap-2.5 px-3 xs:px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-transparent hover:bg-black/[0.03] border border-[#C8BCAB] hover:border-[#FF4D00] text-[#222222] font-space font-semibold text-[9px] xs:text-[10px] sm:text-xs transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer whitespace-nowrap"
               >
-                <Download className="w-4 h-4 text-[#222222]" />
+                <Download className="w-3 h-3 sm:w-4 sm:h-4 text-[#222222]" />
                 <span>Download PDF</span>
               </a>
             )}
