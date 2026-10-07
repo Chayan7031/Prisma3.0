@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Preloader } from '@/components/Preloader';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
-import MagneticScroll from '@/components/MagneticScroll';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -94,9 +93,6 @@ export default function Home() {
   return (
     <div className="relative w-full min-h-screen bg-[#121110] text-[#F8FAFC] overflow-x-hidden selection:bg-[#FF4D00]/30 selection:text-white flex flex-col justify-between">
       <Preloader />
-      
-      {/* Lenis Smooth Scroll & Magnetic Section Snapping */}
-      <MagneticScroll />
       
       {/* Flagship Hero Section */}
       <Hero onOpenReader={handleOpenReader} pdfUrl="/prisma_content.pdf" />

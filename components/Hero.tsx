@@ -101,9 +101,6 @@ export const Hero: React.FC<HeroProps> = ({
       document.body.style.overflow = '';
       if (typeof window !== 'undefined') {
         window.__prismaScrollLocked = false;
-        if (window.__lenis) {
-          window.__lenis.start();
-        }
       }
       window.dispatchEvent(new CustomEvent('prisma-scroll-unlocked'));
     };

@@ -333,7 +333,7 @@
   top: 0;
   width: 100%;
   height: 200vh;
-  background-image: url('/book-bg-border.png');
+  background-image: url('https://res.cloudinary.com/db9l85phg/image/upload/v1791351669/book-bg-border_scpzmu.png');
   background-size: 100% 50%;
   background-repeat: repeat-y;
   animation: border-scroll-y 15s linear infinite;
@@ -361,7 +361,7 @@
   top: 0;
   width: 100%;
   height: 200vh;
-  background-image: url('/book-bg-border-right.png');
+  background-image: url('https://res.cloudinary.com/db9l85phg/image/upload/v1791351669/book-bg-border-right_urcfkc.png');
   background-size: 100% 50%;
   background-repeat: repeat-y;
   animation: border-scroll-y-down 15s linear infinite;

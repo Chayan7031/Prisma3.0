@@ -985,7 +985,7 @@ export const Book: React.FC<BookProps> = ({
         {/* Futuristic Robotic Hand Pointing at Book (Top on Mobile, Left on Desktop) */}
         <div className="absolute top-[-4%] sm:top-[12%] md:top-[50%] left-1/2 md:left-[0%] lg:left-[4%] -translate-x-1/2 md:translate-x-0 translate-y-0 md:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 md:rotate-0">
           <img
-            src="/Futuristic-Robotic-Hand-Schematic.png"
+            src="https://res.cloudinary.com/db9l85phg/image/upload/v1791351330/Futuristic-Robotic-Hand-Schematic_yew1j4.png"
             alt="Robotic Hand Schematic"
             className="w-full h-auto object-contain"
             draggable={false}
@@ -995,7 +995,7 @@ export const Book: React.FC<BookProps> = ({
         {/* Futuristic Robotic Hand Pointing at Book (Bottom on Mobile, Right on Desktop) */}
         <div className="absolute bottom-[0%] sm:bottom-[12%] md:bottom-auto md:top-[50%] left-1/2 md:left-auto md:right-[0%] lg:right-[4%] -translate-x-1/2 md:translate-x-0 translate-y-0 md:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 md:rotate-0">
           <img
-            src="/Futuristic-Robotic-Hand-Schematic-revert.png"
+            src="https://res.cloudinary.com/db9l85phg/image/upload/v1791351328/Futuristic-Robotic-Hand-Schematic-revert_us4h8s.png"
             alt="Robotic Hand Schematic Reversed"
             className="w-full h-auto object-contain"
             draggable={false}
