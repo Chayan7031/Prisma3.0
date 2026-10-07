@@ -982,8 +982,8 @@ export const Book: React.FC<BookProps> = ({
           </g>
         </svg>
 
-        {/* Futuristic Robotic Hand Pointing at Book (Top on Mobile, Left on Desktop) */}
-        <div className="absolute top-[-4%] sm:top-[12%] md:top-[50%] left-1/2 md:left-[0%] lg:left-[4%] -translate-x-1/2 md:translate-x-0 translate-y-0 md:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 md:rotate-0">
+        {/* Futuristic Robotic Hand Pointing at Book (Top on Mobile/Tab, Left on Desktop) */}
+        <div className="absolute top-[-4%] sm:top-[0%] md:top-[-6%] lg:top-[50%] left-1/2 lg:left-[4%] -translate-x-1/2 lg:translate-x-0 translate-y-0 lg:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 lg:rotate-0">
           <img
             src="https://res.cloudinary.com/db9l85phg/image/upload/v1791351330/Futuristic-Robotic-Hand-Schematic_yew1j4.png"
             alt="Robotic Hand Schematic"
@@ -992,8 +992,8 @@ export const Book: React.FC<BookProps> = ({
           />
         </div>
 
-        {/* Futuristic Robotic Hand Pointing at Book (Bottom on Mobile, Right on Desktop) */}
-        <div className="absolute bottom-[0%] sm:bottom-[12%] md:bottom-auto md:top-[50%] left-1/2 md:left-auto md:right-[0%] lg:right-[4%] -translate-x-1/2 md:translate-x-0 translate-y-0 md:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[450px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 md:rotate-0">
+        {/* Futuristic Robotic Hand Pointing at Book (Bottom on Mobile/Tab, Right on Desktop) */}
+        <div className="absolute bottom-[0%] sm:bottom-[0%] md:bottom-[-6%] lg:bottom-auto lg:top-[50%] left-1/2 lg:left-auto lg:right-[4%] -translate-x-1/2 lg:translate-x-0 translate-y-0 lg:-translate-y-1/2 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[500px] opacity-80 pointer-events-none z-0 mix-blend-multiply transition-all duration-700 rotate-90 lg:rotate-0">
           <img
             src="https://res.cloudinary.com/db9l85phg/image/upload/v1791351328/Futuristic-Robotic-Hand-Schematic-revert_us4h8s.png"
             alt="Robotic Hand Schematic Reversed"
@@ -1040,11 +1040,11 @@ export const Book: React.FC<BookProps> = ({
       {/* Top Header Bar (Only Close Button remains) */}
       <header className="book-top-bar" style={{ background: 'transparent', borderBottom: 'none', position: 'absolute', zIndex: 50 }}>
 
-        <div className="book-top-actions" style={{ marginRight: '130px' }}>
+        <div className="book-top-actions" style={{ marginLeft: '5vw' }}>
           {onClose && (
             <button
               type="button"
-              className="book-btn book-btn-close book-btn-icon-only"
+              className="book-btn book-btn-close book-btn-icon-only !bg-[#FF4D00]/15 !border !border-[#FF4D00]/40 !text-[#FF4D00] hover:!bg-[#FF4D00]/25 hover:!border-[#FF4D00]/70 hover:!text-white transition-all shadow-md backdrop-blur-sm"
               onClick={onClose}
               title="Close Reader"
               aria-label="Close Reader"
@@ -1257,7 +1257,7 @@ export const Book: React.FC<BookProps> = ({
             {onClose && (
               <button
                 type="button"
-                className="book-btn book-btn-close book-btn-icon-only"
+                className="book-btn book-btn-close book-btn-icon-only !bg-[#FF4D00]/15 !border !border-[#FF4D00]/40 !text-[#FF4D00] hover:!bg-[#FF4D00]/25 hover:!border-[#FF4D00]/70 hover:!text-white transition-all shadow-md backdrop-blur-sm"
                 onClick={onClose}
                 title="Close Magazine Viewer (Esc)"
                 aria-label="Close Viewer"

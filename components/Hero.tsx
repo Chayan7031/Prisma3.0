@@ -251,6 +251,7 @@ export const Hero: React.FC<HeroProps> = ({
             src="/left_design_tight.png"
             alt="Botanical Sketch Flourish"
             fill
+            sizes="(max-width: 768px) 200px, 280px"
             className="object-contain"
           />
         </div>
@@ -261,6 +262,7 @@ export const Hero: React.FC<HeroProps> = ({
             src="/left_design_tight.png"
             alt="Botanical Sketch Flourish"
             fill
+            sizes="160px"
             className="object-contain"
           />
         </div>
@@ -271,6 +273,7 @@ export const Hero: React.FC<HeroProps> = ({
             src="/design0.png"
             alt="Botanical Sketch Flourish"
             fill
+            sizes="(max-width: 768px) 170px, 220px"
             className="object-contain"
           />
         </div>
@@ -778,6 +781,7 @@ export const Hero: React.FC<HeroProps> = ({
               src="/br_design_tight.png"
               alt="Wireframe Head and Circuit Graphics"
               fill
+              sizes="(max-width: 768px) 165px, 220px"
               className="object-contain object-top"
             />
           </div>

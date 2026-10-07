@@ -113,7 +113,7 @@ export const Footer: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3">
               <div className="w-10 h-10 shrink-0 p-1 rounded-xl bg-white/80 border border-[#D5C9B8] shadow-xs">
                 <img
-                  src="/kgec_logo-removebg-preview.png"
+                  src="https://res.cloudinary.com/db9l85phg/image/upload/v1791353718/kgec_logo-removebg-preview_shf3cd.png"
                   alt="KGEC Logo"
                   className="w-full h-full object-contain"
                   draggable={false}
