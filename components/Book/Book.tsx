@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 import { PageFlip } from 'page-flip';
 import { getMagazinePageUrls } from '@/lib/cloudinary';
 import VectorPathDecor from './VectorPathDecor';
@@ -272,6 +273,7 @@ export const Book: React.FC<BookProps> = ({
 }) => {
   const mountContainerRef = useRef<HTMLDivElement | null>(null);
   const pageFlipRef = useRef<PageFlip | null>(null);
+  const transformRef = useRef<ReactZoomPanPinchRef | null>(null);
   const isOdd = pages.length % 2 === 1;
   const [currentPage, setCurrentPage] = useState<number>(initialPage);
   const currentPageRef = useRef<number>(initialPage);
@@ -761,9 +763,7 @@ export const Book: React.FC<BookProps> = ({
     setPageInputValue('');
   };
 
-  const handleZoomIn = (): void => setZoomLevel((z) => Math.min(2.5, +(z + 0.25).toFixed(2)));
-  const handleZoomOut = (): void => setZoomLevel((z) => Math.max(0.6, +(z - 0.25).toFixed(2)));
-  const handleZoomReset = (): void => setZoomLevel(1);
+  // Handlers for the old custom zoom are removed; they will be provided by TransformWrapper render props
 
   const toggleTheme = (): void => {
     setCurrentTheme((prev) => (prev === 'charcoal' ? 'parchment' : 'charcoal'));
@@ -813,14 +813,14 @@ export const Book: React.FC<BookProps> = ({
           break;
         case '+':
         case '=':
-          handleZoomIn();
+          transformRef.current?.zoomIn();
           break;
         case '-':
         case '_':
-          handleZoomOut();
+          transformRef.current?.zoomOut();
           break;
         case '0':
-          handleZoomReset();
+          transformRef.current?.resetTransform();
           break;
         case 'Escape':
           if (isTOCSidebarOpen) {
@@ -1078,14 +1078,19 @@ export const Book: React.FC<BookProps> = ({
 
       {/* Viewport for Interactive Book Canvas */}
       <main className={`book-viewport ${zoomLevel > 1 ? 'is-zoomed' : ''}`}>
-        <div
-          className="book-zoom-wrapper"
-          style={{
-            transform: `scale(${zoomLevel})`,
-            width: zoomLevel > 1 ? `${bookDimensions.width * (isMobile ? 1 : 2) * zoomLevel}px` : 'auto',
-            height: zoomLevel > 1 ? `${bookDimensions.height * zoomLevel}px` : 'auto',
-          }}
-        >
+      <TransformWrapper
+        ref={transformRef}
+        initialScale={1}
+        minScale={0.6}
+        maxScale={3}
+        centerZoomedOut={true}
+        wheel={{ step: 0.1, disabled: isMobile }}
+        pinch={{ step: 5 }}
+        panning={{ disabled: zoomLevel <= 1.05, allowLeftClickPan: false }}
+        onZoom={(ref: any) => setZoomLevel(ref.state.scale)}
+      >
+        <TransformComponent wrapperStyle={{ width: '100%', height: '100%', overflow: 'visible' }} contentStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="book-zoom-wrapper">
           <div
             className={`flipbook-centering-wrapper is-${bookState} ${isFlipping ? 'is-flipping' : ''} ${isResizing ? 'is-resizing' : ''}`}
             style={{
@@ -1105,7 +1110,9 @@ export const Book: React.FC<BookProps> = ({
               className={`book-edge-stack book-edge-stack-left ${bookState === 'cover-back' && !isFlipping ? 'is-visible' : ''}`}
             />
           </div>
-        </div>
+                </div>
+              </TransformComponent>
+            </TransformWrapper>
 
         {!isReady && (
           <div className="book-loading-container">
@@ -1206,7 +1213,7 @@ export const Book: React.FC<BookProps> = ({
             <button
               type="button"
               className="book-btn book-btn-icon-only"
-              onClick={handleZoomOut}
+              onClick={() => transformRef.current?.zoomOut()}
               disabled={zoomLevel <= 0.6}
               title="Zoom Out (-)"
               aria-label="Zoom Out"
@@ -1217,7 +1224,7 @@ export const Book: React.FC<BookProps> = ({
             <button
               type="button"
               className="book-btn book-zoom-indicator"
-              onClick={handleZoomReset}
+              onClick={() => transformRef.current?.resetTransform()}
               title="Reset Zoom to 100% (0)"
               aria-label="Reset Zoom"
             >
@@ -1227,8 +1234,8 @@ export const Book: React.FC<BookProps> = ({
             <button
               type="button"
               className="book-btn book-btn-icon-only"
-              onClick={handleZoomIn}
-              disabled={zoomLevel >= 2.5}
+              onClick={() => transformRef.current?.zoomIn()}
+              disabled={zoomLevel >= 3}
               title="Zoom In (+)"
               aria-label="Zoom In"
             >
