@@ -2,7 +2,7 @@ export const pages = {};
 
 for (let i = 1; i <= 43; i++) {
   const pageNumber = i.toString().padStart(4, '0');
-  const filename = `/prisma2.0-webp/prisma2.0-page-${pageNumber}.webp`;
+  const filename = `https://res.cloudinary.com/db9l85phg/image/upload/prisma2.0-pages/prisma2.0-page-${pageNumber}.webp`;
   
   if (i === 1) {
     pages["cover"] = filename;
