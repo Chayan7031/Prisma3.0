@@ -1086,7 +1086,7 @@ export const Book: React.FC<BookProps> = ({
         centerZoomedOut={true}
         wheel={{ step: 0.1, disabled: isMobile }}
         pinch={{ step: 5 }}
-        panning={{ disabled: zoomLevel <= 1.05, allowLeftClickPan: false }}
+        panning={{ disabled: zoomLevel <= 1.05, allowLeftClickPan: true }}
         onZoom={(ref: any) => setZoomLevel(ref.state.scale)}
       >
         <TransformComponent wrapperStyle={{ width: '100%', height: '100%', overflow: 'visible' }} contentStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -1103,7 +1103,7 @@ export const Book: React.FC<BookProps> = ({
             />
 
             {/* Flipbook Mount Point */}
-            <div ref={mountContainerRef} className="flipbook-mount-wrapper" />
+            <div ref={mountContainerRef} className={`flipbook-mount-wrapper ${zoomLevel > 1.05 ? 'pointer-events-none' : ''}`} />
 
             {/* Page edge stack for back cover (left side) */}
             <div

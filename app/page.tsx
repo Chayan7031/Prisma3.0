@@ -51,8 +51,8 @@ export default function Home() {
         'The second departmental milestone chronicling the explosion of large language models, cloud native infrastructure, student hackathon podium finishes, and academic research papers.',
       coverImage: 'https://res.cloudinary.com/db9l85phg/image/upload/v1791316869/prisma2.0-cover_a3s0eb.jpg',
       pages: '24 Spreads',
-      readUrl: '/read?page=1',
-      pdfUrl: '/prisma_content.pdf',
+      readUrl: '/read/v2',
+      pdfUrl: '/prisma2.0.pdf',
       highlights: [
         'Large Language Models & Autonomous Agents',
         'High-Performance Distributed Cloud Architecture',
